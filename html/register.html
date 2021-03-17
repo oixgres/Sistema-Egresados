@@ -8,67 +8,82 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
+    <style>
+        .button_send{
+            margin-top: 35px;
+        }
+    </style>
 </head>
 <body>
     
     <div class="mt-5 container">
-        
-        <div class="row">
-            <div class="col-12">
-                <form class="" action="insert.php" method="POST">
-                    
-                    <div class="row"> <!-- Primera Fila -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="idName">Nombre</label> <!-- Campo Izquierda -->
-                                <input type="text" class="form-control" id="idName" name="idName" placeholder="Ingrese Nombre Completo">
+        <div class="card p-5">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-center text-primary">Registrate</h1>
+                    <hr>
+                </div>
+                <br>
+                <div class="col-12">
+                    <form class="" action="insert.php" method="POST">
+
+                        <div class="row"> <!-- Primera Fila -->
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="idName">Nombre</label> <!-- Campo Izquierda -->
+                                    <input type="text" class="form-control" id="idName" name="idName" placeholder="Ingrese Nombre Completo">
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="idPass2">Contraseña</label>
-                                <input type="password" class="form-control" id="idPass2" name="idPass2" placeholder="Ingrese Ingrese Contraseña">
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="idPass2">Contraseña</label>
+                                    <input type="password" class="form-control" id="idPass2" name="idPass2" placeholder="Ingrese Ingrese Contraseña">
+                                </div>
                             </div>
+
                         </div>
 
-                    </div>
-
-                    <div class="row"><!--Segunda Fila -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="idMat">Matricula</label> <!--Campo derecha -->
-                                <input type="text" class="form-control" id="idMat" name="idMat" placeholder="Ingrese Matricula Escolar">
+                        <div class="row"><!--Segunda Fila -->
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="idMat">Matricula</label> <!--Campo derecha -->
+                                    <input type="text" class="form-control" id="idMat" name="idMat" placeholder="Ingrese Matricula Escolar">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="idPass">Contraseña</label>
-                                <input type="password" class="form-control" name="idPass" id="idPass" placeholder="Confirme Contraseña">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="idPass">Contraseña</label>
+                                    <input type="password" class="form-control" name="idPass" id="idPass" placeholder="Confirme Contraseña">
+                                </div>
                             </div>
-                        </div>
-                        
 
-                    </div>
-   
-                    <div class="row"><!--Segunda Fila -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="idMail">Correo</label>
-                                <input type="text" class="form-control" id="idMail" name="ïdMail" placeholder="Ingrese Correo Electronico Universitario">
+
+                        </div>
+
+                        <div class="row"><!--Segunda Fila -->
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="idMail">Correo</label>
+                                    <input type="text" class="form-control" id="idMail" name="ïdMail" placeholder="Ingrese Correo Electronico Universitario">
+                                </div>
                             </div>
+
+                            <div class="col-6">
+                                <button type="submit" name="submit" class="btn btn-success col-6 float-right button_send">Registrar</button>
+                            </div>
+
                         </div>
 
-                        <div class="col-6">
-                            <button type="submit" name="submit" class="btn btn-success col-6 float-right mt-5 button">Registrar</button>
-                        </div>
-
-                    </div>
- 
-                </form>
+                    </form>
+                </div>
             </div>
+
+
+
         </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
