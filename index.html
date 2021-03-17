@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de egresados</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="css/style.css">
+
+    
+</head>
+<body>
+    <div class="mt-5 container">
+        <div class="row">
+            <div class="card col-10 col-md-6  offset-1 offset-md-3">
+
+                <h1 class="d-flex justify-content-center">Ingreso Egresados</h1>
+
+                <form class="" action="insert.php" method="POST"> <!--Aqui va el php-->
+                    <div class="form-group">
+                        <label for="userInput">Usuario</label> <!-- Campo de nombre de usuario -->
+                        <input type="text" class="form-control" id="userInput" placeholder="Introduzca usuario" name="username"> <!-- php id de usuario -->
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordInput">Contraseña</label> <!-- Campo de la Contraseña-->
+                        <input type="password" class="form-control" id="passwordInput" placeholder="Introduzca Contraseña" name="password">
+                    </div>
+
+                    <!-- Hacer botones un poco mas chicos en pantalla extendida-->
+                    <button type="submit" class="btn btn-success d-xl-block mt-3 col ">Iniciar</button>
+                    <a class="btn btn-primary d-xl-block mt-3 col" href="html/register.html">Registrar</a>
+                </form>
+            </div>
+        </div>
+    </div>  
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+</body>
+</html>
