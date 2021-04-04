@@ -2,8 +2,8 @@
 
 $dbServername = "localhost";
 $dbUsername = "root";
-$dbPassword = "";
-$dbName = "proyecto";
+$dbPassword = "harry6627";
+$dbName = "sistemaegresados";
 
 $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
 
