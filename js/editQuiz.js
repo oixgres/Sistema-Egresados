@@ -59,6 +59,25 @@ function createTitleNode(parent, text, spawnTime = 500){
     node.show(spawnTime);
 }
 
+function disableForm() {
+    $('#add_answer').attr('disabled', true);
+    $('#clear_answers').attr('disabled', true);
+    $('#question_topic').attr('disabled', true);
+    $('#question_tittle').attr('disabled', true);
+    $('#answer_option_button').attr('disabled', true);
+
+    answerCreator.disableAnswerFields();
+
+}
+function ensableForm() {
+    $('#add_answer').attr('disabled', false);
+    $('#clear_answers').attr('disabled', false);
+    $('#question_topic').attr('disabled', false);
+    $('#question_tittle').attr('disabled', false);
+    $('#answer_option_button').attr('disabled', false);
+    answerCreator.enableAnswerFields();
+
+}
 $(document).ready(function (e) {
     const SHOW_TIME = 500;
 
@@ -84,11 +103,14 @@ $(document).ready(function (e) {
     })
 
     $('#addPreviewQuestion').on('click', function (e) {
+        disableForm();
         answerPreviewCreator.addQuestionPreview(answerCreator.num_id);
+
     })
 
     $('#discardQuestionPreview').on('click', function (e) {
         e.stopPropagation();
+        ensableForm();
         answerPreviewCreator.clearPreview();
     })
 
@@ -136,13 +158,25 @@ class AnswerCreator{
             this.num_id++;
         }
         this.clearAnswerField = function () {
-            this.answerNodes = [];
+
             parent.children().hide(this.spawnTime, function (){
                 parent.empty();
             })
 
             this.num_id = 0;
         }
+
+        this.disableAnswerFields = function () {
+            for(let i = 0; i < this.num_id; i++){
+                $('#answer_option_text_' + i).attr('disabled', true);
+            }
+        }
+        this.enableAnswerFields = function () {
+            for(let i = 0; i < this.num_id; i++){
+                $('#answer_option_text_' + i).attr('disabled', false);
+            }
+        }
+
     }
 }
 
