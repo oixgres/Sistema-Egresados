@@ -17,21 +17,36 @@ function createRadioButtonNode(parent, id, name, text, spawnTime = 500) {
     node.show(spawnTime);
 }
 
-function createTextAreaNode(parent, id, placeholder) {
-
-}
-
-function createInputNode(parent, id, placeholder) {
+function createTextAreaNode(parent, id, placeholder, spawnTime = 500) {
     let node = $(`
         <div class="row">
-            <div class="col-11 offset-1">
+            <div class="col-12">
                 <div class="form-group">
-                    <input type="text" id="input_" + ${id} placeholder="${placeholder}" class="form-control">
+                    <textArea class="form-control" id="area_${id}" placeholder="${placeholder}"></textArea>
+                </div>
+            </div>
+        </div>
+    
+    `)
+
+    node.hide()
+    parent.append(node);
+    node.show(spawnTime);
+}
+
+function createInputNode(parent, id, placeholder, spawnTime = 500) {
+    let node = $(`
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <input type="text" id="input_${id}" placeholder="${placeholder}" class="form-control">
                 </div>
             </div>
         </div>
     `)
+    node.hide()
     parent.append(node);
+    node.show(spawnTime);
 }
 
 function createTitleNode(parent, text, spawnTime = 500){
@@ -45,7 +60,7 @@ function createTitleNode(parent, text, spawnTime = 500){
 }
 
 $(document).ready(function (e) {
-    const SHOW_TIME = 600;
+    const SHOW_TIME = 500;
 
     answerCreator = new AnswerCreator($('#answers_container'));
     answerPreviewCreator = new AnswerPreviewCreator($('#answer_container_preview'));
@@ -77,6 +92,18 @@ $(document).ready(function (e) {
         answerPreviewCreator.clearPreview();
     })
 
+    $('#answer_option_button').on('click', function (e) {
+        e.stopPropagation();
+        $('#answer_option_dropdown').toggle(SHOW_TIME);
+    })
+
+    $('.dropdown-item').on('click', function (e) {
+        e.stopPropagation();
+        $('#answer_option_button').text((this).text)
+        $('#answer_option_dropdown').hide(SHOW_TIME);
+
+    })
+
     answerCreator.createAnswerField();
     answerCreator.createAnswerField();
     answerCreator.createAnswerField();
@@ -91,26 +118,12 @@ class AnswerCreator{
         this.spawnTime = 500;
 
         this.createAnswerField = function () {
-            let spawnTime = this.spawnTime;
 
             const node = $(`
             <div class="row" id="answer_row_${this.num_id}">
-                <div class="col-8">
+                <div class="col-12">
                     <div class="form-group">
                         <input type="text" placeholder="Respuesta" class="form-control" id="answer_option_text_${this.num_id}">
-                    </div>
-                </div>
-    
-                <div class="col-4">
-                    <div class="form-group">
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-outline-success btn-block dropdown-toggle" id="answer_option_button_${this.num_id}">Radio</button>
-                            <div class="dropdown-menu" id="answer_option_dropdown_${this.num_id}">
-                                <a class="dropdown-item">Radio</a>
-                                <a class="dropdown-item">Input</a>
-                                <a class="dropdown-item">Text Area</a>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>`);
@@ -118,17 +131,6 @@ class AnswerCreator{
             node.hide();
             parent.append(node);
             node.show(this.spawnTime);
-
-            node.find('#answer_option_button_' + this.num_id).on('click', function (e) {
-                e.stopPropagation();
-                $(this).siblings('.dropdown-menu').toggle(spawnTime);
-            });
-
-            node.find('.dropdown-item').on('click', function (e) {
-                e.stopPropagation();
-                $(this).parent().siblings('button').text((this).text);
-                $(this).parent().toggle(spawnTime);
-            })
 
 
             this.num_id++;
@@ -155,20 +157,21 @@ class AnswerPreviewCreator{
             let answer_text;
 
             question_title = $('#question_tittle').val();
+            answer_type = $('#answer_option_button').text();
+
             createTitleNode(this.parent, question_title);
 
             for (let i = 0; i < num_answers; i++) {
-                answer_type = $('#answer_option_button_' + i).text();
                 answer_text = $('#answer_option_text_' + i).val();
+                switch (answer_type){
+                    case 'Radio' :  createRadioButtonNode(this.parent, i, 'answer', answer_text);
+                                    break;
 
-                switch (answer_type) {
-                    case 'Radio' :
-                        createRadioButtonNode(this.parent, i, 'preview', answer_text);
-                        break;
+                    case 'Input':   createInputNode(this.parent, i, answer_text);
+                                    break;
 
-                    case 'Input' :
-                        createInputNode(this.parent, i, answer_text);
-                        break;
+                    case 'Text Area':   createTextAreaNode(this.parent, i, answer_text);
+                                        break;
                 }
             }
         }
