@@ -1,0 +1,5 @@
+﻿idEscolar,Usuario_idUsuario,Universidad_idUniversidad,Campus_idCampus,Facultad_idFacultad,Plan_Estudio_idPlan_Estudio,Ingreso,Egreso,Semestre_Grad,Generacion,Titulacion,Correo_Inst
+1000,1000,1000,1000,1000,1000,2017-08-27,2021-04-03,8,2017,0000-00-00,"quete@uabc.edu,mx"
+1001,1003,1000,1001,1001,1001,2017-08-27,2021-04-03,8,2017,0000-00-00,"valga@uabc.edu,mx"
+1002,1001,1001,1001,1001,1001,2017-08-27,2021-04-03,-1,2017,0000-00-00,"ferga@uabc.edu,mx"
+1003,1002,1002,1003,1003,1003,2017-08-27,2021-04-03,14,2017,0000-00-00,"prro@uabc.edu,mx"
