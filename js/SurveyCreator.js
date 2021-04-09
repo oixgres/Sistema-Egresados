@@ -1,16 +1,23 @@
-const SHOW_DELAY = 600;
-
 $(document).ready(function (e) {
+
+    const SHOW_DELAY = 600;
+    let questionControler = null;
+
+    class QuestionControler{
+        constructor(parent) {
+            this.parent = parent;
+            this.num_id = 0;
+
+        }
+    }
+
 
     function addListeners() {
         const main_container = $('.container');
         const SurveyScope = $('#SurveyScope');
         const dropdownItems = $('.dropdown-item');
-        const SurveyName = $('#SurveyName');
-
-        //temp
-        const QuestionType = $('#QuestionType');
-        ////////
+        const AddQuestion = $('#AddQuestion');
+        const CleanQuestions = $('#CleanQuestions');
 
         main_container.hide(0, function (e) {
             $(this).show(SHOW_DELAY);
@@ -24,8 +31,6 @@ $(document).ready(function (e) {
 
         })
 
-
-
         dropdownItems.on('click', function (e) {
             e.stopPropagation();
             const button = $(this).parent().siblings('button');
@@ -35,35 +40,21 @@ $(document).ready(function (e) {
             }
         })
 
-        SurveyName.on('keyup', function (e) {
+        AddQuestion.on('click', function (e) {
+            e.stopPropagation();
 
         })
 
+        CleanQuestions.on('click', function (e) {
+            e.stopPropagation();
+
+        })
 
         $(document).click(function (e) {
             $('.dropdown-menu').hide(SHOW_DELAY);
         })
-
-        ////temp//////////////
-        QuestionType.on('click', function (e) {
-            e.stopPropagation();
-            const dropdownMenu = $(this).siblings('.dropdown-menu');
-            if(dropdownMenu.length)
-                dropdownMenu.toggle(SHOW_DELAY);
-        })
-
-        /////////////
-    }
-
-
-
-    if(sessionStorage.getItem('Nombre') == null){
-        sessionStorage.setItem('Nombre', 'Omar')
-    }
-    else
-    {
-        console.log(sessionStorage.getItem('Nombre'))
     }
 
     addListeners();
+    questionControler = new QuestionControler($('#QuestionContainer')); //crear un controlador para agregar preguntas
 })
