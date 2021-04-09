@@ -1,0 +1,13 @@
+*{
+    box-sizing: border-box;
+}
+.nav-tabs{
+    font-size: 25px;
+}
+.main{
+    background-image: url("../img/bg2.jpg");
+
+}
+.container{
+    background-color: white;
+}

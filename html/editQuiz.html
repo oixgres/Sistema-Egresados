@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editor de encuesta</title>
+    <link rel="stylesheet" href="../css/boostrap/bootstrap_minty.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="nav navbar-dark bg-primary p-3">
+                    <div class="navbar-brand">Menu</div>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="card-title">
+                            <h4 class="text-center">Agregar</h4>
+                        </div>
+
+                        <form id="main_form">
+                            <div class="form-group row">
+                                <div class="col-12 col-md-4">
+                                    <input type="text" placeholder="Tema" class="form-control" id="question_topic">
+                                </div>
+                                <div class="col-12 col-md-8 mt-2 mt-md-0">
+
+                                    <textarea type="text" class="form-control" placeholder="Pregunta" id="question_tittle"></textarea>
+                                </div>
+
+                                <div class="col-12 mt-2">
+                                    <div class="form-group">
+                                        <div class="dropdown">
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <label for="answer_option_button">Tipo</label>
+                                                </div>
+                                                <div class="col-10 col-md-5 offset-md-5">
+                                                    <button type="button" class="btn btn-outline-success btn-block dropdown-toggle" id="answer_option_button">Radio</button>
+                                                    <div class="dropdown-menu" id="answer_option_dropdown">
+                                                        <a class="dropdown-item">Radio</a>
+                                                        <a class="dropdown-item">Input</a>
+                                                        <a class="dropdown-item">Text Area</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="answers_container">
+                                <!-- Multiple answers block -->
+                                <!-- Multiple answers block -->
+                            </div>
+                        </form>
+
+                        <div class="col-12 mt-4">
+                            <div class="form-group row">
+                                <div class="col-12 col-md-6">
+                                    <button type="button" class="btn btn-success btn-block"  id="add_answer">Agregar</button>
+                                </div>
+
+                                <div class="col-12 col-md-6 mt-2 mt-md-0">
+                                    <button type="button" class="btn btn-warning btn-block" id="clear_answers">Limpiar</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-1 align-items-center justify-content-center d-flex mt-2 mb-2">
+                <button type="button" class="btn btn-outline-success" id="addPreviewQuestion"> >> </button>
+            </div>
+
+            <div class="col-12 col-lg-5">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 class="text-center">Preview</h4>
+
+                                <h6 id="question_name_preview"></h6> <!-- Nombre de la pregunta  -->
+                                <form class="mt-2 mb-2" id="answer_container_preview">
+
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <button type="button" class="btn btn-success btn-block">Guardar</button>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <button type="button" class="btn btn-danger btn-block mt-2 mt-md-0" id="discardQuestionPreview">Descartar</button>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-auto">
+                <h3>Encuesta</h3>
+                <button type="button" class="btn btn-secondary">Refrescar</button>
+            </div>
+
+            <div id="poll_container" class="col-12 mt-5">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="../js/boostrap/jquery-3.6.0.min.js"></script>
+    <script src="../js/boostrap/bootstrap.bundle.js"></script>
+    <script src="../js/editQuiz.js"></script>
+</body>
+</html>
