@@ -11,7 +11,7 @@ $(document).ready(function (e) {
                 let item_active;
 
                 if(this.num_id === 0)
-                    item_active = 'active'
+                    item_active = 'active' //en caso que sea el primer item creado
                 else
                     item_active = '';
 
@@ -35,7 +35,7 @@ $(document).ready(function (e) {
 
                                     <div class="col-12"> <!-- Titulo de la pregunta -->
                                         <div class="form-group">
-                                            <label for="QuestionTittle">Titulo de la pregunta</label>
+                                            <label for="QuestionTittle_${this.num_id}">Titulo de la pregunta</label>
                                             <input type="text" class="form-control" placeholder="Introduce el título de la pregunta" id="QuestionTittle_${this.num_id}">
                                         </div>
                                     </div>
@@ -64,7 +64,7 @@ $(document).ready(function (e) {
 
 
                                     <div class="col-6 mt-2">
-                                        <button type="button" class="btn btn-warning btn-block rounded-pill" id="AddAnswer_${this.num_id}">Añadir Respuesta</button>
+                                        <button type="button" class="btn btn-info btn-block rounded-pill" id="AddAnswer_${this.num_id}">Añadir Respuesta</button>
                                     </div>
 
                                     <div class="col-6 mt-2">
@@ -76,18 +76,18 @@ $(document).ready(function (e) {
                     </div>
                 </div>`)
 
-                node.find(`#QuestionType_${this.num_id}`).on('click', function (e) {
+                node.find(`#QuestionType_${this.num_id}`).on('click', function (e) { //Agregar listener al boton de questionType
                     e.stopPropagation();
                     let dropdownMenu = $(this).siblings('.dropdown-menu');
                     dropdownMenu.toggle(SHOW_DELAY);
                 })
                 
-                node.find(`.dropdown-item`).on('click', function (e) {
+                node.find(`.dropdown-item`).on('click', function (e) { //agregar listeners a los items
                     let button = $(this).parent().siblings();
                     button.text((this).text);
                 })
 
-                node.find(`#AddAnswer_${this.num_id}`).on('click', function (e) {
+                node.find(`#AddAnswer_${this.num_id}`).on('click', function (e) { //listener para agregar una respuesta a la pregunta
                     e.stopPropagation();
 
                     let node = $(`
@@ -96,25 +96,132 @@ $(document).ready(function (e) {
                                 <input type="text" class="form-control Answer" placeholder="Texto de la Respuesta">
                             </div>
                         </div>
-                    `);
-                    let id = $(this).attr('id');
-                    let regex = new RegExp('[0-9]+')
-                    let num_id = regex.exec(id);
-                    node.hide();
-                    $('#AnswersContainer_' + num_id).append(node);
-                    node.show(SHOW_DELAY);
+                    `); //nodo de la pregunta
+                    let id = $(this).attr('id'); //obtener atributo ID
+                    let regex = new RegExp('[0-9]+') //expresion regular
+                    let num_id = regex.exec(id); //obtener el numero de id
+                    node.hide(); //ocultar
+                    $('#AnswersContainer_' + num_id).append(node); //agregar
+                    node.show(SHOW_DELAY); //aplicar efecto
                 })
 
-                this.parent.append(node);
+                this.parent.append(node); //agregar nodo a la componente padre
                 this.num_id++;
 
                 $('.carousel').carousel({
                     interval: false,
                 });
             }
+            this.getTopicOfQuestion = function (num_id) {
+                let topic = $(`QuestionTopic_${num_id}`);
+
+                if(topic)
+                    return topic;
+                else
+                    return 'N/A';
+            }
+            this.getTittleOfQuestion = function (num_id) {
+
+                let tittle = $(`#QuestionTittle_${num_id}`).val();
+
+                if(tittle)
+                    return tittle;
+                else
+                    return "Sin Titulo"
+            }
+            this.getTypeOfanswers = function (num_id) {
+                let type = $(`#QuestionType_${num_id}`).text();
+                if(type !== 'Tipo de respuestas')
+                    return type;
+                else
+                    return 'NO_TYPE'
+            }
+            this.getAnswersText = function (num_id) {
+                let answersInputs = $(`#AnswersContainer_${num_id} .Answer`);
+                let answersArray = [];
+
+                for(let i = 0; i < answersInputs.length; i++){
+                    answersArray.push(answersInputs[i].value);
+                }
+
+                return answersArray;
+            }
+
         }
     }
-    let questionControler = new QuestionControler($('#QuestionContainer')); //crear un controlador para agregar preguntas
+
+    class PreviewController{
+        constructor(QuestionParent, AnswerParent) {
+            this.QuestionParent = QuestionParent;
+            this.AnswerParent = AnswerParent;
+            this.num_id = 0;
+
+            this.createRadioAnswer = function (text, name) {
+                let node = $(`
+                     <div class="col-11 offset-1" >
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio_${this.num_id}" name=${name} class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio_${this.num_id}">${text}</label>
+                        </div>
+                    </div>
+                `);
+
+                this.num_id++;
+                node.hide();
+                return node;
+            }
+
+            this.setTitle = function (title) {
+                $('#QuestionTittlePreview').text(title);
+            }
+            this.setPreviewAnswes = function (type = "", answers = []) {
+                let i;
+
+                for(i = 0; i < answers.length; i++){
+                    switch(type)
+                    {
+                        case 'Radio':   let R_node = this.createRadioAnswer(answers[i], 'preview');
+                                        this.AnswerParent.append(R_node);
+                                        R_node.show(SHOW_DELAY);
+                                        break;
+
+                    }
+
+                }
+
+            }
+
+            this.cleanPreview = function () {
+                this.setTitle('')
+                this.AnswerParent.hide(SHOW_DELAY, function () {
+                    $(this).empty();
+                });
+
+
+                this.AnswerParent.show();
+                this.num_id = 0;
+            }
+
+
+
+            this.updatePreview = function () {
+                this.cleanPreview();
+                const activeItem_num_id = $('#QuestionContainer .carousel-item.active').attr('id');
+                const regex = RegExp('[0-9]+');
+                const num_id = regex.exec(activeItem_num_id);
+
+                const title = questionController.getTittleOfQuestion(num_id);
+                const type = questionController.getTypeOfanswers(num_id);
+                const answers = questionController.getAnswersText(num_id);
+
+
+                this.setTitle(title);
+                this.setPreviewAnswes(type, answers);
+            }
+        }
+    }
+    let questionController = new QuestionControler($('#QuestionContainer')); //crear un controlador para agregar preguntas
+    let previewController = new PreviewController($('#PreviewQuestionContainer'), $('#AnswerPreviewContainer')); //componente padre del preview
 
     function addListeners() {
         const main_container = $('.container');
@@ -122,6 +229,7 @@ $(document).ready(function (e) {
         const dropdownItems = $('.dropdown-item');
         const AddQuestion = $('#AddQuestion');
         const CleanQuestions = $('#CleanQuestions');
+        const QuestionCarousel = $('#QuestionCarousel');
 
         main_container.hide(0, function (e) {
             $(this).show(SHOW_DELAY);
@@ -138,15 +246,36 @@ $(document).ready(function (e) {
         dropdownItems.on('click', function (e) {
             e.stopPropagation();
             const button = $(this).parent().siblings('button');
+            const SurveyTopicLabel = $('#SurveyTopicLabel');
+            const SurveyTopic = $('#SurveyTopic');
+
             if(button.length){
                 button.text((this).text)
                 $(this).parent().hide(SHOW_DELAY)
+
+                switch(button.text()){
+                    case 'Universidad': SurveyTopicLabel.text('Nombre de la Universidad')
+                                        SurveyTopic.attr('placeholder', 'Introduce el nombre de la Universidad');
+                                        break;
+
+                    case 'Campus' : SurveyTopicLabel.text('Nombre del Campus')
+                                    SurveyTopic.attr('placeholder', 'Introduce el nombre del campus');
+                                    break;
+
+                    case 'Facultad':    SurveyTopicLabel.text('Nombre de la Facultad')
+                                        SurveyTopic.attr('placeholder', 'Introduce el nombre de la facultad');
+                                        break;
+
+                    case 'Programa Académico':  SurveyTopicLabel.text('Nombre del Programa Academico')
+                                                SurveyTopic.attr('placeholder', 'Introduce el nombre del programa académico');
+                                                break;
+                }
             }
         })
 
         AddQuestion.on('click', function (e) {
             e.stopPropagation();
-            questionControler.createQuestion();
+            questionController.createQuestion();
             $('#QuestionCarousel').carousel('next');
 
         })
@@ -156,12 +285,21 @@ $(document).ready(function (e) {
 
         })
 
+        QuestionCarousel.on('slid.bs.carousel', function (e) {
+            e.stopPropagation();
+            previewController.updatePreview();
+        })
+
         $(document).click(function (e) {
             $('.dropdown-menu').hide(SHOW_DELAY);
         })
-    }
+
+
+    } //agregar listeners para elementos UNICOS
+
+
 
     addListeners();
-    questionControler.createQuestion();
+    questionController.createQuestion();
 
 })
