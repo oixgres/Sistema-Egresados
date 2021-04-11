@@ -184,6 +184,9 @@ $(document).ready(function (e) {
                 return answersArray;
             }
 
+            this.getAllQuestionTittles = function(){
+
+            }
         }
     }
 
@@ -206,7 +209,6 @@ $(document).ready(function (e) {
                 this.num_id++;
                 return node;
             }
-
             this.createInputAnswer = function (text) {
                 let node = $(`
                     <div class="col-12">
@@ -219,7 +221,6 @@ $(document).ready(function (e) {
                 this.num_id++;
                 return node;
             }
-
             this.setTitle = function (title) {
                 $('#QuestionTittlePreview').text(title);
             }
@@ -243,15 +244,11 @@ $(document).ready(function (e) {
                 }
 
             }
-
             this.cleanPreview = function () {
                 this.setTitle('')
                 this.AnswerParent.empty();
                 this.num_id = 0;
             }
-
-
-
             this.updatePreview = function () {
                 this.cleanPreview();
                 const activeItem_num_id = $('#QuestionContainer .carousel-item.active').attr('id');
@@ -279,6 +276,7 @@ $(document).ready(function (e) {
         const AddQuestion = $('#AddQuestion');
         const CleanQuestions = $('#CleanQuestions');
         const QuestionCarousel = $('#QuestionCarousel');
+        const AddSurvey = $('#AddSurvey');
 
         main_container.hide(0, function (e) {
             $(this).show(SHOW_DELAY);
@@ -339,6 +337,52 @@ $(document).ready(function (e) {
             previewController.updatePreview();
         })
 
+        AddSurvey.on('click', function (e) { //guardar en base de datos
+            e.stopPropagation();
+
+            let surveyName = $('#SurveyName').val(); //obtener el nombre de la encuesta
+
+            let university = null;
+            let campus = null;
+            let faculty = null;
+            let program = null;
+
+            let SurveyTopic = $('#SurveyTopic').val(); //obtener el alcance
+
+            switch ($('#SurveyScope').text())
+            {
+                case 'Universidad': university = SurveyTopic;
+                                    break;
+
+                case 'Campus':      campus = SurveyTopic;
+                                    break;
+
+                case 'Facultad':    faculty = SurveyTopic;
+                                    break;
+
+                case 'Programa Académico': program = SurveyTopic;
+                                            break;
+
+            }
+
+            $.ajax({
+                url:    '../php/createSurvey.php',
+                data:   {surveyName, campus, faculty, program, university},
+                type: 'POST',
+                success: function (response) {
+                    if(parseInt(response, 10)){
+                        //encuesta insertada con exito
+                        sessionStorage.setItem('ID_SURVEY', response);
+                        console.log(response)
+                    }
+                    else
+                    {
+                        console.log(response)
+                    }
+                }
+            })
+
+        })
         $(document).click(function (e) {
             $('.dropdown-menu').hide(SHOW_DELAY);
         })
