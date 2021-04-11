@@ -30,21 +30,21 @@ $(document).ready(function (e) {
                                     <div class="col-12"> <!-- Tema de la pregunta -->
                                         <div class="form-group">
                                             <label for="QuestionTopic_${this.num_id}">Tema</label>
-                                            <input type="text" class="form-control" placeholder="Introduce el tema de la pregunta" id="QuestionTopic_${this.num_id}">
+                                            <input type="text" class="form-control QuestionTopic" placeholder="Introduce el tema de la pregunta" id="QuestionTopic_${this.num_id}">
                                         </div>
                                     </div>
                                    
                                     <div class="col-12"> <!-- Titulo de la pregunta -->
                                         <div class="form-group">
                                             <label for="QuestionTittle_${this.num_id}">Titulo de la pregunta</label>
-                                            <input type="text" class="form-control" placeholder="Introduce el título de la pregunta" id="QuestionTittle_${this.num_id}">
+                                            <input type="text" class="form-control QuestionTitle" placeholder="Introduce el título de la pregunta" id="QuestionTittle_${this.num_id}">
                                         </div>
                                     </div>
                                    
 
                                     <div class="col-12"> <!-- Tipo de respuestas -->
                                         <div class="dropdown">
-                                            <button type="button" class="btn btn-info btn-block dropdown-toggle rounded-pill" id="QuestionType_${this.num_id}">Tipo de respuestas</button>
+                                            <button type="button" class="btn btn-info btn-block dropdown-toggle rounded-pill QuestionType" id="QuestionType_${this.num_id}">Tipo de respuestas</button>
                                             <div class="dropdown-menu col col-12" id="Answer_items_${this.num_id}">
                                                 <a class="dropdown-item">Radio</a>
                                                 <a class="dropdown-item">Input</a>
@@ -54,7 +54,7 @@ $(document).ready(function (e) {
                                         </div>
                                     </div>
 
-                                    <div class="col-12" id="AnswersContainer_${this.num_id}"> <!-- Componente padre de las respuestas -->
+                                    <div class="col-12 AnswerContainer" id="AnswersContainer_${this.num_id}"> <!-- Componente padre de las respuestas -->
          
                                         
                                     </div>
@@ -183,9 +183,67 @@ $(document).ready(function (e) {
 
                 return answersArray;
             }
-
             this.getAllQuestionTittles = function(){
+                let QuestionItems = $('#QuestionContainer .QuestionTitle')//traerme todas las preguntas de #QuestionContainer
+                let questionArray = Array();
 
+                for(let i = 0; i < QuestionItems.length; i++){
+                    questionArray.push(QuestionItems[i].value); //obtener todos los textos de las preguntas
+                    //aqui validar que todas las preguntas tengan titulo
+                }
+                return questionArray; //retornar el arreglo de las preguntas
+            }
+            this.getAllQuestionsType = function (){
+                let QuestionTypes = $('#QuestionContainer .QuestionType');
+                let typesArray = Array();
+
+                for(let i = 0; i < QuestionTypes.length; i++)
+                    typesArray.push(this.getNumericalType(QuestionTypes[i].textContent));
+                
+                return typesArray;
+            }
+            this.getAllQuestionTopics = function () {
+                let QuestionTopics = $('#QuestionContainer .QuestionTopic');
+                let topicsArray = Array();
+
+                for(let i = 0; i < QuestionTopics.length; i++){
+                    topicsArray.push(QuestionTopics[i].value);
+                }
+
+                return topicsArray;
+            }
+
+            this.getNumOfQuestions = function (){
+                return(parent.children().length);
+            }
+            
+            this.getAllAnswersByQuestion = function () {
+                let answerContainers = $('#QuestionContainer .AnswerContainer')
+                let AnswerArrayGroup = Array();
+                let AnswerArray = Array();
+
+                for(let i = 0; i < answerContainers.length; i++){
+                    AnswerArray = answerContainers[i].getElementsByClassName('Answer');
+                    let group = Array();
+                    for(let j = 0; j < AnswerArray.length; j++){
+                        group.push(AnswerArray[j].value);
+                    }
+
+                    AnswerArrayGroup.push(group);
+                }
+
+                return AnswerArrayGroup;
+
+            }
+
+            this.getNumericalType = function (type_text) {
+                switch (type_text) {
+                    case 'Radio':   return 0;
+                    case 'Text Area':   return 1;
+                    case 'Input':   return 2;
+                    case 'Checkbox':    return 3;
+                    default:    return -1;
+                }
             }
         }
     }
@@ -277,6 +335,7 @@ $(document).ready(function (e) {
         const CleanQuestions = $('#CleanQuestions');
         const QuestionCarousel = $('#QuestionCarousel');
         const AddSurvey = $('#AddSurvey');
+        const SaveToDatabase = $(`#SaveToDatabase`);
 
         main_container.hide(0, function (e) {
             $(this).show(SHOW_DELAY);
@@ -372,15 +431,59 @@ $(document).ready(function (e) {
                 success: function (response) {
                     if(parseInt(response, 10)){
                         //encuesta insertada con exito
-                        sessionStorage.setItem('ID_SURVEY', response);
-                        console.log(response)
+                        sessionStorage.setItem('surveyId', response);//guardar llave primaria de la encuesta
+                        console.log(`Nueva encuesta creada #ID = ${response}`);
                     }
                     else
                     {
-                        console.log(response)
+                        alert('No se puedo crear la encuesta')
                     }
                 }
             })
+        })
+
+        SaveToDatabase.on('click', function (e) {
+            e.stopPropagation();
+
+            //insertar pregunta
+            let questionsTittles = questionController.getAllQuestionTittles() //obtener todos los titulos
+            let questionThemes = questionController.getAllQuestionTopics();//obtener todos los temas
+            let questionTypes = questionController.getAllQuestionsType();//obtener todos los tipos
+            let questionAnswers = questionController.getAllAnswersByQuestion(); //obtener todos los grupos de respuestas
+
+            let surveyId = sessionStorage.getItem('surveyId'); //obtener la llave primaria de la encuesta creada
+
+
+            for(let i = 0; i < questionController.getNumOfQuestions(); i++){
+
+                let title = questionsTittles[i];
+                let theme = questionThemes[i];
+                let type = questionTypes[i];
+
+                $.ajax({ //insertar pregunta en la base de datos
+                    url:    '../php/createQuestion.php',
+                    async:  false,
+                    data:   {surveyId, title, theme, type},
+                    type:   'POST',
+                    success:    function (response) {
+                        console.log(`Pregunta creada #ID = ${response}`);
+                        let questionId = response;
+
+                        for(let j = 0; j < questionAnswers[i].length; j++){
+                            let answerText = questionAnswers[i][j];
+                            $.ajax({ //instertar respuestas
+                                url:    '../php/createAnswer.php',
+                                async: false,
+                                data:   {questionId, answerText},
+                                type:   'POST',
+                                success: function (response) {
+                                    console.log('respuesta creada = ' + response)
+                                }
+                            })
+                        }
+                    }
+                });
+            }
 
         })
         $(document).click(function (e) {
