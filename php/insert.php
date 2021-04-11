@@ -10,6 +10,7 @@ if($conn)
   $password = $_POST['idPass'];
   $password2 = $_POST['idPass2'];
 
+
   $checkmail = mysqli_query($conn, "SELECT * FROM Usuario WHERE Correo='".$email."'");
 
 
