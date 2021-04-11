@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Usuario (
   Nombres VARCHAR(45) NOT NULL,
   Apellidos VARCHAR(45) NOT NULL,
   Matricula VARCHAR(45) NOT NULL,
-  Estatus VARCHAR(45) NOT NULL,
+  Estatus VARCHAR(45) NOT NULL DEFAULT 'INACTIVO',
   PRIMARY KEY (idUsuario))
   -- UNIQUE INDEX ind(idUsuario, Correo))
 ;
