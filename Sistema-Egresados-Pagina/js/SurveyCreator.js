@@ -55,10 +55,7 @@ $(document).ready(function (e) {
                                     </div>
 
                                     <div class="col-12" id="AnswersContainer_${this.num_id}"> <!-- Componente padre de las respuestas -->
-                                        
-                                        <div class="col-12 mt-3"> <!--  Texto de respuesta -->
-                                          
-                                        </div>
+         
                                         
                                     </div>
 
@@ -69,6 +66,10 @@ $(document).ready(function (e) {
 
                                     <div class="col-6 mt-2">
                                         <button type="button" class="btn btn-danger btn-block rounded-pill" id="DiscardAnswer_${this.num_id}">Descartar Respuestas</button>
+                                    </div>
+                                    
+                                    <div class="col-12 mt-2">
+                                        <button type="button" class="btn btn-warning btn-block rounded-pill" id=DeleteQuestion_${this.num_id}>Eliminar Pregunta</button>
                                     </div>
                                 </div>
                             </div>
@@ -93,21 +94,31 @@ $(document).ready(function (e) {
                     previewController.updatePreview();
                 })
 
+                let num_id = this.num_id;
+                node.find(`#DiscardAnswer_${this.num_id}`).on('click', function (e) {
+                    e.stopPropagation();
+                    $(`#AnswersContainer_${num_id}`).hide(SHOW_DELAY, function (e) {
+                        $(this).empty();
+                        $(this).show();
+                        previewController.updatePreview();
+                    })
+
+
+                })
+
 
                 node.find(`#AddAnswer_${this.num_id}`).on('click', function (e) { //listener para agregar una respuesta a la pregunta
                     e.stopPropagation();
 
                     let node = $(`
-  
                         <div class="col-12">
                             <div class="input-group">
                                 <input type="text" class="form-control Answer" placeholder="Texto de la Respuesta">
                                  <span class="input-group-btn">
-                                    <button class="btn btn-secondary" type="button"><i class="fa fa-home"></i></button>
+                                    <button class="btn btn-secondary" type="button"><img class="img-fluid" src="../img/Icons/eliminar-simbolo.png" alt="Eliminar"/></button>
                                  </span>
                             </div>                                   
                         </div>
-
                     `); //nodo de la pregunta
 
                     let id = $(this).attr('id'); //obtener atributo ID
@@ -121,6 +132,12 @@ $(document).ready(function (e) {
                         e.stopPropagation();
                         previewController.updatePreview();
                     })
+
+                    node.find('button').on('click', function (e) {
+                        e.stopPropagation();
+
+                    })
+
 
                     previewController.updatePreview();
                 })
@@ -178,7 +195,7 @@ $(document).ready(function (e) {
 
             this.createRadioAnswer = function (text, name) {
                 let node = $(`
-                     <div class="col-11 offset-1" >
+                     <div class="col-12" >
                         <div class="custom-control custom-radio">
                             <input type="radio" id="customRadio_${this.num_id}" name=${name} class="custom-control-input">
                             <label class="custom-control-label" for="customRadio_${this.num_id}">${text}</label>
@@ -189,15 +206,18 @@ $(document).ready(function (e) {
                 this.num_id++;
                 return node;
             }
-            this.createInputAnswer = function (text){
+
+            this.createInputAnswer = function (text) {
                 let node = $(`
-                     <div class="col-12">
-                       <div class="form-group">
-                            <input type="text">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="${text}" id="preview_input_${this.num_id}">
                         </div>
                     </div>
-                `)
+                `);
 
+                this.num_id++;
+                return node;
             }
 
             this.setTitle = function (title) {
@@ -214,6 +234,10 @@ $(document).ready(function (e) {
                                         R_node.show();
                                         break;
 
+                        case 'Input':   let I_node = this.createInputAnswer(answers[i]);
+                                        this.AnswerParent.append(I_node);
+                                        I_node.show();
+                                        break;
                     }
 
                 }

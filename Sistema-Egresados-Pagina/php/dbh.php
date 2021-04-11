@@ -8,9 +8,9 @@ $dbName = "sistemaegresados";
 
 /* Servidor Actual */
 $dbServername = "localhost";
-$dbUsername = "omdprofx_guerra-c";
-$dbPassword = "Gue1870";
-$dbName = "omdprofx_guerra-c-ordinario";
+$dbUsername = "root";
+$dbPassword = "harry6627";
+$dbName = "sistemaegresados";
 
 $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
 
