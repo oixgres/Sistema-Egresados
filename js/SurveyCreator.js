@@ -3,9 +3,10 @@ $(document).ready(function (e) {
     const SHOW_DELAY = 600;
 
     class QuestionControler{
-        constructor(parent) {
+        constructor(parent, previewController) {
             this.parent = parent;
             this.num_id = 0;
+            this.previewController = previewController;
 
             this.createQuestion = function () {
                 let item_active;
@@ -32,13 +33,14 @@ $(document).ready(function (e) {
                                             <input type="text" class="form-control" placeholder="Introduce el tema de la pregunta" id="QuestionTopic_${this.num_id}">
                                         </div>
                                     </div>
-
+                                   
                                     <div class="col-12"> <!-- Titulo de la pregunta -->
                                         <div class="form-group">
                                             <label for="QuestionTittle_${this.num_id}">Titulo de la pregunta</label>
                                             <input type="text" class="form-control" placeholder="Introduce el título de la pregunta" id="QuestionTittle_${this.num_id}">
                                         </div>
                                     </div>
+                                   
 
                                     <div class="col-12"> <!-- Tipo de respuestas -->
                                         <div class="dropdown">
@@ -55,9 +57,7 @@ $(document).ready(function (e) {
                                     <div class="col-12" id="AnswersContainer_${this.num_id}"> <!-- Componente padre de las respuestas -->
                                         
                                         <div class="col-12 mt-3"> <!--  Texto de respuesta -->
-                                            <div class="form-group">
-                                                <input type="text" class="form-control Answer" placeholder="Texto de la Respuesta">
-                                            </div>
+                                          
                                         </div>
                                         
                                     </div>
@@ -81,28 +81,48 @@ $(document).ready(function (e) {
                     let dropdownMenu = $(this).siblings('.dropdown-menu');
                     dropdownMenu.toggle(SHOW_DELAY);
                 })
+
+                node.find(`#QuestionTopic_${this.num_id},#QuestionTittle_${this.num_id}`).on('keyup', function (e) {
+                    e.stopPropagation();
+                    previewController.updatePreview();
+                })
                 
                 node.find(`.dropdown-item`).on('click', function (e) { //agregar listeners a los items
                     let button = $(this).parent().siblings();
                     button.text((this).text);
+                    previewController.updatePreview();
                 })
+
 
                 node.find(`#AddAnswer_${this.num_id}`).on('click', function (e) { //listener para agregar una respuesta a la pregunta
                     e.stopPropagation();
 
                     let node = $(`
-                        <div class="col-12 mt-3"> <!--  Texto de respuesta -->
-                            <div class="form-group">
+  
+                        <div class="col-12">
+                            <div class="input-group">
                                 <input type="text" class="form-control Answer" placeholder="Texto de la Respuesta">
-                            </div>
+                                 <span class="input-group-btn">
+                                    <button class="btn btn-secondary" type="button"><i class="fa fa-home"></i></button>
+                                 </span>
+                            </div>                                   
                         </div>
+
                     `); //nodo de la pregunta
+
                     let id = $(this).attr('id'); //obtener atributo ID
                     let regex = new RegExp('[0-9]+') //expresion regular
                     let num_id = regex.exec(id); //obtener el numero de id
                     node.hide(); //ocultar
                     $('#AnswersContainer_' + num_id).append(node); //agregar
                     node.show(SHOW_DELAY); //aplicar efecto
+
+                    node.find('.Answer').on('keyup', function (e) {
+                        e.stopPropagation();
+                        previewController.updatePreview();
+                    })
+
+                    previewController.updatePreview();
                 })
 
                 this.parent.append(node); //agregar nodo a la componente padre
@@ -167,8 +187,17 @@ $(document).ready(function (e) {
                 `);
 
                 this.num_id++;
-                node.hide();
                 return node;
+            }
+            this.createInputAnswer = function (text){
+                let node = $(`
+                     <div class="col-12">
+                       <div class="form-group">
+                            <input type="text">
+                        </div>
+                    </div>
+                `)
+
             }
 
             this.setTitle = function (title) {
@@ -182,7 +211,7 @@ $(document).ready(function (e) {
                     {
                         case 'Radio':   let R_node = this.createRadioAnswer(answers[i], 'preview');
                                         this.AnswerParent.append(R_node);
-                                        R_node.show(SHOW_DELAY);
+                                        R_node.show();
                                         break;
 
                     }
@@ -193,12 +222,7 @@ $(document).ready(function (e) {
 
             this.cleanPreview = function () {
                 this.setTitle('')
-                this.AnswerParent.hide(SHOW_DELAY, function () {
-                    $(this).empty();
-                });
-
-
-                this.AnswerParent.show();
+                this.AnswerParent.empty();
                 this.num_id = 0;
             }
 
@@ -220,8 +244,9 @@ $(document).ready(function (e) {
             }
         }
     }
-    let questionController = new QuestionControler($('#QuestionContainer')); //crear un controlador para agregar preguntas
+
     let previewController = new PreviewController($('#PreviewQuestionContainer'), $('#AnswerPreviewContainer')); //componente padre del preview
+    let questionController = new QuestionControler($('#QuestionContainer'), previewController); //crear un controlador para agregar preguntas
 
     function addListeners() {
         const main_container = $('.container');
