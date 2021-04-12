@@ -15,6 +15,9 @@
             border-radius: 20px;
         }
 
+        .progress{
+            height: 20px;
+        }
     </style>
 
 </head>
@@ -86,7 +89,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-6" id="test2">
+            <div class="col-12 col-lg-6" id="QuestionContainerController">
 
                 <div id="QuestionCarousel" class="carousel slide" role="carousel" data-interval="false">
 
@@ -134,7 +137,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-lg-6" id="test3">
+            <div class="col-12 col-lg-6 " id="QuestionContainerPreview">
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title">
@@ -154,17 +157,41 @@
                             <div class="col-12">
                                 <button class="btn btn-success btn-block rounded-pill" id="SaveToDatabase">Guardar Encuesta</button>
                             </div>
+                            <div class="col-12 mt-4">
+                                <div class="progress">
+                                    <div class="progress progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 0%" id="ProgressBarDatabase">0</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-
-
-
         </div>
 
+        <div class="col-12">
+            <!-- Modal -->
+            <div class="modal fade" id="ModalDatabaseSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Aviso!</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            La encuesta ha sido guardada con exito.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+
 
 
     <script src="../js/boostrap/jquery-3.6.0.min.js"></script>
