@@ -1,5 +1,8 @@
 <?php
+session_start();
+
 require_once 'dbh.php';
+require_once 'generalFunctions.php';
 
 if($conn)
 {
@@ -29,33 +32,18 @@ if($conn)
         /* Creamos el usuario */
         mysqli_query($conn, "INSERT INTO Usuario (Correo, Password, Nombres, Apellidos, Matricula) VALUES ('$email','$password','$name','$lastname','$matricula')");
 
-        /* Creamos la clave de acceso */
-        $key = rand(10000000, 99999999);
-        $key = strval($key);
-
         $idUser = mysqli_query($conn, "SELECT idUsuario FROM Usuario WHERE Correo='".$email."'");
         $idUser = $idUser->fetch_array();
         $idUser = intval($idUser[0]);
 
-        mysqli_query($conn, "INSERT INTO Claves_Confirmacion (Usuario_idUsuario, Clave) VALUES ('$idUser', '$key')");
+        $key = generateCode($conn, $id, TRUE);
+        sendCode($conn, $email, "Codigo de Verificación", $key);
 
-        /* Mensaje para el correo */
-        $mailMessage = "Este es el ultmo paso para crear tu cuenta!"."\r\n";
-        $mailMessage.= "Por favor ingresa la siguiente clave en la pagina para finalizar activar tu cuenta"."\r\n";
-        $mailMessage.= $key."\r\n\n";
-        $mailMessage.= "NOTA: Si usted no creado una cuenta solo ignore el mensaje";
+        /* Nos servira para verificar al usuario */
+        $_SESSION['idUser'] = $idUser;
 
-
-
-        /* Preparamos el correo */
-        $header = "FROM: noreply@SistemaEgresados.com"."\r\n";
-        $header.= "Reply-To: noreply@SistemaEgresados.com"."\r\n";
-        $header.= "X-Mailer: PHP/".phpversion();
-
-        /*  Enviamos el Correo */
-        @mail($email, "Clave de Verificacion", $key, $header);
-
-        header("Location: ../html/regSuccessful.html");
+        mysqli_close($conn);
+        header("Location: verificationPage.php");
         exit();
       }
   }

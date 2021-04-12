@@ -1,3 +1,5 @@
+<?php  //session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -15,7 +17,7 @@
       <div class="row align-items-center">
         <div class="col align-self-center">
           <div class="alert alert-success" role="alert">
-            <form class="" action="../php/VerifyUser.php" method="post" align="center">
+            <form class="" action="../php/verifyUser.php" method="post" align="center">
 
               <h4 class="alert-heading mt-3 mb-3">Activa tu cuenta!</h4>
               <p class="mb-5">Se ha enviado una clave para verificar su cuenta</p>
@@ -38,6 +40,11 @@
                   <a class="btn btn-outline-success" href="#">Generar Clave</a>
                 </div>
               </div>
+
+              <!--
+              <input type="hidden" name="idUser" value="<?php //$_SESSION['idUser']; ?>">
+              <?php //session_destroy(); ?>
+              -->
             </form>
           </div>
         </div>
