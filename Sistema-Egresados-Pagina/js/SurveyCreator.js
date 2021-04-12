@@ -1,5 +1,5 @@
 $(document).ready(function (e) {
-    //$('#QuestionContainerController,#QuestionContainerPreview').hide();
+    $('#QuestionContainerController,#QuestionContainerPreview').hide();
     const SHOW_DELAY = 600;
     $('.toast').toast('show');
 
