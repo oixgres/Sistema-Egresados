@@ -31,12 +31,17 @@ if($conn)
       {
         /* Creamos el usuario */
         mysqli_query($conn, "INSERT INTO Usuario (Correo, Password, Nombres, Apellidos, Matricula) VALUES ('$email','$password','$name','$lastname','$matricula')");
-
+        /*
         $idUser = mysqli_query($conn, "SELECT idUsuario FROM Usuario WHERE Correo='".$email."'");
         $idUser = $idUser->fetch_array();
         $idUser = intval($idUser[0]);
+        */
 
-        $key = generateCode($conn, $id, TRUE);
+        /* Obtenemos el ID del Usuario */
+        $idUser = getFirstQueryElement($conn, "Usuario", "idUsuario", "Correo", $email);
+
+        /* Creamos y enviamos correo */
+        $key = generateCode($conn, $idUser, TRUE);
         sendCode($conn, $email, "Codigo de Verificación", $key);
 
         /* Nos servira para verificar al usuario */

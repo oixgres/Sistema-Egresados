@@ -1,5 +1,3 @@
-<?php  //session_start(); ?>
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -28,7 +26,7 @@
                   <input type="text" name="key" class="form-control ml-4 mb-5" placeholder="Introduzca clave de confirmacion">
                 </div>
                 <div class="col-3">
-                  <button type="button" name="sendButton" class="btn btn-info mr-4">Enviar</button>
+                  <button type="submit" name="sendButton" class="btn btn-info mr-4">Enviar</button>
                 </div>
               </div>
 
@@ -37,14 +35,9 @@
                   <a class="btn btn-outline-success" href="../index.html">Pagina Principal</a>
                 </div>
                 <div class="col-6">
-                  <a class="btn btn-outline-success" href="#">Generar Clave</a>
+                  <a class="btn btn-outline-success" href="verificationPage.php?newKey=<?php  $_SESSION['idUser']?>">Generar Clave</a>
                 </div>
               </div>
-
-              <!--
-              <input type="hidden" name="idUser" value="<?php //$_SESSION['idUser']; ?>">
-              <?php //session_destroy(); ?>
-              -->
             </form>
           </div>
         </div>
