@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -15,31 +16,31 @@
       <div class="row align-items-center">
         <div class="col align-self-center">
           <div class="alert alert-success" role="alert">
-            <div align="center">
-              <h4 class="alert-heading mt-3 mb-3">Cuenta creada con exito!</h4>
-              <p class="mb-5">Se ha enviado un codigo para confirmar su cuenta</p>
-              <p>Ingrese el codigo para activar su cuenta</p>
+            <form class="" action="../php/verifyUser.php" method="post" align="center">
+              <?php require_once 'verifyUser.php' ?>
+
+              <h4 class="alert-heading mt-3 mb-3">Activa tu cuenta!</h4>
+              <p class="mb-5">Se ha enviado una clave para verificar su cuenta</p>
+              <p>Ingrese su clave</p>
 
               <div class="row">
                 <div class="col-9">
                   <input type="text" name="key" class="form-control ml-4 mb-5" placeholder="Introduzca clave de confirmacion">
                 </div>
                 <div class="col-3">
-                  <button type="button" name="sendButton" class="btn btn-info mr-4">Enviar</button>
+                  <button type="submit" name="sendButton" class="btn btn-info mr-4">Enviar</button>
                 </div>
               </div>
-
 
               <div class="row">
                 <div class="col-6">
-                  <a href="../index.html">Pagina Principal</a>
+                  <a class="btn btn-outline-success" href="../index.html">Pagina Principal</a>
                 </div>
                 <div class="col-6">
-                  <a href="#">Reenviar Codigo</a>
+                  <a href="verificationPage.php?newKey=<?php echo "new"; ?>" class="btn btn-outline-success" >Generar Clave</a>
                 </div>
               </div>
-
-            </div>
+            </form>
           </div>
         </div>
       </div>
