@@ -103,7 +103,21 @@ $(document).ready(function (e) {
                         $(this).show();
                         previewController.updatePreview();
                     })
+                })
 
+                node.find(`#DeleteQuestion_${this.num_id}`).on('click', function (e) {
+                    e.stopPropagation();
+                    let carousel = $('#QuestionCarousel');
+                    let current = carousel.find('.carousel-item.active');
+
+                    if($('#QuestionContainer').children().length > 1){
+                        current.hide(0, function (e) {
+
+                            current.remove();
+                            let next = carousel.find('.carousel-item').last();
+                            next.addClass('active');
+                        })
+                    }
 
                 })
 
@@ -138,6 +152,7 @@ $(document).ready(function (e) {
                         e.stopPropagation();
                         $(this).parent().parent().parent().hide(300, function (e){
                             $(this).remove();
+                            previewController.updatePreview();
                         });
                     })
 
