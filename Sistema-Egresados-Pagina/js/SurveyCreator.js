@@ -1,6 +1,7 @@
 $(document).ready(function (e) {
-
+    $('#QuestionContainerController,#QuestionContainerPreview').hide();
     const SHOW_DELAY = 600;
+    $('.toast').toast('show');
 
     class QuestionControler{
         constructor(parent, previewController) {
@@ -30,21 +31,21 @@ $(document).ready(function (e) {
                                     <div class="col-12"> <!-- Tema de la pregunta -->
                                         <div class="form-group">
                                             <label for="QuestionTopic_${this.num_id}">Tema</label>
-                                            <input type="text" class="form-control" placeholder="Introduce el tema de la pregunta" id="QuestionTopic_${this.num_id}">
+                                            <input type="text" class="form-control QuestionTopic" placeholder="Introduce el tema de la pregunta" id="QuestionTopic_${this.num_id}">
                                         </div>
                                     </div>
                                    
                                     <div class="col-12"> <!-- Titulo de la pregunta -->
                                         <div class="form-group">
                                             <label for="QuestionTittle_${this.num_id}">Titulo de la pregunta</label>
-                                            <input type="text" class="form-control" placeholder="Introduce el título de la pregunta" id="QuestionTittle_${this.num_id}">
+                                            <input type="text" class="form-control QuestionTitle" placeholder="Introduce el título de la pregunta" id="QuestionTittle_${this.num_id}">
                                         </div>
                                     </div>
                                    
 
                                     <div class="col-12"> <!-- Tipo de respuestas -->
                                         <div class="dropdown">
-                                            <button type="button" class="btn btn-info btn-block dropdown-toggle rounded-pill" id="QuestionType_${this.num_id}">Tipo de respuestas</button>
+                                            <button type="button" class="btn btn-info btn-block dropdown-toggle rounded-pill QuestionType" id="QuestionType_${this.num_id}">Tipo de respuestas</button>
                                             <div class="dropdown-menu col col-12" id="Answer_items_${this.num_id}">
                                                 <a class="dropdown-item">Radio</a>
                                                 <a class="dropdown-item">Input</a>
@@ -54,11 +55,8 @@ $(document).ready(function (e) {
                                         </div>
                                     </div>
 
-                                    <div class="col-12" id="AnswersContainer_${this.num_id}"> <!-- Componente padre de las respuestas -->
-                                        
-                                        <div class="col-12 mt-3"> <!--  Texto de respuesta -->
-                                          
-                                        </div>
+                                    <div class="col-12 AnswerContainer" id="AnswersContainer_${this.num_id}"> <!-- Componente padre de las respuestas -->
+         
                                         
                                     </div>
 
@@ -69,6 +67,10 @@ $(document).ready(function (e) {
 
                                     <div class="col-6 mt-2">
                                         <button type="button" class="btn btn-danger btn-block rounded-pill" id="DiscardAnswer_${this.num_id}">Descartar Respuestas</button>
+                                    </div>
+                                    
+                                    <div class="col-12 mt-2">
+                                        <button type="button" class="btn btn-warning btn-block rounded-pill" id=DeleteQuestion_${this.num_id}>Eliminar Pregunta</button>
                                     </div>
                                 </div>
                             </div>
@@ -93,21 +95,31 @@ $(document).ready(function (e) {
                     previewController.updatePreview();
                 })
 
+                let num_id = this.num_id;
+                node.find(`#DiscardAnswer_${this.num_id}`).on('click', function (e) {
+                    e.stopPropagation();
+                    $(`#AnswersContainer_${num_id}`).hide(SHOW_DELAY, function (e) {
+                        $(this).empty();
+                        $(this).show();
+                        previewController.updatePreview();
+                    })
+
+
+                })
+
 
                 node.find(`#AddAnswer_${this.num_id}`).on('click', function (e) { //listener para agregar una respuesta a la pregunta
                     e.stopPropagation();
 
                     let node = $(`
-  
                         <div class="col-12">
                             <div class="input-group">
                                 <input type="text" class="form-control Answer" placeholder="Texto de la Respuesta">
                                  <span class="input-group-btn">
-                                    <button class="btn btn-secondary" type="button"><i class="fa fa-home"></i></button>
+                                    <button class="btn btn-secondary" type="button"><img class="img-fluid" src="../img/Icons/eliminar-simbolo.png" alt="Eliminar"/></button>
                                  </span>
                             </div>                                   
                         </div>
-
                     `); //nodo de la pregunta
 
                     let id = $(this).attr('id'); //obtener atributo ID
@@ -121,6 +133,12 @@ $(document).ready(function (e) {
                         e.stopPropagation();
                         previewController.updatePreview();
                     })
+
+                    node.find('button').on('click', function (e) {
+                        e.stopPropagation();
+
+                    })
+
 
                     previewController.updatePreview();
                 })
@@ -166,7 +184,65 @@ $(document).ready(function (e) {
 
                 return answersArray;
             }
+            this.getAllQuestionTittles = function(){
+                let QuestionItems = $('#QuestionContainer .QuestionTitle')//traerme todas las preguntas de #QuestionContainer
+                let questionArray = Array();
 
+                for(let i = 0; i < QuestionItems.length; i++){
+                    questionArray.push(QuestionItems[i].value); //obtener todos los textos de las preguntas
+                    //aqui validar que todas las preguntas tengan titulo
+                }
+                return questionArray; //retornar el arreglo de las preguntas
+            }
+            this.getAllQuestionsType = function (){
+                let QuestionTypes = $('#QuestionContainer .QuestionType');
+                let typesArray = Array();
+
+                for(let i = 0; i < QuestionTypes.length; i++)
+                    typesArray.push(this.getNumericalType(QuestionTypes[i].textContent));
+                
+                return typesArray;
+            }
+            this.getAllQuestionTopics = function () {
+                let QuestionTopics = $('#QuestionContainer .QuestionTopic');
+                let topicsArray = Array();
+
+                for(let i = 0; i < QuestionTopics.length; i++){
+                    topicsArray.push(QuestionTopics[i].value);
+                }
+
+                return topicsArray;
+            }
+            this.getNumOfQuestions = function (){
+                return(parent.children().length);
+            }
+            this.getAllAnswersByQuestion = function () {
+                let answerContainers = $('#QuestionContainer .AnswerContainer')
+                let AnswerArrayGroup = Array();
+                let AnswerArray = Array();
+
+                for(let i = 0; i < answerContainers.length; i++){
+                    AnswerArray = answerContainers[i].getElementsByClassName('Answer');
+                    let group = Array();
+                    for(let j = 0; j < AnswerArray.length; j++){
+                        group.push(AnswerArray[j].value);
+                    }
+
+                    AnswerArrayGroup.push(group);
+                }
+
+                return AnswerArrayGroup;
+
+            }
+            this.getNumericalType = function (type_text) {
+                switch (type_text) {
+                    case 'Radio':   return 0;
+                    case 'Text Area':   return 1;
+                    case 'Input':   return 2;
+                    case 'Checkbox':    return 3;
+                    default:    return -1;
+                }
+            }
         }
     }
 
@@ -178,7 +254,7 @@ $(document).ready(function (e) {
 
             this.createRadioAnswer = function (text, name) {
                 let node = $(`
-                     <div class="col-11 offset-1" >
+                     <div class="col-12" >
                         <div class="custom-control custom-radio">
                             <input type="radio" id="customRadio_${this.num_id}" name=${name} class="custom-control-input">
                             <label class="custom-control-label" for="customRadio_${this.num_id}">${text}</label>
@@ -189,17 +265,18 @@ $(document).ready(function (e) {
                 this.num_id++;
                 return node;
             }
-            this.createInputAnswer = function (text){
+            this.createInputAnswer = function (text) {
                 let node = $(`
-                     <div class="col-12">
-                       <div class="form-group">
-                            <input type="text">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="${text}" id="preview_input_${this.num_id}">
                         </div>
                     </div>
-                `)
+                `);
 
+                this.num_id++;
+                return node;
             }
-
             this.setTitle = function (title) {
                 $('#QuestionTittlePreview').text(title);
             }
@@ -214,20 +291,20 @@ $(document).ready(function (e) {
                                         R_node.show();
                                         break;
 
+                        case 'Input':   let I_node = this.createInputAnswer(answers[i]);
+                                        this.AnswerParent.append(I_node);
+                                        I_node.show();
+                                        break;
                     }
 
                 }
 
             }
-
             this.cleanPreview = function () {
                 this.setTitle('')
                 this.AnswerParent.empty();
                 this.num_id = 0;
             }
-
-
-
             this.updatePreview = function () {
                 this.cleanPreview();
                 const activeItem_num_id = $('#QuestionContainer .carousel-item.active').attr('id');
@@ -255,6 +332,8 @@ $(document).ready(function (e) {
         const AddQuestion = $('#AddQuestion');
         const CleanQuestions = $('#CleanQuestions');
         const QuestionCarousel = $('#QuestionCarousel');
+        const AddSurvey = $('#AddSurvey');
+        const SaveToDatabase = $(`#SaveToDatabase`);
 
         main_container.hide(0, function (e) {
             $(this).show(SHOW_DELAY);
@@ -315,14 +394,113 @@ $(document).ready(function (e) {
             previewController.updatePreview();
         })
 
+        AddSurvey.on('click', function (e) { //guardar en base de datos
+            e.stopPropagation();
+
+            let surveyName = $('#SurveyName').val(); //obtener el nombre de la encuesta
+
+            let university = null;
+            let campus = null;
+            let faculty = null;
+            let program = null;
+
+            let SurveyTopic = $('#SurveyTopic').val(); //obtener el alcance
+
+            switch ($('#SurveyScope').text())
+            {
+                case 'Universidad': university = SurveyTopic;
+                                    break;
+
+                case 'Campus':      campus = SurveyTopic;
+                                    break;
+
+                case 'Facultad':    faculty = SurveyTopic;
+                                    break;
+
+                case 'Programa Académico': program = SurveyTopic;
+                                            break;
+
+            }
+
+            $.ajax({
+                url:    '../php/createSurvey.php',
+                data:   {surveyName, campus, faculty, program, university},
+                type: 'POST',
+                success: function (response) {
+                    if(parseInt(response, 10)){
+                        //encuesta insertada con exito
+                        sessionStorage.setItem('surveyId', response);//guardar llave primaria de la encuesta
+                        console.log(`Nueva encuesta creada #ID = ${response}`);
+                        $('#QuestionContainerController,#QuestionContainerPreview').show(SHOW_DELAY);//mostrar las herramientas
+                    }
+                    else
+                    {
+                        alert('No se puedo crear la encuesta')
+                    }
+                }
+            })
+        })
+
+        SaveToDatabase.on('click', function (e) {
+            e.stopPropagation();
+            let progressBar = $(`#ProgressBarDatabase`);
+            let currentProgress = 0;
+
+            //insertar pregunta
+            let questionsTittles = questionController.getAllQuestionTittles() //obtener todos los titulos
+            let questionThemes = questionController.getAllQuestionTopics();//obtener todos los temas
+            let questionTypes = questionController.getAllQuestionsType();//obtener todos los tipos
+            let questionAnswers = questionController.getAllAnswersByQuestion(); //obtener todos los grupos de respuestas
+            let ProgressBarIncrement = 100 / questionController.getNumOfQuestions();
+            let ModalDatabaseSuccess = $('#ModalDatabaseSuccess');
+
+            let surveyId = sessionStorage.getItem('surveyId'); //obtener la llave primaria de la encuesta creada
+
+
+            for(let i = 0; i < questionController.getNumOfQuestions(); i++){
+
+                let title = questionsTittles[i];
+                let theme = questionThemes[i];
+                let type = questionTypes[i];
+
+                $.ajax({ //insertar pregunta en la base de datos
+                    url:    '../php/createQuestion.php',
+                    async:  false,
+                    data:   {surveyId, title, theme, type},
+                    type:   'POST',
+                    success:    function (response) {
+                        console.log(`Pregunta creada #ID = ${response}`);
+                        let questionId = response;
+                        currentProgress += ProgressBarIncrement;
+                        progressBar.css('width',`${currentProgress}%`);
+                        progressBar.text((currentProgress)%100);
+
+                        for(let j = 0; j < questionAnswers[i].length; j++){
+                            let answerText = questionAnswers[i][j];
+                            $.ajax({ //instertar respuestas
+                                url:    '../php/createAnswer.php',
+                                async: false,
+                                data:   {questionId, answerText},
+                                type:   'POST',
+                                success: function (response) {
+                                    console.log('respuesta creada = ' + response)
+                                }
+                            })
+                        }
+
+
+                    }
+                });
+            }
+
+            ModalDatabaseSuccess.modal('show');
+        })
         $(document).click(function (e) {
             $('.dropdown-menu').hide(SHOW_DELAY);
         })
 
 
     } //agregar listeners para elementos UNICOS
-
-
 
     addListeners();
     questionController.createQuestion();

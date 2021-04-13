@@ -12,11 +12,20 @@ require_once "dbh.php";
  *      surveyId / errorCode
  */
 
-$university = $_POST['university'];
-$campus = $_POST['campus'];
-$faculty = $_POST['faculty'];
-$program = $_POST['program'];
-$surveyName = $_POST['surveyName'];
+if(isset($_POST['university']))
+    $university = $_POST['university'];
+
+if(isset($_POST['campus']))
+    $campus = $_POST['campus'];
+
+if(isset($_POST['faculty']))
+    $faculty = $_POST['faculty'];
+
+if(isset($_POST['program']))
+    $program = $_POST['program'];
+
+if(isset($_POST['surveyName']))
+    $surveyName = $_POST['surveyName'];
 
 if(isset($university)) {
     $sql = "SELECT idUniversidad FROM Universidad WHERE Nombre = '$university'";
@@ -47,13 +56,13 @@ if(isset($university)) {
 
     $sql = "INSERT INTO Encuesta (Nombre, Plan_Estudio_idPlan_Estudio) VALUES ('$surveyName', '$id')";
 } else {
-    echo "error: ningun alcance seleccionado";
+    die('No has seleccionado ningun alcance');
 }
 
-if(mysqli_query($conn, $sql)) {
+if(isset($sql) && mysqli_query($conn, $sql)) {
     echo mysqli_insert_id($conn);
 } else {
-    echo "error: no se pudo crear encuesta";
+    die("no se pudo crear encuesta");
 }
 
 $conn->close();
