@@ -18,14 +18,11 @@ if(isset($_GET['newKey']))
 }
 else
 {
-  if(isset($POST['key']))
+  if(isset($_POST['key']))
   {
     $key = getFirstQueryElement($conn, "Claves_Confirmacion", "Clave", "Usuario_idUsuario", $idUser);
 
     $insertedKey = $_POST['key'];
-
-    echo $key;
-    echo $insertedKey;
 
     if($key == $insertedKey)
     {
