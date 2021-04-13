@@ -1,10 +1,12 @@
 <?php
   /* Funcion para generar claves */
-  function generateCode($conn, $id, $isNew)
+  function generateCode($conn, $id, $action)
   {
     /* Si la clave no es nueva borramos la existente */
-    if(!is_null($isNew))
-      mysqli_query($conn, "DELETE * FROM Claves_Confirmacion WHERE Usuario_idUsuario='".$id."'");
+    if($action == "again")
+    {
+      mysqli_query($conn, "DELETE FROM Claves_Confirmacion WHERE Usuario_idUsuario='".$id."'");
+    }
 
     /* Creamos la clave de acceso */
     $key = rand(10000000, 99999999);
@@ -37,10 +39,9 @@
   /* Funcion para obtener el primer elemento de una busqueda */
   function getFirstQueryElement($conn, $table, $item, $coincidence, $keyCoincidence)
   {
-    $query = "SELECT '".$item."' FROM '".$table."' WHERE '".$coincidence."'='".$keyCoincidence."'";
+    $query = "SELECT $item FROM $table WHERE $coincidence='".$keyCoincidence."'";
     $res = mysqli_query($conn, $query);
-    $res-> fetch_array($res);
-
+    $res = $res->fetch_array();
     return $res[0];
   }
 

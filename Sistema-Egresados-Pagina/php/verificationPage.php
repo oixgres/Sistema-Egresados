@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -16,6 +17,7 @@
         <div class="col align-self-center">
           <div class="alert alert-success" role="alert">
             <form class="" action="../php/verifyUser.php" method="post" align="center">
+              <?php require_once 'verifyUser.php' ?>
 
               <h4 class="alert-heading mt-3 mb-3">Activa tu cuenta!</h4>
               <p class="mb-5">Se ha enviado una clave para verificar su cuenta</p>
@@ -35,7 +37,7 @@
                   <a class="btn btn-outline-success" href="../index.html">Pagina Principal</a>
                 </div>
                 <div class="col-6">
-                  <a class="btn btn-outline-success" href="verificationPage.php?newKey=<?php  $_SESSION['idUser']?>">Generar Clave</a>
+                  <a href="verificationPage.php?newKey=<?php echo "new"; ?>" class="btn btn-outline-success" >Generar Clave</a>
                 </div>
               </div>
             </form>

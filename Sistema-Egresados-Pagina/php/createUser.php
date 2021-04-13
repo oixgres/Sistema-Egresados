@@ -41,7 +41,7 @@ if($conn)
         $idUser = getFirstQueryElement($conn, "Usuario", "idUsuario", "Correo", $email);
 
         /* Creamos y enviamos correo */
-        $key = generateCode($conn, $idUser, TRUE);
+        $key = generateCode($conn, $idUser, "new");
         sendCode($conn, $email, "Codigo de Verificación", $key);
 
         /* Nos servira para verificar al usuario */
