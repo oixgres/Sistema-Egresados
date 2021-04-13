@@ -1,13 +1,14 @@
 $(document).ready(function (e) {
     $('#QuestionContainerController,#QuestionContainerPreview').hide();
     const SHOW_DELAY = 600;
-    $('.toast').toast('show');
+    const toast = $('.toast');
+
+    toast.toast('hide');
 
     class QuestionControler{
         constructor(parent, previewController) {
             this.parent = parent;
             this.num_id = 0;
-            this.previewController = previewController;
 
             this.createQuestion = function () {
                 let item_active;
@@ -112,7 +113,6 @@ $(document).ready(function (e) {
 
                     if($('#QuestionContainer').children().length > 1){
                         current.hide(0, function (e) {
-
                             current.remove();
                             let next = carousel.find('.carousel-item').last();
                             next.addClass('active');
@@ -190,6 +190,9 @@ $(document).ready(function (e) {
                     return type;
                 else
                     return 'NO_TYPE'
+            }
+            this.getAllAnswerCount = function (e) {
+                return $('#QuestionContainer .Answer').length;
             }
             this.getAnswersText = function (num_id) {
                 let answersInputs = $(`#AnswersContainer_${num_id} .Answer`);
@@ -449,6 +452,7 @@ $(document).ready(function (e) {
                         sessionStorage.setItem('surveyId', response);//guardar llave primaria de la encuesta
                         console.log(`Nueva encuesta creada #ID = ${response}`);
                         $('#QuestionContainerController,#QuestionContainerPreview').show(SHOW_DELAY);//mostrar las herramientas
+                        toast.toast('show');
                     }
                     else
                     {
@@ -468,7 +472,7 @@ $(document).ready(function (e) {
             let questionThemes = questionController.getAllQuestionTopics();//obtener todos los temas
             let questionTypes = questionController.getAllQuestionsType();//obtener todos los tipos
             let questionAnswers = questionController.getAllAnswersByQuestion(); //obtener todos los grupos de respuestas
-            let ProgressBarIncrement = 100 / questionController.getNumOfQuestions();
+            let ProgressBarIncrement = 100 / (questionController.getNumOfQuestions() + questionController.getAllAnswerCount());
             let ModalDatabaseSuccess = $('#ModalDatabaseSuccess');
 
             let surveyId = sessionStorage.getItem('surveyId'); //obtener la llave primaria de la encuesta creada
@@ -490,7 +494,7 @@ $(document).ready(function (e) {
                         let questionId = response;
                         currentProgress += ProgressBarIncrement;
                         progressBar.css('width',`${currentProgress}%`);
-                        progressBar.text((currentProgress)%100);
+                        progressBar.text(parseInt(currentProgress));
 
                         for(let j = 0; j < questionAnswers[i].length; j++){
                             let answerText = questionAnswers[i][j];
@@ -500,6 +504,10 @@ $(document).ready(function (e) {
                                 data:   {questionId, answerText},
                                 type:   'POST',
                                 success: function (response) {
+                                    console.log(currentProgress)
+                                    currentProgress += ProgressBarIncrement;
+                                    progressBar.css('width',`${currentProgress}%`);
+                                    progressBar.text(parseInt(currentProgress));
                                     console.log('respuesta creada = ' + response)
                                 }
                             })
