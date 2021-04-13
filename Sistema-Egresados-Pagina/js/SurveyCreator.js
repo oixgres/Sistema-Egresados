@@ -116,7 +116,7 @@ $(document).ready(function (e) {
                             <div class="input-group">
                                 <input type="text" class="form-control Answer" placeholder="Texto de la Respuesta">
                                  <span class="input-group-btn">
-                                    <button class="btn btn-secondary" type="button"><img class="img-fluid" src="../img/Icons/eliminar-simbolo.png" alt="Eliminar"/></button>
+                                    <button class="btn btn-secondary deleteAnswer" type="button"><img class="img-fluid" src="../img/Icons/eliminar-simbolo.png" alt="Eliminar"/></button>
                                  </span>
                             </div>                                   
                         </div>
@@ -136,7 +136,9 @@ $(document).ready(function (e) {
 
                     node.find('button').on('click', function (e) {
                         e.stopPropagation();
-
+                        $(this).parent().parent().parent().hide(300, function (e){
+                            $(this).remove();
+                        });
                     })
 
 
