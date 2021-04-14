@@ -6,8 +6,8 @@ session_start();
 require_once 'dbh.php';
 require_once 'generalFunctions.php';
 
-$mail = $_POST['userInput'];
-$pass = $_POST['passwordInput'];
+$mail = $_POST['username'];
+$pass = $_POST['password'];
 
 /* Checamos que exista el usuario y este activo */
 $res = mysqli_query($conn, "SELECT * FROM Usuario WHERE Correo='".$mail."' AND Password='".$pass."'");
@@ -25,7 +25,7 @@ if($nr == 1)
   /* Creamos una cookie para almacenar el token del lado del cliente*/
   setcookie("token",$token,time()+(60*60*24*30), "/");
   /* Creamos cookie para almacenar el nombre de cliente*/
-  setcookie("name", getFirstQueryElement($conn, "Usuario", "Nombre", "Correo", $mail));
+  setcookie("name", getFirstQueryElement($conn, "Usuario", "Nombres", "Correo", $mail));
 
   header("Location: pruebas.php");
 }
