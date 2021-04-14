@@ -10,8 +10,8 @@ $mail = $_POST['userInput'];
 $pass = $_POST['passwordInput'];
 
 /* Checamos que exista el usuario y este activo */
-$res = mysqli_query("SELECT * FROM Usuario WHERE Correo='".$mail."' AND Password='".$pass."'");
-$nr = mysqli_num_rows($nr);
+$res = mysqli_query($conn, "SELECT * FROM Usuario WHERE Correo='".$mail."' AND Password='".$pass."'");
+$nr = mysqli_num_rows($res);
 
 /* Si existe */
 if($nr == 1)

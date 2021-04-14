@@ -13,9 +13,7 @@ if($conn)
   $password = $_POST['idPass'];
   $password2 = $_POST['idPass2'];
 
-
   $checkmail = mysqli_query($conn, "SELECT * FROM Usuario WHERE Correo='".$email."'");
-
 
   if(mysqli_num_rows($checkmail) > 0)
   {
@@ -31,11 +29,6 @@ if($conn)
       {
         /* Creamos el usuario */
         mysqli_query($conn, "INSERT INTO Usuario (Correo, Password, Nombres, Apellidos, Matricula) VALUES ('$email','$password','$name','$lastname','$matricula')");
-        /*
-        $idUser = mysqli_query($conn, "SELECT idUsuario FROM Usuario WHERE Correo='".$email."'");
-        $idUser = $idUser->fetch_array();
-        $idUser = intval($idUser[0]);
-        */
 
         /* Obtenemos el ID del Usuario */
         $idUser = getFirstQueryElement($conn, "Usuario", "idUsuario", "Correo", $email);
