@@ -27,7 +27,8 @@ else
     if($key == $insertedKey)
     {
       /* Activamos al Usuario */
-      mysqli_query($conn, "UPDATE Usuario SET Estatus='ACTIVO' WHERE idUsuario='".$idUser."'");
+      //Agregue un trigger la funcion a la base de datos xd
+      //mysqli_query($conn, "UPDATE Usuario SET Estatus='ACTIVO' WHERE idUsuario='".$idUser."'");
 
       /* Eliminamos el codigo */
       mysqli_query($conn, "DELETE FROM Claves_Confirmacion WHERE Usuario_idUsuario='".$idUser."'");
