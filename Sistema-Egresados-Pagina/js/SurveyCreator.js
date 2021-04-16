@@ -272,6 +272,17 @@ $(document).ready(function (e) {
             this.AnswerParent = AnswerParent;
             this.num_id = 0;
 
+            this.createCheckboxAnswer = function (text){
+                let node = $(`
+                    <div class="col-12" >
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="customRadio_${this.num_id}" name='checkbox' class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio_${this.num_id}">${text}</label>
+                    </div>
+                </div>`);
+                this.num_id++;
+                return node;
+            }
             this.createRadioAnswer = function (text, name) {
                 let node = $(`
                      <div class="col-12" >
@@ -297,12 +308,24 @@ $(document).ready(function (e) {
                 this.num_id++;
                 return node;
             }
+            this.createTextAreaAnswer = function (text) {
+                let node = $(`
+                    <div class="col-12">
+                        <div class="form-group">
+                            <textarea type="text" class="form-control" placeholder="${text}" id="preview_textArea_${this.num_id}"></textarea>
+                        </div>
+                    </div>
+                `);
+
+                this.num_id++;
+                return node;
+            }
             this.setTitle = function (title) {
                 $('#QuestionTittlePreview').text(title);
             }
             this.setPreviewAnswes = function (type = "", answers = []) {
                 let i;
-
+                console.log(type)
                 for(i = 0; i < answers.length; i++){
                     switch(type)
                     {
@@ -315,6 +338,16 @@ $(document).ready(function (e) {
                                         this.AnswerParent.append(I_node);
                                         I_node.show();
                                         break;
+
+                        case 'Text Area':   let TA_node = this.createTextAreaAnswer(answers[i]);
+                                            this.AnswerParent.append(TA_node);
+                                            TA_node.show();
+                                            break;
+
+                        case 'Checkbox':    let CB_node = this.createCheckboxAnswer(answers[i]);
+                                            this.AnswerParent.append(CB_node);
+                                            CB_node.show();
+                                            break;
                     }
 
                 }
@@ -416,7 +449,7 @@ $(document).ready(function (e) {
 
         AddSurvey.on('click', function (e) { //guardar en base de datos
             e.stopPropagation();
-
+            $(this).children('span').removeClass('d-none')
             let surveyName = $('#SurveyName').val(); //obtener el nombre de la encuesta
 
             let university = null;
@@ -442,6 +475,8 @@ $(document).ready(function (e) {
 
             }
 
+
+
             $.ajax({
                 url:    '../php/createSurvey.php',
                 data:   {surveyName, campus, faculty, program, university},
@@ -453,6 +488,7 @@ $(document).ready(function (e) {
                         console.log(`Nueva encuesta creada #ID = ${response}`);
                         $('#QuestionContainerController,#QuestionContainerPreview').show(SHOW_DELAY);//mostrar las herramientas
                         toast.toast('show');
+                        $('#AddSurvey').children('span').addClass('d-none')
                     }
                     else
                     {
@@ -512,10 +548,10 @@ $(document).ready(function (e) {
                                 }
                             })
                         }
-
-
                     }
                 });
+
+                $(this).attr('disabled', true);
             }
 
             ModalDatabaseSuccess.modal('show');
