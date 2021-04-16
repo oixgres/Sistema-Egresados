@@ -278,8 +278,9 @@ $(document).ready(function (e) {
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" id="customRadio_${this.num_id}" name='checkbox' class="custom-control-input">
                             <label class="custom-control-label" for="customRadio_${this.num_id}">${text}</label>
-                    </div>
-                </div>`);
+                        </div>
+                    </div>`
+                );
                 this.num_id++;
                 return node;
             }
