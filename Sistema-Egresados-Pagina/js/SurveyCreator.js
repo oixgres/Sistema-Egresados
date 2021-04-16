@@ -489,6 +489,10 @@ $(document).ready(function (e) {
                         $('#QuestionContainerController,#QuestionContainerPreview').show(SHOW_DELAY);//mostrar las herramientas
                         toast.toast('show');
                         $('#AddSurvey').children('span').addClass('d-none')
+
+                        $('#SurveyName').addClass('alert alert-success');
+                        $('#SurveyTopic').addClass('alert alert-success');
+
                     }
                     else
                     {
