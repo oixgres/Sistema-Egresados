@@ -459,6 +459,11 @@ $(document).ready(function (e) {
 
             let SurveyTopic = $('#SurveyTopic').val(); //obtener el alcance
 
+            $('#SurveyName').removeClass('alert alert-success is-valid');
+            $('#SurveyTopic').removeClass('alert alert-success is-valid');
+            $('#SurveyName').removeClass('alert alert-danger is-invalid');
+            $('#SurveyTopic').removeClass('alert alert-danger is-invalid');
+
             switch ($('#SurveyScope').text())
             {
                 case 'Universidad': university = SurveyTopic;
@@ -490,12 +495,16 @@ $(document).ready(function (e) {
                         toast.toast('show');
                         $('#AddSurvey').children('span').addClass('d-none')
 
-                        $('#SurveyName').addClass('alert alert-success');
-                        $('#SurveyTopic').addClass('alert alert-success');
+                        $('#SurveyName').addClass('alert alert-success is-valid');
+                        $('#SurveyTopic').addClass('alert alert-success is-valid');
 
                     }
                     else
                     {
+                        $('#AddSurvey').children('span').addClass('d-none')
+                        $('#SurveyName').addClass('alert alert-danger is-invalid');
+                        $('#SurveyTopic').addClass('alert alert-danger is-invalid');
+
                         alert('No se puedo crear la encuesta')
                     }
                 }
