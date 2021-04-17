@@ -1,0 +1,4 @@
+Ver luego
+http://www.satya-weblog.com/2007/05/php-and-javascript-cookie.html
+https://www.codeproject.com/questions/465705/possible-to-get-session-value-in-javascript
+https://retentionscience.zendesk.com/hc/en-us/articles/115003025814-How-To-Build-HTML-for-Conditional-Statements
