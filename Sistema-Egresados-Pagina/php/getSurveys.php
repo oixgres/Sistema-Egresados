@@ -26,7 +26,7 @@ require_once "dbh.php";
 if(isset($_POST['idUsuario'])) {
 	$idUsuario = $_POST['idUsuario'];
 } else {
-	echo "-1"
+	echo "-1";
 }
 $alcances = array("Universidad", "Campus", "Facultad", "Plan_Estudio");
 $json = array();

@@ -3,8 +3,8 @@ $(document).ready(function (e) {
     const SHOW_DELAY = 600;
     const toast = $('.toast');
     //<source src="../sounds/ShowSuccessToast.ogg" type="audio/ogg">
-    //
     let ShowSuccessToastSound = new Audio('../sounds/definite-555.ogg');
+    let ShowFaildedSound = new Audio('../sounds/dont-think-so-556.ogg');
 
     toast.toast('hide');
 
@@ -502,7 +502,7 @@ $(document).ready(function (e) {
                 data:   {surveyName, campus, faculty, program, university},
                 type: 'POST',
                 success: function (response) {
-                    if(parseInt(response, 10)){
+                    if(parseInt(response, 10) > 0){
                         //encuesta insertada con exito
                         sessionStorage.setItem('surveyId', response);//guardar llave primaria de la encuesta
                         console.log(`Nueva encuesta creada #ID = ${response}`);
@@ -518,11 +518,16 @@ $(document).ready(function (e) {
                     }
                     else
                     {
+                        ShowFaildedSound.play();
                         $('#AddSurvey').children('span').addClass('d-none')
-                        $('#SurveyName').addClass('alert alert-danger is-invalid');
-                        $('#SurveyTopic').addClass('alert alert-danger is-invalid');
 
-                        alert('No se puedo crear la encuesta')
+                        switch (parseInt(response, 10)){
+                            case -1:    $('#SurveyName').addClass('alert alert-danger is-invalid');
+                                        break;
+                            case -2:     $('#SurveyTopic').addClass('alert alert-danger is-invalid');
+                                        break;
+                        }
+
                     }
                 }
             })
