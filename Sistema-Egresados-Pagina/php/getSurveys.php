@@ -34,7 +34,7 @@ if(isset($_POST['idUsuario'])) {
 $sql = "SELECT idUsuario FROM Usuario WHERE idUsuario = '$idUsuario'";
 $res = mysqli_query($conn, $sql);
 
-if($res == 0) {
+if($res->num_rows == 0) {
     echo -2;
     $conn->close();
     exit();
@@ -43,8 +43,7 @@ if($res == 0) {
 $alcances = array("Universidad", "Campus", "Facultad", "Plan_Estudio");
 $json = array();
 
-for($i = 0; $i < 4; $i++)
-{
+for($i = 0; $i < 4; $i++) {
     $sql = "SELECT idEncuesta, Encuesta.Nombre AS encuesta, ${alcances[$i]}.Nombre AS alcance FROM Encuesta
             INNER JOIN Universidad ON Encuesta.${alcances[$i]}_id${alcances[$i]} = ${alcances[$i]}.id${alcances[$i]}
             INNER JOIN Datos_Escolares ON ${alcances[$i]}.id${alcances[$i]} = Datos_Escolares.${alcances[$i]}_id${alcances[$i]}
@@ -53,7 +52,7 @@ for($i = 0; $i < 4; $i++)
 
     $res = mysqli_query($conn, $sql);
 
-    if(gettype($res) != "boolean"){
+    if(gettype($res) != "boolean") {
         while($fila = mysqli_fetch_array($res)) {
             $json [] = array(
                 'idEncuesta' => $fila['idEncuesta'],
@@ -70,8 +69,7 @@ for($i = 0; $i < 4; $i++)
  *	   string(84) "[{"idEncuesta":"3","encuesta":"Historial laboral","alcance":"UABC","tipoAlcance":0}]"
 */
 
-if(!empty($json))
-{
+if(!empty($json)) {
     $jsonString = json_encode($json); 	//convertir el json a cadena
     echo $jsonString; 					//retornar el json al frontend
 } else {
