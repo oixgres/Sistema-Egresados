@@ -1,15 +1,19 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css"> <!-- estilos base de boostrap -->
     <link rel="stylesheet" href="../css/boostrap/bootstrap_pulse.min.css"> <!-- Nuevos estilos de boostrap -->
+
     <title>Contestar encuesta</title>
 </head>
 <body>
+
     <div class="container">
+
 
         <!-- Una navbar clasica para mostrar-->
         <div class="row">
@@ -28,21 +32,25 @@
             </div>
         </div>
 
+
+
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="row d-flex justify-content-center">
-                            <h3>Seleccione una encuesta</h3>
-                            <div class="dropdown ml-2">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
-                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                    Cargando...
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item">Action</a>
-                                    <a class="dropdown-item">Another action</a>
-                                    <a class="dropdown-item">Something else here</a>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                <h3 class="">Seleccione una encuesta</h3>
+                                <div class="dropdown ml-2">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="AvailableSurveysButton" data-toggle="dropdown">
+                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        Cargando...
+                                    </button>
+                                    <div class="dropdown-menu" id="AvailableSurveys">
+                                        <a class="dropdown-item">Action</a>
+                                        <a class="dropdown-item">Another action</a>
+                                        <a class="dropdown-item">Something else here</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -58,10 +66,13 @@
 
     </div>
 
+
+
     <script src="../js/boostrap/jquery-3.6.0.min.js"></script>
     <script src="../js/boostrap/bootstrap.js"></script>
     <script src="../js/boostrap/bootstrap.bundle.js"></script>
     <script src="../js/ShowSurvey.js"></script>
     <script src="https://kit.fontawesome.com/5d2293cbbc.js" crossorigin="anonymous"></script>
+
 </body>
 </html>
