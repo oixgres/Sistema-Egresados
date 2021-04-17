@@ -4,17 +4,8 @@ class QuestionCreator{
         this.answer_id = 0;
         this.parent = parent;
         
-        
-        /*
-        <div class="col-12">
-                <h3>Pregunta #1</h3>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" id="customRadio_${this.num_id}" name='checkbox' class="custom-control-input">
-                    <label class="custom-control-label" for="customRadio_${this.num_id}">Respuesta 1</label>
-                </div>
-            </div>
-         */
-        this.createCheckBoxQuestion = function (title, answers = []) {
+
+        this.createCheckBoxQuestion = function (title, answers = [], id = 0) {
             let parentNode = $(`<div class="col-12"></div>`); //create parent node
             let titleNode = $(`<h3 class="Question_title">${title}</h3>`);// create title node
             parentNode.append(titleNode); //append title node to the parentNode
@@ -32,8 +23,7 @@ class QuestionCreator{
                 this.parent.append(parentNode); //append the question to the container
             }
         }
-
-        this.createInputQuestion = function (title, answers) {
+        this.createInputQuestion = function (title, answers, id = 0) {
             let parentNode = $(`<div class="col-12"></div>`); //create parent node
             let titleNode = $(`<h3 class="Question_title">${title}</h3>`);// create title node
             parentNode.append(titleNode); //append title node to the parentNode
@@ -49,8 +39,7 @@ class QuestionCreator{
                 this.parent.append(parentNode); //append the question to the container
             }
         }
-        
-        this.createTextareaQuestion = function (title, answers) {
+        this.createTextareaQuestion = function (title, answers, id = 0) {
             let parentNode = $(`<div class="col-12"></div>`); //create parent node
             let titleNode = $(`<h3 class="Question_title">${title}</h3>`);// create title node
             parentNode.append(titleNode); //append title node to the parentNode
@@ -66,8 +55,7 @@ class QuestionCreator{
                 this.parent.append(parentNode); //append the question to the container
             }
         }
-
-        this.createRadioAnswer = function (title, answers) {
+        this.createRadioAnswer = function (title, answers, id = 0) {
             let parentNode = $(`<div class="col-12"></div>`); //create parent node
             let titleNode = $(`<h3 class="Question_title">${title}</h3>`);// create title node
             parentNode.append(titleNode); //append title node to the parentNode
@@ -85,19 +73,12 @@ class QuestionCreator{
             }
             this.question_id++;
         }
+
+
     }
 }
 
 $(document).ready(function (e) {
     let questionCreator = new QuestionCreator($('#QuestionsContainer'));
-
-    questionCreator.createCheckBoxQuestion('Pregunta 1',Array("R1", "R2", "R3"));
-    questionCreator.createInputQuestion('Pregunta 2',Array("R1", "R2", "R3"));
-    questionCreator.createTextareaQuestion('Pregunta 3',Array("R1", "R2", "R3"));
-    questionCreator.createRadioAnswer('Pregunta 4',Array("R1", "R2", "R3"));
-
-
-
-
 
 })

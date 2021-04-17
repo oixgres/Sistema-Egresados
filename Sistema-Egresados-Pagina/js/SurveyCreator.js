@@ -2,6 +2,9 @@ $(document).ready(function (e) {
     $('#QuestionContainerController,#QuestionContainerPreview').hide();
     const SHOW_DELAY = 600;
     const toast = $('.toast');
+    //<source src="../sounds/ShowSuccessToast.ogg" type="audio/ogg">
+    //
+    let ShowSuccessToastSound = new Audio('../sounds/definite-555.ogg');
 
     toast.toast('hide');
 
@@ -71,7 +74,7 @@ $(document).ready(function (e) {
                                     </div>
                                     
                                     <div class="col-12 mt-2">
-                                        <button type="button" class="btn btn-warning btn-block rounded-pill" id=DeleteQuestion_${this.num_id}>Eliminar Pregunta</button>
+                                        <button type="button" class="btn btn-warning btn-block rounded-pill mb-5" id=DeleteQuestion_${this.num_id}>Eliminar Pregunta</button>
                                     </div>
                                 </div>
                             </div>
@@ -388,6 +391,7 @@ $(document).ready(function (e) {
         const QuestionCarousel = $('#QuestionCarousel');
         const AddSurvey = $('#AddSurvey');
         const SaveToDatabase = $(`#SaveToDatabase`);
+        const questionFinder = $('#questionFinder');
 
         main_container.hide(0, function (e) {
             $(this).show(SHOW_DELAY);
@@ -399,6 +403,16 @@ $(document).ready(function (e) {
             if(dropdownMenu.length)
                 dropdownMenu.toggle(SHOW_DELAY);
 
+        })
+
+        questionFinder.on('keydown', function (e) {
+            let value = $(this).val();
+
+            if(e.key === 'Enter'){
+               if(parseInt(value, 10)){
+                   QuestionCarousel.carousel(parseInt(value, 10));
+               }
+            }
         })
 
         dropdownItems.on('click', function (e) {
@@ -499,6 +513,8 @@ $(document).ready(function (e) {
                         $('#SurveyName').addClass('alert alert-success is-valid');
                         $('#SurveyTopic').addClass('alert alert-success is-valid');
 
+                        ShowSuccessToastSound.play().then(r => function () { });
+
                     }
                     else
                     {
@@ -576,6 +592,9 @@ $(document).ready(function (e) {
 
 
     } //agregar listeners para elementos UNICOS
+    function validateAllFields(){ //funcion para validar todas las preguntas y respuestas, tambien los campos
+
+    }
 
     addListeners();
     questionController.createQuestion();
