@@ -356,13 +356,11 @@ BEGIN
                 VALUES (survey_name, id_scope);
 
                 SELECT last_insert_id();  			   -- RETORNAR EL ID DE LA ENCUESTA INSERTADA
-                --
-                SELECT 'SI SE PUDO CREAR LA ENCUESTA'; -- RETORNAR LA LLAVE PRIMARIA INSERTADA
             ELSE
-                SELECT 'NO SE PUDO CREAR LA ENCUESTA';
+                SELECT '-1' AS RESULT;    -- LA ENCUESTA YA EXISTE
             END IF;
         ELSE
-            SELECT 'LA UNIVERSIDAD NO EXISTE' AS RESULT;
+            SELECT '-2' AS RESULT;      -- LA UNIVERSIDAD NO EXISTE
         END IF;
 
         WHEN '1' THEN
@@ -381,13 +379,11 @@ BEGIN
                     VALUES (survey_name, id_scope);
 
                     SELECT last_insert_id();  			   -- RETORNAR EL ID DE LA ENCUESTA INSERTADA
-                    --
-                    SELECT 'SI SE PUDO CREAR LA ENCUESTA'; -- RETORNAR LA LLAVE PRIMARIA INSERTADA
                 ELSE
-                    SELECT 'NO SE PUDO CREAR LA ENCUESTA';
+                    SELECT '-1' AS RESULT;    -- LA ENCUESTA YA EXISTE
                 END IF;
             ELSE
-                SELECT 'EL CAMPUS NO EXISTE' AS RESULT;
+                SELECT '-2' AS RESULT;      -- EL CAMPUS NO EXISTE
             END IF;
 
         WHEN '2' THEN
@@ -406,13 +402,11 @@ BEGIN
                     VALUES (survey_name, id_scope);
 
                     SELECT last_insert_id();  			   -- RETORNAR EL ID DE LA ENCUESTA INSERTADA
-                    --
-                    SELECT 'SI SE PUDO CREAR LA ENCUESTA'; -- RETORNAR LA LLAVE PRIMARIA INSERTADA
                 ELSE
-                    SELECT 'NO SE PUDO CREAR LA ENCUESTA';
+                    SELECT '-1' AS RESULT;    -- LA ENCUESTA YA EXISTE
                 END IF;
             ELSE
-                SELECT 'EL CAMPUS NO EXISTE' AS RESULT;
+                SELECT '-2' AS RESULT;      -- LA FACULTAD NO EXISTE
             END IF;
 
         WHEN '3' THEN
@@ -431,13 +425,11 @@ BEGIN
                     VALUES (survey_name, id_scope);
 
                     SELECT last_insert_id();  			   -- RETORNAR EL ID DE LA ENCUESTA INSERTADA
-                    --
-                    SELECT 'SI SE PUDO CREAR LA ENCUESTA'; -- RETORNAR LA LLAVE PRIMARIA INSERTADA
                 ELSE
-                    SELECT 'NO SE PUDO CREAR LA ENCUESTA';
+                    SELECT '-1' AS RESULT;    -- LA ENCUESTA YA EXISTE
                 END IF;
             ELSE
-                SELECT 'EL CAMPUS NO EXISTE' AS RESULT;
+                SELECT '-2' AS RESULT;      -- EL PLAN NO EXISTE
             END IF;
 
         END CASE;
