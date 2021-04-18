@@ -10,6 +10,7 @@ require_once "dbh.php";
  *  (JSON)
  *  IdPregunta : INT
  *	Texto : VARCHAR(45)
+ *	Tema : VARCHAR(45)
  *  Tipo : INT
  *
  *  Códigos de error:
@@ -36,7 +37,7 @@ if($res->num_rows == 0) {
 }
 
 $json = array();
-$sql = "SELECT idPregunta, Pregunta, Tipo FROM Pregunta
+$sql = "SELECT idPregunta, Pregunta, Tema, Tipo FROM Pregunta
         INNER JOIN Encuesta ON Pregunta.Encuesta_idEncuesta = Encuesta.idEncuesta
         WHERE Encuesta.idEncuesta = '$idEncuesta'
         ORDER BY idPregunta";
@@ -47,6 +48,7 @@ if(gettype($res) != "boolean") {
         $json [] = array(
             'idPregunta' => $fila['idPregunta'],
             'pregunta' => $fila['Pregunta'],
+            'tema' => $fila['Tema'],
             'tipo' => $fila['Tipo']
         );
     }
