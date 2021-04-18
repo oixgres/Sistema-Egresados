@@ -79,6 +79,100 @@ class QuestionCreator{
         } //funcion para crear una funcion tipo radio
     }
 }
+class AnswersToDatabase{
+    constructor() {
+
+        this.num_regex = RegExp('[0-9]+'); //extraer el numero de id de los componenets
+
+        this.ajaxRequestForSaveAnswer = function(idPregunta, idUsuario, respuesta){
+            $.ajax({
+                url: '../php/setUserAnswer.php',
+                async: false,
+                data: {idPregunta, idUsuario, respuesta},
+                type: 'POST',
+                success: function (response) {
+                    if(parseInt(response) > 0){
+                        //exito
+                        console.log(response)
+                    }else{
+                        //error
+                        console.log(response)
+                    }
+                }
+            })
+        }
+
+        this.SaveAnswersToDatabase = function (idUsuario) {
+            //this.SaveRadioAnswersToDatabase(idUsuario)
+            //this.SaveInputAnswersToDatabase(idUsuario);
+
+            this.SaveCheckBoxAnswersToDatabase(idUsuario);
+        }
+        this.SaveInputAnswersToDatabase = function(idUsuario){
+            let inputQuestions = $('.input_question');
+
+            for(let i = 0; i < inputQuestions.length; i++){
+                let title_id = inputQuestions[i].children[0].getAttribute('id');
+                let idPregunta = this.num_regex.exec(title_id).pop();
+
+                let answers = $(`#${title_id}`).siblings().children();
+
+                for(let j = 0; j < answers.length; j++){
+
+                    if(answers[j].value !== ""){
+                        this.ajaxRequestForSaveAnswer(idPregunta, idUsuario, answers[j].value);
+                    }
+                    else{
+
+                    }
+                }
+            }
+        }
+        this.SaveRadioAnswersToDatabase = function (idUsuario) {
+            //traerme todas las preguntas tipo radio
+            let questions = $('.radio_question');
+
+            for(let i = 0; i < questions.length; i++){ //recorrer pregunta por pregunta
+                let title_id = questions[i].children[0].getAttribute('id'); //obtener un id de referencia
+                let idPregunta = this.num_regex.exec(title_id).pop();//obtener id para la base de datos
+                let respuesta = null;
+
+                let answers = $(`#${title_id}`).siblings().children('.Answer');//obtener todas las respuestas (labels)
+
+                for(let j = 0; j < answers.length; j++){
+                    let radio = $(`#${answers[j].getAttribute('for')}`); //traerme el radio de la primera respuesta
+
+                    if(radio.prop('checked')) {
+                        respuesta = answers[j].textContent;
+                        break;
+                    }
+                }
+
+                this.ajaxRequestForSaveAnswer(idPregunta, idUsuario, respuesta);
+
+            }
+        }
+        this.SaveCheckBoxAnswersToDatabase = function (idUsuario) {
+            let checkBoxQuestions = $('.checkbox_question') //obtener todas las preguntas tipo checkbox
+
+            for(let i = 0; i < checkBoxQuestions.length; i++){
+                let title_id = checkBoxQuestions[i].children[0].getAttribute('id');
+                let idPregunta = this.num_regex.exec(title_id).pop();
+
+                let answers = $(`#${title_id}`).siblings().children('.Answer');//obtener todas las respuestas (labels)
+
+                for(let j = 0; j < answers.length; j++){
+                    let checkbox = $(`#${answers[j].getAttribute('for')}`); //traerme la checkbox de la primera respuesta
+
+                    if(checkbox.prop('checked')){
+                        this.ajaxRequestForSaveAnswer(idPregunta, idUsuario, answers[j].textContent)
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 function getCookie(cname) {
     const name = cname + "=";
@@ -97,7 +191,7 @@ function getCookie(cname) {
 } //funcion para obtener un cookie
 
 $(document).ready(function (e) {
-    const num_regex = RegExp('[0-9]+'); //extraer el numero de id de los componenets
+
     const survey_selected_id = 'survey_selected_id'; //nombre para guardar el ID de la encuesta seleccionada
 
     //cookie de prueba del php
@@ -108,6 +202,7 @@ $(document).ready(function (e) {
     const container = $('.container');
     const idUsuario = getCookie(id); //obtener el id de usuario
     let questionCreator = new QuestionCreator($('#QuestionsContainer')); //creador de prguntas
+    const answersToDatabase = new AnswersToDatabase(); //clase para guardar las preguntas en la base de datos
     const showSelectedSurvey = $('#showSelectedSurvey'); //boton para mostrar el contenido de la encuesta
     const SaveAnswersToDatabase = $('#SaveAnswersToDatabase');
 
@@ -119,51 +214,7 @@ $(document).ready(function (e) {
     })
 
     SaveAnswersToDatabase.on('click', function (e) {
-        //traerme todas las preguntas tipo radio
-        let questions = $('.radio_question');
-
-        for(let i = 0; i < questions.length; i++){ //recorrer pregunta por pregunta
-            let title_id = questions[i].children[0].getAttribute('id'); //obtener un id de referencia
-            let idPregunta = num_regex.exec(title_id).pop();//obtener id para la base de datos
-            let respuesta = null;
-
-            let answers = $(`#${title_id}`).siblings().children('.Answer');//obtener todas las respuestas (labels)
-
-            for(let j = 0; j < answers.length; j++){
-                let radio = $(`#${answers[j].getAttribute('for')}`); //traerme el radio de la primera respuesta
-
-                if(radio.prop('checked'))
-                    respuesta = answers[j].textContent;
-
-            }
-
-            //hacer la pedicion AJAX
-
-            $.ajax({
-                url: '../php/setUserAnswer.php',
-                async: false,
-                data: {idPregunta, idUsuario, respuesta},
-                type: 'POST',
-                success: function (response) {
-                    if(parseInt(response) > 0){
-                        //exito
-                        console.log(response)
-                    }else{
-                        //error
-                        console.log(response)
-                    }
-                }
-            })
-
-            console.log(idUsuario + " | " + idPregunta + " | " + respuesta);
-
-        }
-
-           // let questionId =  num_regex.exec(questionChildren[0].getAttribute('id'));
-
-           // console.log("ID = "+ questionId + " | TEXT = " + questionChildren[0].textContent)
-
-
+        answersToDatabase.SaveAnswersToDatabase(idUsuario);
     })
 
     showSelectedSurvey.on('click', function (e) {
