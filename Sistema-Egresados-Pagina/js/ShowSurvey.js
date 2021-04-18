@@ -3,6 +3,7 @@ const TEXT_AREA = 1;
 const INPUT = 2;
 const CHECKBOX = 3;
 
+//$('#customRadio_21').prop('checked') para checar radio o checkboxes
 
 class QuestionCreator{
 
@@ -10,7 +11,6 @@ class QuestionCreator{
     constructor(parent) {
         this.question_id = 0;
         this.parent = parent;
-        
 
         this.createCheckBoxQuestion = function (title, answers_text = [], question_id, answers_id = []) {
             let parentNode = $(`<div class="col-12 checkbox_question mt-3"></div>`); //create parent node
@@ -77,8 +77,6 @@ class QuestionCreator{
             this.parent.append(parentNode); //append the question to the container
             this.question_id++;
         } //funcion para crear una funcion tipo radio
-
-
     }
 }
 
@@ -99,6 +97,7 @@ function getCookie(cname) {
 } //funcion para obtener un cookie
 
 $(document).ready(function (e) {
+    const num_regex = RegExp('[0-9]+'); //extraer el numero de id de los componenets
     const survey_selected_id = 'survey_selected_id'; //nombre para guardar el ID de la encuesta seleccionada
 
     //cookie de prueba del php
@@ -110,6 +109,7 @@ $(document).ready(function (e) {
     const idUsuario = getCookie(id); //obtener el id de usuario
     let questionCreator = new QuestionCreator($('#QuestionsContainer')); //creador de prguntas
     const showSelectedSurvey = $('#showSelectedSurvey'); //boton para mostrar el contenido de la encuesta
+    const SaveAnswersToDatabase = $('#SaveAnswersToDatabase');
 
     container.on('click', function (e) { //evento principal para el contenedor
         $('.dropdown-menu').hide(500);
@@ -118,10 +118,58 @@ $(document).ready(function (e) {
         container.show(700);
     })
 
+    SaveAnswersToDatabase.on('click', function (e) {
+        //traerme todas las preguntas tipo radio
+        let questions = $('.radio_question');
+
+        for(let i = 0; i < questions.length; i++){ //recorrer pregunta por pregunta
+            let title_id = questions[i].children[0].getAttribute('id'); //obtener un id de referencia
+            let idPregunta = num_regex.exec(title_id).pop();//obtener id para la base de datos
+            let respuesta = null;
+
+            let answers = $(`#${title_id}`).siblings().children('.Answer');//obtener todas las respuestas (labels)
+
+            for(let j = 0; j < answers.length; j++){
+                let radio = $(`#${answers[j].getAttribute('for')}`); //traerme el radio de la primera respuesta
+
+                if(radio.prop('checked'))
+                    respuesta = answers[j].textContent;
+
+            }
+
+            //hacer la pedicion AJAX
+
+            $.ajax({
+                url: '../php/setUserAnswer.php',
+                async: false,
+                data: {idPregunta, idUsuario, respuesta},
+                type: 'POST',
+                success: function (response) {
+                    if(parseInt(response) > 0){
+                        //exito
+                        console.log(response)
+                    }else{
+                        //error
+                        console.log(response)
+                    }
+                }
+            })
+
+            console.log(idUsuario + " | " + idPregunta + " | " + respuesta);
+
+        }
+
+           // let questionId =  num_regex.exec(questionChildren[0].getAttribute('id'));
+
+           // console.log("ID = "+ questionId + " | TEXT = " + questionChildren[0].textContent)
+
+
+    })
+
     showSelectedSurvey.on('click', function (e) {
       //mostrar todas las preguntas y respuestas
         let idEncuesta = sessionStorage.getItem(survey_selected_id);
-
+        $('#QuestionsContainer').empty();
 
         //peticion para mostrar las rpreguntas y respuestas
         $.ajax({
@@ -138,8 +186,8 @@ $(document).ready(function (e) {
                             let idPregunta = question.idPregunta; //obtener id de la pregunta
                             let questionTitle = question.pregunta;//obtener titulo de la pregunta
                             let questionType = question.tipo; //obtener el tipo de respuestas
-                            let answers_text = [];
-                            let answers_id = [];
+                            let answers_text = []; //arreglo para almacenar las respuestas
+                            let answers_id = [];//arreglo para almacenar als id
 
 
                             //obtener las respuestas por cada pregunta
@@ -185,7 +233,7 @@ $(document).ready(function (e) {
 
                     }
                     else{
-                        console.log("Vacio")
+                        alert("La encuesta está vacia")
                     }
 
 
