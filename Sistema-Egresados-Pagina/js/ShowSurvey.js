@@ -11,8 +11,10 @@ class QuestionCreator{
     constructor(parent) {
         this.question_id = 0;
         this.parent = parent;
+        this.totalQuestions = 0;
 
         this.createCheckBoxQuestion = function (title, answers_text = [], question_id, answers_id = []) {
+            this.totalQuestions++;
             let parentNode = $(`<div class="col-12 checkbox_question mt-3"></div>`); //create parent node
             let titleNode = $(`<h3 class="Question_title" id="Question_${question_id}">${title}</h3>`);// create title node
             parentNode.append(titleNode); //append title node to the parentNode
@@ -30,6 +32,7 @@ class QuestionCreator{
             this.parent.append(parentNode); //append the question to the container
         } //funcion para crear una pregunta checkbox
         this.createInputQuestion = function (title, answers_text = [], question_id, answers_id = []) {
+            this.totalQuestions++;
             let parentNode = $(`<div class="col-12 input_question mt-3"></div>`); //create parent node
             let titleNode = $(`<h3 class="Question_title" id="Question_${question_id}">${title}</h3>`);// create title node
             parentNode.append(titleNode); //append title node to the parentNode
@@ -45,6 +48,7 @@ class QuestionCreator{
             this.parent.append(parentNode); //append the question to the container
         } //funcion para crear una pregunta tipo input
         this.createTextareaQuestion = function (title, answers_text = [], question_id, answers_id = []) {
+            this.totalQuestions++;
             let parentNode = $(`<div class="col-12 textArea_question mt-3"></div>`); //create parent node
             let titleNode = $(`<h3 class="Question_title" id="Question_${question_id}">${title}</h3>`);// create title node
             parentNode.append(titleNode); //append title node to the parentNode
@@ -60,6 +64,7 @@ class QuestionCreator{
             this.parent.append(parentNode); //append the question to the container
         } //funcion para crear una funcion tipo text area
         this.createRadioAnswer = function (title, answers_text = [], question_id, answers_id = []) {
+            this.totalQuestions++;
             let parentNode = $(`<div class="col-12 radio_question mt-3"></div>`); //create parent node
             let titleNode = $(`<h3 class="Question_title" id="Question_${question_id}">${title}</h3>`);// create title node
             parentNode.append(titleNode); //append title node to the parentNode
@@ -80,9 +85,12 @@ class QuestionCreator{
     }
 }
 class AnswersToDatabase{
-    constructor() {
-
+    constructor(totalQuestions) {
+        this.progressBar = $('#ProgressBarDatabase');
+        this.progressBarTick = 100/totalQuestions;
         this.num_regex = RegExp('[0-9]+'); //extraer el numero de id de los componenets
+        this.currentProgress = 0;
+
 
         this.ajaxRequestForSaveAnswer = function(idPregunta, idUsuario, respuesta){
             $.ajax({
@@ -93,20 +101,24 @@ class AnswersToDatabase{
                 success: function (response) {
                     if(parseInt(response) > 0){
                         //exito
-                        console.log(response)
+
                     }else{
                         //error
-                        console.log(response)
+
                     }
                 }
             })
+
+
         }
 
         this.SaveAnswersToDatabase = function (idUsuario) {
-            //this.SaveRadioAnswersToDatabase(idUsuario)
-            //this.SaveInputAnswersToDatabase(idUsuario);
-
+            this.currentProgress = 0;
+            this.SaveRadioAnswersToDatabase(idUsuario)
+            this.SaveInputAnswersToDatabase(idUsuario);
             this.SaveCheckBoxAnswersToDatabase(idUsuario);
+            this.saveTextAreaAnswersToDatabase(idUsuario);
+
         }
         this.SaveInputAnswersToDatabase = function(idUsuario){
             let inputQuestions = $('.input_question');
@@ -126,7 +138,35 @@ class AnswersToDatabase{
 
                     }
                 }
+                this.currentProgress += this.progressBarTick;
+                this.progressBar.css('width', `${this.currentProgress}%`)
             }
+
+        }
+        this.saveTextAreaAnswersToDatabase = function(idUsuario){
+            let textAreaQuestions = $('.textArea_question');
+
+            for(let i = 0; i < textAreaQuestions.length; i++){
+
+                let title_id = textAreaQuestions[i].children[0].getAttribute('id');
+                let idPregunta = this.num_regex.exec(title_id).pop();
+
+                let answers = $(`#${title_id}`).siblings().children();
+
+                for(let j = 0; j < answers.length; j++){
+
+                    if(answers[j].value !== ""){
+                        this.ajaxRequestForSaveAnswer(idPregunta, idUsuario, answers[j].value);
+                    }
+                    else{
+
+                    }
+                }
+                this.currentProgress += this.progressBarTick;
+                this.progressBar.css('width', `${this.currentProgress}%`)
+            }
+
+
         }
         this.SaveRadioAnswersToDatabase = function (idUsuario) {
             //traerme todas las preguntas tipo radio
@@ -149,13 +189,16 @@ class AnswersToDatabase{
                 }
 
                 this.ajaxRequestForSaveAnswer(idPregunta, idUsuario, respuesta);
-
+                this.currentProgress += this.progressBarTick;
+                this.progressBar.css('width', `${this.currentProgress}%`)
             }
+
         }
         this.SaveCheckBoxAnswersToDatabase = function (idUsuario) {
             let checkBoxQuestions = $('.checkbox_question') //obtener todas las preguntas tipo checkbox
 
             for(let i = 0; i < checkBoxQuestions.length; i++){
+
                 let title_id = checkBoxQuestions[i].children[0].getAttribute('id');
                 let idPregunta = this.num_regex.exec(title_id).pop();
 
@@ -168,7 +211,11 @@ class AnswersToDatabase{
                         this.ajaxRequestForSaveAnswer(idPregunta, idUsuario, answers[j].textContent)
                     }
                 }
+
+                this.currentProgress += this.progressBarTick;
+                this.progressBar.css('width', `${this.currentProgress}%`)
             }
+
         }
     }
 }
@@ -200,11 +247,14 @@ $(document).ready(function (e) {
     ///
 
     const container = $('.container');
+    const QuestionsContainer = $('#QuestionsContainer');
     const idUsuario = getCookie(id); //obtener el id de usuario
-    let questionCreator = new QuestionCreator($('#QuestionsContainer')); //creador de prguntas
-    const answersToDatabase = new AnswersToDatabase(); //clase para guardar las preguntas en la base de datos
+    let questionCreator = new QuestionCreator(QuestionsContainer); //creador de prguntas
+    let answersToDatabase = null; //clase para guardar las preguntas en la base de datos
     const showSelectedSurvey = $('#showSelectedSurvey'); //boton para mostrar el contenido de la encuesta
     const SaveAnswersToDatabase = $('#SaveAnswersToDatabase');
+
+
 
     container.on('click', function (e) { //evento principal para el contenedor
         $('.dropdown-menu').hide(500);
@@ -214,13 +264,15 @@ $(document).ready(function (e) {
     })
 
     SaveAnswersToDatabase.on('click', function (e) {
+        answersToDatabase =  new AnswersToDatabase(questionCreator.totalQuestions);
         answersToDatabase.SaveAnswersToDatabase(idUsuario);
     })
 
     showSelectedSurvey.on('click', function (e) {
       //mostrar todas las preguntas y respuestas
         let idEncuesta = sessionStorage.getItem(survey_selected_id);
-        $('#QuestionsContainer').empty();
+        QuestionsContainer.empty();
+        QuestionsContainer.hide();
 
         //peticion para mostrar las rpreguntas y respuestas
         $.ajax({
@@ -281,7 +333,7 @@ $(document).ready(function (e) {
                             answers_id = [];
 
                         });
-
+                        QuestionsContainer.show(900);
                     }
                     else{
                         alert("La encuesta está vacia")
@@ -296,7 +348,6 @@ $(document).ready(function (e) {
         });
 
     });
-
     //peticion para obtener las encuestas
     $.ajax({
         url: '../php/getSurveys.php', //obtener las encuestas
@@ -336,6 +387,7 @@ $(document).ready(function (e) {
                 spinner.addClass('d-none'); //ocultar el spinner
                 button.text('Seleccione una encuesta') //cambiar el texto del dropdown
 
+
             }catch (e) {
                 let button = $('#AvailableSurveysButton'); //obtener el boton de referenca
                 let spinner = button.children('span'); //obtener la barra de progreso
@@ -346,5 +398,7 @@ $(document).ready(function (e) {
             }
         }
     });
+
+
 
 })
