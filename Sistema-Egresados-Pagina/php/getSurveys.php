@@ -45,7 +45,7 @@ $json = array();
 
 for($i = 0; $i < 4; $i++) {
     $sql = "SELECT idEncuesta, Encuesta.Nombre AS encuesta, ${alcances[$i]}.Nombre AS alcance FROM Encuesta
-            INNER JOIN Universidad ON Encuesta.${alcances[$i]}_id${alcances[$i]} = ${alcances[$i]}.id${alcances[$i]}
+            INNER JOIN ${alcances[$i]} ON Encuesta.${alcances[$i]}_id${alcances[$i]} = ${alcances[$i]}.id${alcances[$i]}
             INNER JOIN Datos_Escolares ON ${alcances[$i]}.id${alcances[$i]} = Datos_Escolares.${alcances[$i]}_id${alcances[$i]}
             INNER JOIN Usuario ON Datos_Escolares.Usuario_idUsuario = Usuario.idUsuario
             WHERE Usuario.idUsuario = '$idUsuario'";

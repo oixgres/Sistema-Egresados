@@ -1,4 +1,11 @@
 $(document).ready(function (e) {
+    /*
+        case 'Radio':   return 0;
+        case 'Text Area':   return 1;
+        case 'Input':   return 2;
+        case 'Checkbox':    return 3;
+        default:    return -1;
+     */
     $('#QuestionContainerController,#QuestionContainerPreview').hide();
     const SHOW_DELAY = 600;
     const toast = $('.toast');
@@ -467,10 +474,10 @@ $(document).ready(function (e) {
             $(this).children('span').removeClass('d-none')
             let surveyName = $('#SurveyName').val(); //obtener el nombre de la encuesta
 
-            let university = null;
-            let campus = null;
-            let faculty = null;
-            let program = null;
+            let university = "NULL";
+            let campus = "NULL";
+            let faculty = "NULL";
+            let program = "NULL";
 
             let SurveyTopic = $('#SurveyTopic').val(); //obtener el alcance
 
@@ -495,17 +502,15 @@ $(document).ready(function (e) {
 
             }
 
-
-
             $.ajax({
                 url:    '../php/createSurvey.php',
                 data:   {surveyName, campus, faculty, program, university},
                 type: 'POST',
                 success: function (response) {
+                    console.log(response)
                     if(parseInt(response, 10) > 0){
                         //encuesta insertada con exito
                         sessionStorage.setItem('surveyId', response);//guardar llave primaria de la encuesta
-                        console.log(`Nueva encuesta creada #ID = ${response}`);
                         $('#QuestionContainerController,#QuestionContainerPreview').show(SHOW_DELAY);//mostrar las herramientas
                         toast.toast('show');
                         $('#AddSurvey').children('span').addClass('d-none')

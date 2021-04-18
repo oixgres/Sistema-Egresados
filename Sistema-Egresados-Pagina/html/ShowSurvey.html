@@ -32,8 +32,6 @@
             </div>
         </div>
 
-
-
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -42,16 +40,19 @@
                             <div class="col-12 d-flex justify-content-center">
                                 <h3 class="">Seleccione una encuesta</h3>
                                 <div class="dropdown ml-2">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="AvailableSurveysButton" data-toggle="dropdown">
-                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="AvailableSurveysButton" >
+                                        <span class="spinner-border spinner-border-sm" role="status"></span>
                                         Cargando...
                                     </button>
-                                    <div class="dropdown-menu" id="AvailableSurveys">
-                                        <a class="dropdown-item">Action</a>
-                                        <a class="dropdown-item">Another action</a>
-                                        <a class="dropdown-item">Something else here</a>
+                                    <div class="col col-12 dropdown-menu" id="AvailableSurveysMenu">
+
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button class="btn btn-success rounded-pill" id="showSelectedSurvey">Mostrar encuesta</button>
                             </div>
                         </div>
                     </div>
@@ -68,11 +69,10 @@
 
 
 
+    <script src="../js/boostrap/popper.min.js"></script>
     <script src="../js/boostrap/jquery-3.6.0.min.js"></script>
     <script src="../js/boostrap/bootstrap.js"></script>
     <script src="../js/boostrap/bootstrap.bundle.js"></script>
     <script src="../js/ShowSurvey.js"></script>
-    <script src="https://kit.fontawesome.com/5d2293cbbc.js" crossorigin="anonymous"></script>
-
 </body>
 </html>
