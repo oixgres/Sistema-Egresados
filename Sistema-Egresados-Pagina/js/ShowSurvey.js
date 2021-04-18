@@ -31,7 +31,7 @@ class QuestionCreator{
         } //funcion para crear una pregunta checkbox
         this.createInputQuestion = function (title, answers_text = [], question_id, answers_id = []) {
             let parentNode = $(`<div class="col-12 input_question mt-3"></div>`); //create parent node
-            let titleNode = $(`<h3 class="Question_title" id="Question_${question_id}>${title}</h3>`);// create title node
+            let titleNode = $(`<h3 class="Question_title" id="Question_${question_id}">${title}</h3>`);// create title node
             parentNode.append(titleNode); //append title node to the parentNode
             for(let i = 0; i < answers_text.length; i++){
                 //create a answer node
@@ -52,7 +52,7 @@ class QuestionCreator{
                 //create a answer node
                 let answerNode = $(`
                     <div class="form-group">
-                        <textarea type="text" class="form-control Answer" id="answer_${answers_id[i]} placeholder="${answers_text[i]}"></textarea>
+                        <textarea type="text" class="form-control Answer" id="answer_${answers_id[i]}" placeholder="${answers_text[i]}"></textarea>
                     </div>
                 `)
                 parentNode.append(answerNode); //append answer to the question
@@ -122,6 +122,8 @@ $(document).ready(function (e) {
       //mostrar todas las preguntas y respuestas
         let idEncuesta = sessionStorage.getItem(survey_selected_id);
 
+
+        //peticion para mostrar las rpreguntas y respuestas
         $.ajax({
             url: '../php/getQuestions.php',
             data: {idEncuesta},
@@ -163,8 +165,16 @@ $(document).ready(function (e) {
 
                             switch (parseInt(questionType)) {
                                 case RADIO: questionCreator.createRadioAnswer(questionTitle, answers_text, idPregunta, answers_id);
-                                            console.log(questionType)
                                             break;
+
+                                case INPUT:  questionCreator.createInputQuestion(questionTitle, answers_text, idPregunta, answers_id);
+                                             break;
+
+                                case TEXT_AREA: questionCreator.createTextareaQuestion(questionTitle, answers_text, idPregunta, answers_id);
+                                                break;
+
+                                case CHECKBOX:  questionCreator.createCheckBoxQuestion(questionTitle, answers_text, idPregunta, answers_id);
+                                                break;
 
                             }
 
