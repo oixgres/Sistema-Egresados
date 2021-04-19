@@ -3,13 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Buscar Usuario</title>
+    <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css"> <!-- Nuevos estilos de boostrap -->
     <link rel="stylesheet" href="../css/boostrap/bootstrap_pulse.min.css"> <!-- Nuevos estilos de boostrap -->
-    <style>
-        .padding-0{
-            padding-right:0;
-            padding-left:0;
-        }
-    </style>
+
+
 </head>
 <body>
 
@@ -40,14 +37,14 @@
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Introduzca el nombre del usuario">
                             <div class="input-group-append">
-                                <button class="btn btn-secondary">Busqueda Avanzada</button>
+                                <button class="btn btn-secondary" id="AdvanceSearch">Busqueda Avanzada</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
+        </div> <!-- Contenedor principal de la busqueda -->
+        <div class="row d-none" id="FiltersContainer">
             <div class="col-12">
                 <div class="card border-top-0">
                     <div class="card-body">
@@ -55,7 +52,7 @@
                             <h2>Aplicar filtros</h2>
                         </div>
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-md-6 col-lg-3">
                                 <label for="CampusText">Campus</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control d-inline-block" placeholder="Introduce el Campus" id="CampusText">
@@ -65,7 +62,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-md-6 col-lg-3">
                                 <label for="FacultyText">Facultad</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control d-inline-block" placeholder="Introduce la facultad" id="FacultyText">
@@ -76,7 +73,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-md-6 col-lg-3">
                                 <label for="Program">Programa Académico</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control d-inline-block" placeholder="Introduce la carrera" id="Program">
@@ -86,10 +83,20 @@
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-md-6 col-lg-3">
                                 <label for="Company">Empresa</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control d-inline-block" placeholder="Introduce la empresa" id="Company">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" class="custom-checkbox" data-toggle="tooltip" data-placement="bottom" title="Habilita o deshabilita este filtro">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-lg-3">
+                                <label for="City">Ciudad</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control d-inline-block" placeholder="Introduce la ciudad" id="City">
                                     <div class="input-group-text">
                                         <input type="checkbox" class="custom-checkbox" data-toggle="tooltip" data-placement="bottom" title="Habilita o deshabilita este filtro">
                                     </div>
@@ -102,11 +109,84 @@
                     </div>
                 </div>
             </div>
+        </div> <!-- Contenedor principal de los filtros -->
+
+        <div class="row"> <!-- Contenedor para mostrar los alumnos -->
+            <div class="col-12">
+                <table class="table table-bordered table-hover table-responsive">
+                    <thead class="thead-default" id="UsersContainer">
+                    <th>Matricula</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Campus</th>
+                    <th>Facultad</th>
+                    <th>Programa Academico</th>
+                    <th>Empresa</th>
+                    <th>Cargo</th>
+                    <th>Ciudad</th>
+                    <th>Perfil</th>
+
+
+
+                    </thead>
+
+                    <!-- .table-active -->
+                    <!-- .table-success -->
+                    <!-- .table-warning -->
+                    <!-- .table-danger -->
+                    <!-- .table-info -->
+                    <tr class="">
+                        <td>1252892</td>
+                        <td>Omar Antonio</td>
+                        <td>Montoya Valdivia</td>
+                        <td>Tijuana</td>
+                        <td>FCQI</td>
+                        <td>Ingenieria en computacion</td>
+                        <td>Microchip</td>
+                        <td>Desarrollador de firmware</td>
+                        <td>So far away from here</td>
+                        <td>
+                            <button class="btn btn-success showOffCanvas">
+                                <span class="fa fa-user"></span>
+                            </button>
+                        </td>
+
+
+                    </tr>
+
+                    <!-- .bg-primary -->
+                    <!-- .bg-success -->
+                    <!-- .bg-warning -->
+                    <!-- .bg-danger -->
+                    <!-- .bg-info -->
+                    <tr class="">
+                        <td>Alejandro</td>
+                        <td>34</td>
+                        <td>España</td>
+                    </tr>
+
+
+                </table>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="offcanvas offcanvas-start w-75" tabindex="-1" id="UserProfile" aria-labelledby="offcanvasExampleLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 
-    <script src="../js/boostrap/popper.min.js"></script>
     <script src="../js/boostrap/jquery-3.6.0.min.js"></script>
+    <script src="../js/boostrap/popper.min.js"></script>
     <script src="../js/boostrap/bootstrap.bundle.js"></script>
     <script src="../js/boostrap/bootstrap.js"></script>
     <script src="../js/userFinder.js"></script>
