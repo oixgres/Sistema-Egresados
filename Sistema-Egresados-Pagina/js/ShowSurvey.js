@@ -253,7 +253,11 @@ $(document).ready(function (e) {
     let answersToDatabase = null; //clase para guardar las preguntas en la base de datos
     const showSelectedSurvey = $('#showSelectedSurvey'); //boton para mostrar el contenido de la encuesta
     const SaveAnswersToDatabase = $('#SaveAnswersToDatabase');
+    const ProgressBarDatabase = $('#progressBarRow');
 
+
+    ProgressBarDatabase.hide();
+    SaveAnswersToDatabase.hide();
 
 
     container.on('click', function (e) { //evento principal para el contenedor
@@ -386,7 +390,7 @@ $(document).ready(function (e) {
 
                 spinner.addClass('d-none'); //ocultar el spinner
                 button.text('Seleccione una encuesta') //cambiar el texto del dropdown
-
+                showSelectedSurvey.show();
 
             }catch (e) {
                 let button = $('#AvailableSurveysButton'); //obtener el boton de referenca

@@ -410,7 +410,15 @@ $(document).ready(function (e) {
         const AddSurvey = $('#AddSurvey');
         const SaveToDatabase = $(`#SaveToDatabase`);
         const questionFinder = $('#questionFinder');
+        const carouselButtonLeft= $('#carousel-button-left');
+        const carouselButtonRight = $('#carousel-button-right');
 
+        carouselButtonLeft.on('click', function (e) {
+            QuestionCarousel.carousel('prev');
+        })
+        carouselButtonRight.on('click', function (e) {
+            QuestionCarousel.carousel('next');
+        })
         main_container.hide(0, function (e) {
             $(this).show(SHOW_DELAY);
         });
@@ -604,7 +612,7 @@ $(document).ready(function (e) {
                                     },
                                     error:  function (xhr, status, error){
                                         alert(error)
-                                        break;
+
                                     }
                                 })
                             }
