@@ -14,6 +14,9 @@ if(isset($_POST['sendNewCode']))
   /* Creamos y enviamos correo */
   $key = generateCode($conn, $idUser, "again");
   sendCode($conn, $email, "Nuevo Codigo de Verificación", $key);
+
+  header("Location: ../html/verificationPage.html");
+  exit();
 }
 else
   /* Comparar claves */

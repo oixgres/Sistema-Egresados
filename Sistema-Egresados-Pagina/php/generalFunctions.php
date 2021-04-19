@@ -47,7 +47,7 @@
 
   function checkSession()
   {
-    start_session();
+    session_start();
 
     if($_COOKIE["token"] != $_SESSION["token"])
     {
