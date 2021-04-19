@@ -1,7 +1,5 @@
  <?php
 session_start();
-//https://www.youtube.com/watch?v=3Gkx_8wU9Hw&ab_channel=ErickVladimirReyesMar%C3%ADnhttps://www.youtube.com/watch?v=3Gkx_8wU9Hw&ab_channel=ErickVladimirReyesMar%C3%ADn
-// Cerrar sesion 40:00
 
 require_once 'dbh.php';
 require_once 'generalFunctions.php';
@@ -9,7 +7,7 @@ require_once 'generalFunctions.php';
 $mail = $_POST['username'];
 $pass = $_POST['password'];
 
-/* Checamos que exista el usuario y este activo */
+/* Checamos que exista el usuario egresado y que  este activo */
 $res = mysqli_query($conn, "SELECT * FROM Usuario WHERE Correo='".$mail."' AND Password='".$pass."'");
 $nr = mysqli_num_rows($res);
 
@@ -23,7 +21,7 @@ if($nr == 1)
   if(mysqli_query($conn, $query))
   {
     $_SESSION['idUser'] = $idUser;
-    header("Location: verificationPage.php");
+    header("Location: ../html/verificationPage.html");
     exit();
   }
   else
@@ -56,7 +54,4 @@ if($nr == 1)
 }
 else
   echo "Ha ocurrido un error, contacte con el administrador"; //si no existe
-
-
-
 ?>

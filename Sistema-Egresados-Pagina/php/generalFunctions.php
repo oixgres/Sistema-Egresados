@@ -45,4 +45,15 @@
     return $res[0];
   }
 
+  function checkSession()
+  {
+    start_session();
+
+    if($_COOKIE["token"] != $_SESSION["token"])
+    {
+      header("Location: ../error.html");
+      exit();
+    }
+  }
+
 ?>

@@ -7,7 +7,7 @@ require_once 'generalFunctions.php';
 $idUser = $_SESSION['idUser'];
 
 /* Clave nueva */
-if(isset($_GET['newKey']))
+if(isset($_POST['sendNewCode']))
 {
   $email = getFirstQueryElement($conn, 'Usuario', 'Correo', 'idUsuario', $idUser);
 

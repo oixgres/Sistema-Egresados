@@ -41,7 +41,7 @@ if($conn)
         $_SESSION['idUser'] = $idUser;
 
         mysqli_close($conn);
-        header("Location: verificationPage.php");
+        header("Location: ../html/verificationPage.html");
         exit();
       }
   }

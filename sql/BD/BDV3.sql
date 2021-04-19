@@ -211,6 +211,7 @@ CREATE TABLE IF NOT EXISTS Encuesta (
   Campus_idCampus INT NULL,
   Facultad_idFacultad INT NULL,
   Plan_Estudio_idPlan_Estudio INT NULL,
+  Estatus VARCHAR(45) NOT NULL,
   PRIMARY KEY (idEncuesta),
   FOREIGN KEY (Universidad_idUniversidad)
   REFERENCES Universidad (idUniversidad),
@@ -221,7 +222,6 @@ CREATE TABLE IF NOT EXISTS Encuesta (
   FOREIGN KEY (Plan_Estudio_idPlan_Estudio)
   REFERENCES Plan_Estudio (idPlan_Estudio))
 ;
-
 
 -- -----------------------------------------------------
 -- TablePregunta
