@@ -255,12 +255,17 @@ $(document).ready(function (e) {
     const showSelectedSurvey = $('#showSelectedSurvey'); //boton para mostrar el contenido de la encuesta
     const SaveAnswersToDatabase = $('#SaveAnswersToDatabase');
     const ProgressBarDatabase = $('#progressBarRow');
+    const btnDismiss = $('#btnDismiss');
+
+
 
 
     ProgressBarDatabase.hide();
     SaveAnswersToDatabase.hide();
 
-
+    btnDismiss.on('click', function (e) {
+        $('#ModalDatabaseSuccess').modal('hide');
+    })
     container.on('click', function (e) { //evento principal para el contenedor
         $('.dropdown-menu').hide(500);
     })
@@ -279,6 +284,7 @@ $(document).ready(function (e) {
         let idEncuesta = sessionStorage.getItem(survey_selected_id);
         QuestionsContainer.empty();
         QuestionsContainer.hide();
+        questionCreator.totalQuestions = 0;
 
         //peticion para mostrar las rpreguntas y respuestas
         $.ajax({
