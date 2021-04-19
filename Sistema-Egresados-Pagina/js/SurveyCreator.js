@@ -560,71 +560,73 @@ $(document).ready(function (e) {
         SaveToDatabase.on('click', function (e) {
 
             e.stopPropagation();
-            let progressBar = $(`#ProgressBarDatabase`);
-            let currentProgress = 0;
+            if(validateAllFields()){
 
-            //insertar pregunta
-            let questionsTittles = questionController.getAllQuestionTittles() //obtener todos los titulos
-            let questionThemes = questionController.getAllQuestionTopics();//obtener todos los temas
-            let questionTypes = questionController.getAllQuestionsType();//obtener todos los tipos
-            let questionAnswers = questionController.getAllAnswersByQuestion(); //obtener todos los grupos de respuestas
-            let ProgressBarIncrement = 100 / (questionController.getNumOfQuestions() + questionController.getAllAnswerCount());
-            let ModalDatabaseSuccess = $('#ModalDatabaseSuccess');
+                let progressBar = $(`#ProgressBarDatabase`);
+                let currentProgress = 0;
 
-            let surveyId = sessionStorage.getItem('surveyId'); //obtener la llave primaria de la encuesta creada
+                //insertar pregunta
+                let questionsTittles = questionController.getAllQuestionTittles() //obtener todos los titulos
+                let questionThemes = questionController.getAllQuestionTopics();//obtener todos los temas
+                let questionTypes = questionController.getAllQuestionsType();//obtener todos los tipos
+                let questionAnswers = questionController.getAllAnswersByQuestion(); //obtener todos los grupos de respuestas
+                let ProgressBarIncrement = 100 / (questionController.getNumOfQuestions() + questionController.getAllAnswerCount());
+                let ModalDatabaseSuccess = $('#ModalDatabaseSuccess');
+
+                let surveyId = sessionStorage.getItem('surveyId'); //obtener la llave primaria de la encuesta creada
 
 
-            for(let i = 0; i < questionController.getNumOfQuestions(); i++){
+                for(let i = 0; i < questionController.getNumOfQuestions(); i++){
 
-                let title = questionsTittles[i];
-                let theme = questionThemes[i];
-                let type = questionTypes[i];
+                    let title = questionsTittles[i];
+                    let theme = questionThemes[i];
+                    let type = questionTypes[i];
 
-                if(validateAllFields()){
-                    $.ajax({ //insertar pregunta en la base de datos
-                        url:    '../php/createQuestion.php',
-                        async:  false,
-                        data:   {surveyId, title, theme, type},
-                        type:   'POST',
-                        error:  function (xhr, status, error) { // en caso de error
-                            alert(error)
-                        },
-                        success:    function (response) {
-                            console.log(`Pregunta creada #ID = ${response}`);
-                            let questionId = response;
-                            currentProgress += ProgressBarIncrement;
-                            progressBar.css('width',`${currentProgress}%`);
-                            progressBar.text(parseInt(currentProgress));
 
-                            for(let j = 0; j < questionAnswers[i].length; j++){
-                                let answerText = questionAnswers[i][j];
-                                $.ajax({ //instertar respuestas
-                                    url:    '../php/createAnswer.php',
-                                    async: false,
-                                    data:   {questionId, answerText},
-                                    type:   'POST',
-                                    success: function (response) {
-                                        console.log(currentProgress)
-                                        currentProgress += ProgressBarIncrement;
-                                        progressBar.css('width',`${currentProgress}%`);
-                                        progressBar.text(parseInt(currentProgress));
-                                        console.log('respuesta creada = ' + response)
-                                    },
-                                    error:  function (xhr, status, error){
-                                        alert(error)
+                        $.ajax({ //insertar pregunta en la base de datos
+                            url:    '../php/createQuestion.php',
+                            async:  false,
+                            data:   {surveyId, title, theme, type},
+                            type:   'POST',
+                            error:  function (xhr, status, error) { // en caso de error
+                                alert(error)
+                            },
+                            success:    function (response) {
+                                console.log(`Pregunta creada #ID = ${response}`);
+                                let questionId = response;
+                                currentProgress += ProgressBarIncrement;
+                                progressBar.css('width',`${currentProgress}%`);
+                                progressBar.text(parseInt(currentProgress));
 
-                                    }
-                                })
+                                for(let j = 0; j < questionAnswers[i].length; j++){
+                                    let answerText = questionAnswers[i][j];
+                                    $.ajax({ //instertar respuestas
+                                        url:    '../php/createAnswer.php',
+                                        async: false,
+                                        data:   {questionId, answerText},
+                                        type:   'POST',
+                                        success: function (response) {
+                                            console.log(currentProgress)
+                                            currentProgress += ProgressBarIncrement;
+                                            progressBar.css('width',`${currentProgress}%`);
+                                            progressBar.text(parseInt(currentProgress));
+                                            console.log('respuesta creada = ' + response)
+                                        },
+                                        error:  function (xhr, status, error){
+                                            alert(error)
+
+                                        }
+                                    })
+                                }
                             }
-                        }
-                    });
+                        });
 
-                    $(this).attr('disabled', true);
-                    ModalDatabaseSuccess.modal('show');
-                }else{
-                    alert("Favor de verificar las preguntas y respuestas")
+                        $(this).attr('disabled', true);
+                        ModalDatabaseSuccess.modal('show');
+                    }
                 }
-
+            else{
+                alert("Favor de verificar las preguntas y respuestas")
             }
         })
         $(document).click(function (e) {
