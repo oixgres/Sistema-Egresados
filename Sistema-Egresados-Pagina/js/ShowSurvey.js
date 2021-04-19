@@ -338,6 +338,7 @@ $(document).ready(function (e) {
 
                         });
                         QuestionsContainer.show(900);
+                        SaveAnswersToDatabase.show(900);
                     }
                     else{
                         alert("La encuesta está vacia")
