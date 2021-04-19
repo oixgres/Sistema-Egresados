@@ -15,25 +15,25 @@ if(isset($_POST['sendNewCode']))
   $key = generateCode($conn, $idUser, "again");
   sendCode($conn, $email, "Nuevo Codigo de Verificación", $key);
 }
-
-/* Comparar claves */
-if(isset($_POST['key']))
-{
-  $key = getFirstQueryElement($conn, "Claves_Confirmacion", "Clave", "Usuario_idUsuario", $idUser);
-
-  $insertedKey = $_POST['key'];
-
-  if($key == $insertedKey)
+else
+  /* Comparar claves */
+  if(isset($_POST['key']))
   {
-    /* Eliminamos el codigo */
-    mysqli_query($conn, "DELETE FROM Claves_Confirmacion WHERE Usuario_idUsuario='".$idUser."'");
+    $key = getFirstQueryElement($conn, "Claves_Confirmacion", "Clave", "Usuario_idUsuario", $idUser);
 
-    header("Location: profile.php");
-    exit();
+    $insertedKey = $_POST['key'];
+
+    if($key == $insertedKey)
+    {
+      /* Eliminamos el codigo */
+      mysqli_query($conn, "DELETE FROM Claves_Confirmacion WHERE Usuario_idUsuario='".$idUser."'");
+
+      header("Location: profile.php");
+      exit();
+    }
+    else
+    {
+        echo "Las claves no coinciden";
+    }
   }
-  else
-  {
-      echo "Las claves no coinciden";
-  }
-}
 ?>

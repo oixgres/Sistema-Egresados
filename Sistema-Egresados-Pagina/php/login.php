@@ -16,10 +16,10 @@ $nr = mysqli_num_rows($res);
 /* Si existe */
 if($nr == 1)
 {
-  /* si  no esta activo la cuenta */
-  $query = "SELECT * FROM Usuario WHERE Correo='".$mail."' AND Password='".$pass."' AND Estatus='INACTIVO'";
   $idUser = getFirstQueryElement($conn, "Usuario", "idUsuario", "Correo", $mail);
+  $query = "SELECT * FROM Usuario WHERE Correo='".$mail."' AND Password='".$pass."' AND Estatus='INACTIVO'";
 
+  /* si  no esta activo la cuenta */
   if(mysqli_query($conn, $query))
   {
     $_SESSION['idUser'] = $idUser;
