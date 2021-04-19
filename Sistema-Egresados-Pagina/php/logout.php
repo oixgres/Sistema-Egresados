@@ -12,4 +12,5 @@
   setcookie("id",  "", time()-1,"/");
 
   header("Location: ../index.html");
+  exit();
 ?>

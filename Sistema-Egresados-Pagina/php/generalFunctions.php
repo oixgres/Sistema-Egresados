@@ -49,9 +49,10 @@
   {
     session_start();
 
-    if($_COOKIE["token"] != $_SESSION["token"])
+
+    if($_COOKIE["token"] != $_SESSION["token"] || !isset($_SESSION['token']))
     {
-      header("Location: ../error.html");
+      header("Location: ../html/error.html");
       exit();
     }
   }
