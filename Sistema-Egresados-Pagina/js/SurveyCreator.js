@@ -578,6 +578,9 @@ $(document).ready(function (e) {
                         async:  false,
                         data:   {surveyId, title, theme, type},
                         type:   'POST',
+                        error:  function (xhr, status, error) { // en caso de error
+                            alert(error)
+                        },
                         success:    function (response) {
                             console.log(`Pregunta creada #ID = ${response}`);
                             let questionId = response;
@@ -598,6 +601,9 @@ $(document).ready(function (e) {
                                         progressBar.css('width',`${currentProgress}%`);
                                         progressBar.text(parseInt(currentProgress));
                                         console.log('respuesta creada = ' + response)
+                                    },
+                                    error:  function (xhr, status, error){
+                                        alert(error)
                                     }
                                 })
                             }
@@ -611,11 +617,6 @@ $(document).ready(function (e) {
                 }
 
             }
-
-
-
-
-
         })
         $(document).click(function (e) {
             $('.dropdown-menu').hide(SHOW_DELAY);
