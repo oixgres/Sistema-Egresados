@@ -43,6 +43,12 @@ $(document).ready(function (e) {
                                         <div class="form-group">
                                             <label for="QuestionTopic_${this.num_id}">Tema</label>
                                             <input type="text" class="form-control QuestionTopic" placeholder="Introduce el tema de la pregunta" id="QuestionTopic_${this.num_id}">
+                                             <div class="valid-feedback"> <!-- Para habilitarlo agregar clase is-valid al input -->
+                                                Correcto
+                                            </div>
+                                            <div class="invalid-feedback"> <!-- Para habilitarlo agregar clase is-invalid al input -->
+                                                Favor de llenar el campo
+                                            </div>
                                         </div>
                                     </div>
                                    
@@ -50,6 +56,12 @@ $(document).ready(function (e) {
                                         <div class="form-group">
                                             <label for="QuestionTittle_${this.num_id}">Titulo de la pregunta</label>
                                             <input type="text" class="form-control QuestionTitle" placeholder="Introduce el título de la pregunta" id="QuestionTittle_${this.num_id}">
+                                            <div class="valid-feedback"> <!-- Para habilitarlo agregar clase is-valid al input -->
+                                                Correcto
+                                            </div>
+                                            <div class="invalid-feedback"> <!-- Para habilitarlo agregar clase is-invalid al input -->
+                                                Favor de llenar el campo
+                                            </div>
                                         </div>
                                     </div>
                                    
@@ -81,7 +93,7 @@ $(document).ready(function (e) {
                                     </div>
                                     
                                     <div class="col-12 mt-2">
-                                        <button type="button" class="btn btn-warning btn-block rounded-pill mb-5" id=DeleteQuestion_${this.num_id}>Eliminar Pregunta</button>
+                                        <button type="button" class="btn btn-danger btn-block rounded-pill mb-5" id=DeleteQuestion_${this.num_id}>Eliminar Pregunta</button>
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +148,7 @@ $(document).ready(function (e) {
                     e.stopPropagation();
 
                     let node = $(`
-                        <div class="col-12">
+                        <div class="col-12 mt-1">
                             <div class="input-group">
                                 <input type="text" class="form-control Answer" placeholder="Texto de la Respuesta">
                                  <span class="input-group-btn">
@@ -336,7 +348,6 @@ $(document).ready(function (e) {
             }
             this.setPreviewAnswes = function (type = "", answers = []) {
                 let i;
-                console.log(type)
                 for(i = 0; i < answers.length; i++){
                     switch(type)
                     {
@@ -539,6 +550,7 @@ $(document).ready(function (e) {
         })
 
         SaveToDatabase.on('click', function (e) {
+
             e.stopPropagation();
             let progressBar = $(`#ProgressBarDatabase`);
             let currentProgress = 0;
@@ -560,41 +572,50 @@ $(document).ready(function (e) {
                 let theme = questionThemes[i];
                 let type = questionTypes[i];
 
-                $.ajax({ //insertar pregunta en la base de datos
-                    url:    '../php/createQuestion.php',
-                    async:  false,
-                    data:   {surveyId, title, theme, type},
-                    type:   'POST',
-                    success:    function (response) {
-                        console.log(`Pregunta creada #ID = ${response}`);
-                        let questionId = response;
-                        currentProgress += ProgressBarIncrement;
-                        progressBar.css('width',`${currentProgress}%`);
-                        progressBar.text(parseInt(currentProgress));
+                if(validateAllFields()){
+                    $.ajax({ //insertar pregunta en la base de datos
+                        url:    '../php/createQuestion.php',
+                        async:  false,
+                        data:   {surveyId, title, theme, type},
+                        type:   'POST',
+                        success:    function (response) {
+                            console.log(`Pregunta creada #ID = ${response}`);
+                            let questionId = response;
+                            currentProgress += ProgressBarIncrement;
+                            progressBar.css('width',`${currentProgress}%`);
+                            progressBar.text(parseInt(currentProgress));
 
-                        for(let j = 0; j < questionAnswers[i].length; j++){
-                            let answerText = questionAnswers[i][j];
-                            $.ajax({ //instertar respuestas
-                                url:    '../php/createAnswer.php',
-                                async: false,
-                                data:   {questionId, answerText},
-                                type:   'POST',
-                                success: function (response) {
-                                    console.log(currentProgress)
-                                    currentProgress += ProgressBarIncrement;
-                                    progressBar.css('width',`${currentProgress}%`);
-                                    progressBar.text(parseInt(currentProgress));
-                                    console.log('respuesta creada = ' + response)
-                                }
-                            })
+                            for(let j = 0; j < questionAnswers[i].length; j++){
+                                let answerText = questionAnswers[i][j];
+                                $.ajax({ //instertar respuestas
+                                    url:    '../php/createAnswer.php',
+                                    async: false,
+                                    data:   {questionId, answerText},
+                                    type:   'POST',
+                                    success: function (response) {
+                                        console.log(currentProgress)
+                                        currentProgress += ProgressBarIncrement;
+                                        progressBar.css('width',`${currentProgress}%`);
+                                        progressBar.text(parseInt(currentProgress));
+                                        console.log('respuesta creada = ' + response)
+                                    }
+                                })
+                            }
                         }
-                    }
-                });
+                    });
 
-                $(this).attr('disabled', true);
+                    $(this).attr('disabled', true);
+                    ModalDatabaseSuccess.modal('show');
+                }else{
+                    alert("Favor de verificar las preguntas y respuestas")
+                }
+
             }
 
-            ModalDatabaseSuccess.modal('show');
+
+
+
+
         })
         $(document).click(function (e) {
             $('.dropdown-menu').hide(SHOW_DELAY);
@@ -603,7 +624,30 @@ $(document).ready(function (e) {
 
     } //agregar listeners para elementos UNICOS
     function validateAllFields(){ //funcion para validar todas las preguntas y respuestas, tambien los campos
+        let fields = $('.QuestionTopic,.QuestionTitle,.Answer'); //todos los campos de tema
+        let status = true;
 
+        cleanValidates()//limpiar campos
+
+        //validar los topic fields
+        fields.each(function (){
+            if($(this).val() === ""){
+                $(this).addClass("alert alert-danger is-invalid");
+                status = false;
+            }
+            else{
+                $(this).addClass("alert alert-success is-valid");
+            }
+        })
+
+
+
+        return status
+    }
+
+    function cleanValidates() {
+        let fields = $('.QuestionTopic,.QuestionTitle,.Answer'); //todos los campos de tema
+        fields.removeClass('alert alert-danger alert-success is-valid is-invalid');
     }
 
     addListeners();
