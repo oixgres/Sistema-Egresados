@@ -7,6 +7,8 @@ require_once 'generalFunctions.php';
 $mail = $_POST['username'];
 $pass = $_POST['password'];
 
+
+/*Login de Egresado*/
 /* Checamos que exista el usuario egresado y que  este activo */
 $res = mysqli_query($conn, "SELECT * FROM Usuario WHERE Correo='".$mail."' AND Password='".$pass."'");
 $nr = mysqli_num_rows($res);
