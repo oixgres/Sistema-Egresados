@@ -604,6 +604,7 @@ $(document).ready(function (e) {
                                     },
                                     error:  function (xhr, status, error){
                                         alert(error)
+                                        break;
                                     }
                                 })
                             }
