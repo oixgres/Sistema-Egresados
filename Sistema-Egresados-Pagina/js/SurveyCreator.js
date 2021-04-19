@@ -489,7 +489,7 @@ $(document).ready(function (e) {
         })
 
         QuestionCarousel.on('slid.bs.carousel', function (e) {
-            e.stopPropagation();
+            //e.stopPropagation();
             previewController.updatePreview();
         })
 

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar Usuario</title>
+    <link rel="stylesheet" href="../css/boostrap/bootstrap_pulse.min.css"> <!-- Nuevos estilos de boostrap -->
+    <style>
+        .padding-0{
+            padding-right:0;
+            padding-left:0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row"> <!-- Una navbar clasica -->
+                    <div class="col-12">
+                        <nav class="nav navbar-dark bg-primary p-3 d-flex justify-content-between">
+                            <div class="navbar-brand">Buscar usuario</div>
+                            <button type="button" class="btn btn-info">
+                                <i class="fa fa-home"></i>
+                                Regresar
+                            </button> <!-- Boton para regresar -->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row"> <!-- Contenedor principal para buscar usuario -->
+            <div class="col-12">
+                <div class="card border-bottom-0">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h2>Busqueda de usuarios</h2>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Introduzca el nombre del usuario">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary">Busqueda Avanzada</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card border-top-0">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h2>Aplicar filtros</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <label for="CampusText">Campus</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control d-inline-block" placeholder="Introduce el Campus" id="CampusText">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" class="custom-checkbox"  data-toggle="tooltip" data-placement="bottom" title="Habilita o deshabilita este filtro">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-3">
+                                <label for="FacultyText">Facultad</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control d-inline-block" placeholder="Introduce la facultad" id="FacultyText">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" class="custom-checkbox" data-toggle="tooltip" data-placement="bottom" title="Habilita o deshabilita este filtro">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-3">
+                                <label for="Program">Programa Académico</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control d-inline-block" placeholder="Introduce la carrera" id="Program">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" class="custom-checkbox" data-toggle="tooltip" data-placement="bottom" title="Habilita o deshabilita este filtro">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-3">
+                                <label for="Company">Empresa</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control d-inline-block" placeholder="Introduce la empresa" id="Company">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" class="custom-checkbox" data-toggle="tooltip" data-placement="bottom" title="Habilita o deshabilita este filtro">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/boostrap/popper.min.js"></script>
+    <script src="../js/boostrap/jquery-3.6.0.min.js"></script>
+    <script src="../js/boostrap/bootstrap.bundle.js"></script>
+    <script src="../js/boostrap/bootstrap.js"></script>
+    <script src="../js/userFinder.js"></script>
+    <script src="https://kit.fontawesome.com/5d2293cbbc.js" crossorigin="anonymous"></script>
+</body>
+</html>
