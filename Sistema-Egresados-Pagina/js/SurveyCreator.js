@@ -412,7 +412,12 @@ $(document).ready(function (e) {
         const questionFinder = $('#questionFinder');
         const carouselButtonLeft= $('#carousel-button-left');
         const carouselButtonRight = $('#carousel-button-right');
+        const btnDismiss = $('#btnDismiss');
 
+
+        btnDismiss.on('click', function (e) {
+            $('#ModalDatabaseSuccess').modal('hide');
+        })
         carouselButtonLeft.on('click', function (e) {
             QuestionCarousel.carousel('prev');
         })
