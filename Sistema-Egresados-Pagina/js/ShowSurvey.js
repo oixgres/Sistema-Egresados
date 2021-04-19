@@ -118,6 +118,7 @@ class AnswersToDatabase{
             this.SaveInputAnswersToDatabase(idUsuario);
             this.SaveCheckBoxAnswersToDatabase(idUsuario);
             this.saveTextAreaAnswersToDatabase(idUsuario);
+            $('#ModalDatabaseSuccess').modal('show');
 
         }
         this.SaveInputAnswersToDatabase = function(idUsuario){
@@ -268,6 +269,7 @@ $(document).ready(function (e) {
     })
 
     SaveAnswersToDatabase.on('click', function (e) {
+        ProgressBarDatabase.show(0)
         answersToDatabase =  new AnswersToDatabase(questionCreator.totalQuestions);
         answersToDatabase.SaveAnswersToDatabase(idUsuario);
     })
