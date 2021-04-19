@@ -1,7 +1,17 @@
 $(document).ready(function (e) {
+    /*
+        case 'Radio':   return 0;
+        case 'Text Area':   return 1;
+        case 'Input':   return 2;
+        case 'Checkbox':    return 3;
+        default:    return -1;
+     */
     $('#QuestionContainerController,#QuestionContainerPreview').hide();
     const SHOW_DELAY = 600;
     const toast = $('.toast');
+    //<source src="../sounds/ShowSuccessToast.ogg" type="audio/ogg">
+    let ShowSuccessToastSound = new Audio('../sounds/definite-555.ogg');
+    let ShowFaildedSound = new Audio('../sounds/dont-think-so-556.ogg');
 
     toast.toast('hide');
 
@@ -33,6 +43,12 @@ $(document).ready(function (e) {
                                         <div class="form-group">
                                             <label for="QuestionTopic_${this.num_id}">Tema</label>
                                             <input type="text" class="form-control QuestionTopic" placeholder="Introduce el tema de la pregunta" id="QuestionTopic_${this.num_id}">
+                                             <div class="valid-feedback"> <!-- Para habilitarlo agregar clase is-valid al input -->
+                                                Correcto
+                                            </div>
+                                            <div class="invalid-feedback"> <!-- Para habilitarlo agregar clase is-invalid al input -->
+                                                Favor de llenar el campo
+                                            </div>
                                         </div>
                                     </div>
                                    
@@ -40,6 +56,12 @@ $(document).ready(function (e) {
                                         <div class="form-group">
                                             <label for="QuestionTittle_${this.num_id}">Titulo de la pregunta</label>
                                             <input type="text" class="form-control QuestionTitle" placeholder="Introduce el título de la pregunta" id="QuestionTittle_${this.num_id}">
+                                            <div class="valid-feedback"> <!-- Para habilitarlo agregar clase is-valid al input -->
+                                                Correcto
+                                            </div>
+                                            <div class="invalid-feedback"> <!-- Para habilitarlo agregar clase is-invalid al input -->
+                                                Favor de llenar el campo
+                                            </div>
                                         </div>
                                     </div>
                                    
@@ -71,7 +93,7 @@ $(document).ready(function (e) {
                                     </div>
                                     
                                     <div class="col-12 mt-2">
-                                        <button type="button" class="btn btn-warning btn-block rounded-pill" id=DeleteQuestion_${this.num_id}>Eliminar Pregunta</button>
+                                        <button type="button" class="btn btn-danger btn-block rounded-pill mb-5" id=DeleteQuestion_${this.num_id}>Eliminar Pregunta</button>
                                     </div>
                                 </div>
                             </div>
@@ -126,7 +148,7 @@ $(document).ready(function (e) {
                     e.stopPropagation();
 
                     let node = $(`
-                        <div class="col-12">
+                        <div class="col-12 mt-1">
                             <div class="input-group">
                                 <input type="text" class="form-control Answer" placeholder="Texto de la Respuesta">
                                  <span class="input-group-btn">
@@ -272,6 +294,18 @@ $(document).ready(function (e) {
             this.AnswerParent = AnswerParent;
             this.num_id = 0;
 
+            this.createCheckboxAnswer = function (text){
+                let node = $(`
+                    <div class="col-12" >
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="customRadio_${this.num_id}" name='checkbox' class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio_${this.num_id}">${text}</label>
+                        </div>
+                    </div>`
+                );
+                this.num_id++;
+                return node;
+            }
             this.createRadioAnswer = function (text, name) {
                 let node = $(`
                      <div class="col-12" >
@@ -297,12 +331,23 @@ $(document).ready(function (e) {
                 this.num_id++;
                 return node;
             }
+            this.createTextAreaAnswer = function (text) {
+                let node = $(`
+                    <div class="col-12">
+                        <div class="form-group">
+                            <textarea type="text" class="form-control" placeholder="${text}" id="preview_textArea_${this.num_id}"></textarea>
+                        </div>
+                    </div>
+                `);
+
+                this.num_id++;
+                return node;
+            }
             this.setTitle = function (title) {
                 $('#QuestionTittlePreview').text(title);
             }
             this.setPreviewAnswes = function (type = "", answers = []) {
                 let i;
-
                 for(i = 0; i < answers.length; i++){
                     switch(type)
                     {
@@ -315,6 +360,16 @@ $(document).ready(function (e) {
                                         this.AnswerParent.append(I_node);
                                         I_node.show();
                                         break;
+
+                        case 'Text Area':   let TA_node = this.createTextAreaAnswer(answers[i]);
+                                            this.AnswerParent.append(TA_node);
+                                            TA_node.show();
+                                            break;
+
+                        case 'Checkbox':    let CB_node = this.createCheckboxAnswer(answers[i]);
+                                            this.AnswerParent.append(CB_node);
+                                            CB_node.show();
+                                            break;
                     }
 
                 }
@@ -354,6 +409,7 @@ $(document).ready(function (e) {
         const QuestionCarousel = $('#QuestionCarousel');
         const AddSurvey = $('#AddSurvey');
         const SaveToDatabase = $(`#SaveToDatabase`);
+        const questionFinder = $('#questionFinder');
 
         main_container.hide(0, function (e) {
             $(this).show(SHOW_DELAY);
@@ -365,6 +421,16 @@ $(document).ready(function (e) {
             if(dropdownMenu.length)
                 dropdownMenu.toggle(SHOW_DELAY);
 
+        })
+
+        questionFinder.on('keydown', function (e) {
+            let value = $(this).val();
+
+            if(e.key === 'Enter'){
+               if(parseInt(value, 10)){
+                   QuestionCarousel.carousel(parseInt(value, 10));
+               }
+            }
         })
 
         dropdownItems.on('click', function (e) {
@@ -416,15 +482,20 @@ $(document).ready(function (e) {
 
         AddSurvey.on('click', function (e) { //guardar en base de datos
             e.stopPropagation();
-
+            $(this).children('span').removeClass('d-none')
             let surveyName = $('#SurveyName').val(); //obtener el nombre de la encuesta
 
-            let university = null;
-            let campus = null;
-            let faculty = null;
-            let program = null;
+            let university = "NULL";
+            let campus = "NULL";
+            let faculty = "NULL";
+            let program = "NULL";
 
             let SurveyTopic = $('#SurveyTopic').val(); //obtener el alcance
+
+            $('#SurveyName').removeClass('alert alert-success is-valid');
+            $('#SurveyTopic').removeClass('alert alert-success is-valid');
+            $('#SurveyName').removeClass('alert alert-danger is-invalid');
+            $('#SurveyTopic').removeClass('alert alert-danger is-invalid');
 
             switch ($('#SurveyScope').text())
             {
@@ -447,22 +518,39 @@ $(document).ready(function (e) {
                 data:   {surveyName, campus, faculty, program, university},
                 type: 'POST',
                 success: function (response) {
-                    if(parseInt(response, 10)){
+                    console.log(response)
+                    if(parseInt(response, 10) > 0){
                         //encuesta insertada con exito
                         sessionStorage.setItem('surveyId', response);//guardar llave primaria de la encuesta
-                        console.log(`Nueva encuesta creada #ID = ${response}`);
                         $('#QuestionContainerController,#QuestionContainerPreview').show(SHOW_DELAY);//mostrar las herramientas
                         toast.toast('show');
+                        $('#AddSurvey').children('span').addClass('d-none')
+
+                        $('#SurveyName').addClass('alert alert-success is-valid');
+                        $('#SurveyTopic').addClass('alert alert-success is-valid');
+
+                        ShowSuccessToastSound.play().then(r => function () { });
+
                     }
                     else
                     {
-                        alert('No se puedo crear la encuesta')
+                        ShowFaildedSound.play();
+                        $('#AddSurvey').children('span').addClass('d-none')
+
+                        switch (parseInt(response, 10)){
+                            case -1:    $('#SurveyName').addClass('alert alert-danger is-invalid');
+                                        break;
+                            case -2:     $('#SurveyTopic').addClass('alert alert-danger is-invalid');
+                                        break;
+                        }
+
                     }
                 }
             })
         })
 
         SaveToDatabase.on('click', function (e) {
+
             e.stopPropagation();
             let progressBar = $(`#ProgressBarDatabase`);
             let currentProgress = 0;
@@ -484,41 +572,52 @@ $(document).ready(function (e) {
                 let theme = questionThemes[i];
                 let type = questionTypes[i];
 
-                $.ajax({ //insertar pregunta en la base de datos
-                    url:    '../php/createQuestion.php',
-                    async:  false,
-                    data:   {surveyId, title, theme, type},
-                    type:   'POST',
-                    success:    function (response) {
-                        console.log(`Pregunta creada #ID = ${response}`);
-                        let questionId = response;
-                        currentProgress += ProgressBarIncrement;
-                        progressBar.css('width',`${currentProgress}%`);
-                        progressBar.text(parseInt(currentProgress));
+                if(validateAllFields()){
+                    $.ajax({ //insertar pregunta en la base de datos
+                        url:    '../php/createQuestion.php',
+                        async:  false,
+                        data:   {surveyId, title, theme, type},
+                        type:   'POST',
+                        error:  function (xhr, status, error) { // en caso de error
+                            alert(error)
+                        },
+                        success:    function (response) {
+                            console.log(`Pregunta creada #ID = ${response}`);
+                            let questionId = response;
+                            currentProgress += ProgressBarIncrement;
+                            progressBar.css('width',`${currentProgress}%`);
+                            progressBar.text(parseInt(currentProgress));
 
-                        for(let j = 0; j < questionAnswers[i].length; j++){
-                            let answerText = questionAnswers[i][j];
-                            $.ajax({ //instertar respuestas
-                                url:    '../php/createAnswer.php',
-                                async: false,
-                                data:   {questionId, answerText},
-                                type:   'POST',
-                                success: function (response) {
-                                    console.log(currentProgress)
-                                    currentProgress += ProgressBarIncrement;
-                                    progressBar.css('width',`${currentProgress}%`);
-                                    progressBar.text(parseInt(currentProgress));
-                                    console.log('respuesta creada = ' + response)
-                                }
-                            })
+                            for(let j = 0; j < questionAnswers[i].length; j++){
+                                let answerText = questionAnswers[i][j];
+                                $.ajax({ //instertar respuestas
+                                    url:    '../php/createAnswer.php',
+                                    async: false,
+                                    data:   {questionId, answerText},
+                                    type:   'POST',
+                                    success: function (response) {
+                                        console.log(currentProgress)
+                                        currentProgress += ProgressBarIncrement;
+                                        progressBar.css('width',`${currentProgress}%`);
+                                        progressBar.text(parseInt(currentProgress));
+                                        console.log('respuesta creada = ' + response)
+                                    },
+                                    error:  function (xhr, status, error){
+                                        alert(error)
+                                        break;
+                                    }
+                                })
+                            }
                         }
+                    });
 
+                    $(this).attr('disabled', true);
+                    ModalDatabaseSuccess.modal('show');
+                }else{
+                    alert("Favor de verificar las preguntas y respuestas")
+                }
 
-                    }
-                });
             }
-
-            ModalDatabaseSuccess.modal('show');
         })
         $(document).click(function (e) {
             $('.dropdown-menu').hide(SHOW_DELAY);
@@ -526,6 +625,32 @@ $(document).ready(function (e) {
 
 
     } //agregar listeners para elementos UNICOS
+    function validateAllFields(){ //funcion para validar todas las preguntas y respuestas, tambien los campos
+        let fields = $('.QuestionTopic,.QuestionTitle,.Answer'); //todos los campos de tema
+        let status = true;
+
+        cleanValidates()//limpiar campos
+
+        //validar los topic fields
+        fields.each(function (){
+            if($(this).val() === ""){
+                $(this).addClass("alert alert-danger is-invalid");
+                status = false;
+            }
+            else{
+                $(this).addClass("alert alert-success is-valid");
+            }
+        })
+
+
+
+        return status
+    }
+
+    function cleanValidates() {
+        let fields = $('.QuestionTopic,.QuestionTitle,.Answer'); //todos los campos de tema
+        fields.removeClass('alert alert-danger alert-success is-valid is-invalid');
+    }
 
     addListeners();
     questionController.createQuestion();
