@@ -2,18 +2,31 @@ $(document).ready(function (e) {
     const filters = $('.custom-checkbox');
     const AdvanceSearch = $('#AdvanceSearch');
     const FiltersContainer =  $('#FiltersContainer');
-    const OffCanvas = new bootstrap.Offcanvas($('#UserProfile')[0]);
+    const UserProfile = new bootstrap.Offcanvas($('#UserProfile')[0]);
+    const SendEmail = new bootstrap.Offcanvas($('#SendEmail')[0]);
 
     filters.parent().siblings().attr('disabled', true); //deshabilitar por default los filtros
-    $('[data-toggle="tooltip"]').tooltip() //habilitar los tooltips
+
+
+    //habilitar los tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+
 
     filters.on('click', function (e) {
         $(this).parent().siblings().attr('disabled', !$(this).prop('checked'))
     })
 
-    $('.showOffCanvas').on('click', function (e) {
+    $('.showProfileBtn').on('click', function (e) {
         e.stopPropagation();
-        OffCanvas.toggle();
+        UserProfile.toggle();
+    })
+
+    $('.sendEmailProfile').on('click', function (e) {
+        e.stopPropagation();
+        SendEmail.toggle();
     })
 
     FiltersContainer.hide();
