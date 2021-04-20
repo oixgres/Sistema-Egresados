@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Editor de encuestas</title>
+    <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css"> <!-- Nuevos estilos de boostrap -->
+    <link rel="stylesheet" href="../css/boostrap/bootstrap_pulse.min.css"> <!-- Nuevos estilos de boostrap -->
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row"> <!-- Una navbar clasica -->
+                    <div class="col-12">
+                        <nav class="nav navbar-dark bg-primary p-3 d-flex justify-content-between">
+                            <div class="navbar-brand">Editor de encuestas</div>
+                            <button type="button" class="btn btn-info">
+                                <i class="fa fa-home"></i>
+                                Regresar
+                            </button> <!-- Boton para regresar -->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h2 class="display-6">Seleccione una encuesta</h2>
+                        </div>
+
+                        <table class="table table-bordered table-hover text-center">
+                            <thead class="thead-default" id="UsersContainer">
+                            <th>Nombre</th>
+                            <th>Alcance</th>
+                            <th>Nombre del alcance</th>
+                            <th>Preguntas</th>
+                            <th>Opciones</th>
+                            </thead>
+
+                            <tr>
+                                <td>Seguimiento de egresados</td>
+                                <td>Facultad</td>
+                                <td>FCQI</td>
+                                <td>20</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button class="btn mr-1 btn-success showProfileBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ver">
+                                            <span class="fa fa-search"></span>
+                                        </button>
+                                        <button class="btn btn-info mr-1 sendEmailProfile" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar">
+                                            <span class="fa fa-edit"></span>
+                                        </button>
+                                        <button class="btn btn-danger deleteUser" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliminar">
+                                            <span class="fa fa-times"></span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script src="../js/boostrap/jquery-3.6.0.min.js"></script>
+    <script src="../js/boostrap/popper.min.js"></script>
+    <script src="../js/boostrap/bootstrap.bundle.js"></script>
+    <script src="../js/boostrap/bootstrap.js"></script>
+    <script src="https://kit.fontawesome.com/5d2293cbbc.js" crossorigin="anonymous"></script>
+</body>
+</html>
