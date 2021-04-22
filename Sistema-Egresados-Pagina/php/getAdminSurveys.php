@@ -24,7 +24,7 @@ require_once "dbh.php";
 */
 
 if(isset($_POST['idAdmin'])) {
-    $idUsuario = $_POST['idAdmin'];
+    $idAdmin = $_POST['idAdmin'];
 } else {
     echo -1;
     $conn->close();
@@ -55,14 +55,18 @@ $sql = "SELECT  Encuesta.idEncuesta,
                     WHEN Encuesta.Plan_Estudio_idPlan_Estudio IS NOT NULL THEN Plan_Estudio.Nombre
                 END) AS alcance,
                 COUNT(DISTINCT(Pregunta.idPregunta)) AS numPreguntas
-        FROM Encuesta
-        LEFT JOIN Universidad ON Encuesta.Universidad_idUniversidad = Universidad.idUniversidad
-        LEFT JOIN Admin ON Admin.Universidad_idUniversidad = Universidad.idUniversidad
-        LEFT JOIN Facultad ON Encuesta.Universidad_idUniversidad = Universidad.idUniversidad
-        LEFT JOIN Campus ON Encuesta.Campus_idCampus = Campus.idCampus
-        LEFT JOIN Plan_Estudio ON Encuesta.Plan_Estudio_idPlan_Estudio = Plan_Estudio.idPlan_Estudio
-        INNER JOIN Pregunta ON Pregunta.Encuesta_idEncuesta = Encuesta.idEncuesta
-        WHERE Admin.idAdmin =  $idAdmin";
+        FROM Universidad
+        INNER JOIN Admin ON Admin.Universidad_idUniversidad = Universidad.idUniversidad
+        INNER JOIN Campus ON Campus.Universidad_idUniversidad = Universidad.idUniversidad
+        INNER JOIN Facultad ON Facultad.Campus_idCampus = Campus.idCampus
+        INNER JOIN Plan_Estudio ON Plan_Estudio.Facultad_idFacultad = Facultad.idFacultad
+        INNER JOIN Encuesta ON Encuesta.Universidad_idUniversidad = Universidad.idUniversidad
+                            OR Encuesta.Campus_idCampus = Campus.idCampus
+                            OR Encuesta.Facultad_idFacultad = Facultad.idFacultad
+                            OR Encuesta.Plan_Estudio_idPlan_Estudio = Plan_Estudio.idPlan_Estudio
+        LEFT JOIN Pregunta ON Pregunta.Encuesta_idEncuesta = Encuesta.idEncuesta
+        WHERE Admin.idAdmin = $idAdmin
+        GROUP BY Encuesta.idEncuesta";
 $res = mysqli_query($conn, $sql);
 
 while($fila = mysqli_fetch_array($res)) {
@@ -81,7 +85,9 @@ while($fila = mysqli_fetch_array($res)) {
 }
 /*
  *	JSON Ejemplo:
- *	   [{"idEncuesta":"1","nombre":"Historial laboral","tipoAlcance":"0","alcance":"UABC","numPreguntas":"3"}]
+ *	   [{"idEncuesta":"1","nombre":"Historial trabajo","tipoAlcance":"0","alcance":"UABC","numPreguntas":"3"},
+ *      {"idEncuesta":"3","nombre":"Desarrollo","tipoAlcance":"3","alcance":"Ing Comp","numPreguntas":"1"},
+ *      {"idEncuesta":"4","nombre":"Capacitaciones","tipoAlcance":"1","alcance":"Ensenada","numPreguntas":"5"}]
 */
 $jsonString = json_encode($json); 	//convertir el json a cadena
 echo $jsonString; 					//retornar el json al frontend
