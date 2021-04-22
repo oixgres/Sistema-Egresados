@@ -1,5 +1,26 @@
-/*
+.modified-navbar{
+  height: 60px;
+  padding-top: 0;
+}
 
-Avisa antes de pinchi mover algo OMAR >:(
+.modified-navbar-elements, .modified-navbar-quit{
+  color: white;
+  background-color: rgb(52,58,64);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding-left: 2rem;
+  padding-right: 2rem;
 
-*/
+}
+
+.modified-navbar-elements:hover{
+  color: white;
+  background-color: rgb(33, 96, 212);
+}
+
+.modified-navbar-quit:hover{
+  color: white;
+  background-color: rgb(231,91,91);
+}
