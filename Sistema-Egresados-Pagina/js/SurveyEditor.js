@@ -108,6 +108,7 @@ $(document).ready(function () {
                     ConfirmDeleteSurvey.on('click', function (e) {
                         e.stopPropagation()
                         showConfirmDeleteModal.hide();
+                        deleteSurvey(idEncuesta);
 
                     })
 
@@ -118,7 +119,7 @@ $(document).ready(function () {
                     ConfirmDeleteDialog.off('hidden.bs.modal')
                     ConfirmDeleteDialog.on('hidden.bs.modal', function (e) {
 
-                        deleteSurvey(idEncuesta);
+
 
                         spinner.addClass('d-none');
                         searchIcon.removeClass('d-none');
@@ -240,7 +241,7 @@ $(document).ready(function () {
             type: 'POST',
             success: function (response) {
                 try{
-                    json = JSON.parse(response);
+                    let json = JSON.parse(response);
 
                     json.forEach(survey => {
                         tableManager.createSurveyDataRow(survey.idEncuesta, survey.nombre, survey.tipoAlcance, survey.alcance, survey.numPreguntas)
