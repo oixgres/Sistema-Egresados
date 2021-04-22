@@ -8,6 +8,12 @@
     <title>Editor de encuestas</title>
     <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css"> <!-- Nuevos estilos de boostrap -->
     <link rel="stylesheet" href="../css/boostrap/bootstrap_pulse.min.css"> <!-- Nuevos estilos de boostrap -->
+
+    <style>
+        tr:hover{
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -35,7 +41,7 @@
                             <h2 class="display-6">Seleccione una encuesta</h2>
                         </div>
 
-                        <table class="table table-bordered table-hover text-center">
+                        <table class="table table-bordered table-hover text-center" id="surveyDataContainer">
                             <thead class="thead-default" id="UsersContainer">
                             <th>Nombre</th>
                             <th>Alcance</th>
@@ -44,25 +50,6 @@
                             <th>Opciones</th>
                             </thead>
 
-                            <tr>
-                                <td>Seguimiento de egresados</td>
-                                <td>Facultad</td>
-                                <td>FCQI</td>
-                                <td>20</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button class="btn mr-1 btn-success showProfileBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ver">
-                                            <span class="fa fa-search"></span>
-                                        </button>
-                                        <button class="btn btn-info mr-1 sendEmailProfile" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar">
-                                            <span class="fa fa-edit"></span>
-                                        </button>
-                                        <button class="btn btn-danger deleteUser" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliminar">
-                                            <span class="fa fa-times"></span>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
 
                         </table>
 
@@ -73,12 +60,27 @@
 
     </div>
 
+    <!-- Contenedor para los offcanvas -->
+    <div class="container">
 
+        <div class="offcanvas offcanvas-start w-25" tabindex="-1" id="SurveyContainerShow">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Ver encuesta</h5>
+                <button type="button" data-bs-dismiss="offcanvas" class="btn-close text-reset"></button>
+            </div>
+            <div class="offcanvas-body overflow-scroll">
+                <div class="row" id="QuestionContainer">
+
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="../js/boostrap/jquery-3.6.0.min.js"></script>
     <script src="../js/boostrap/popper.min.js"></script>
     <script src="../js/boostrap/bootstrap.bundle.js"></script>
     <script src="../js/boostrap/bootstrap.js"></script>
     <script src="https://kit.fontawesome.com/5d2293cbbc.js" crossorigin="anonymous"></script>
+    <script src="../js/SurveyEditor.js"></script>
 </body>
 </html>

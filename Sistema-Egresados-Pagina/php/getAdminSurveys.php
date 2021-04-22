@@ -23,6 +23,7 @@ require_once "dbh.php";
  *	-3 : No existen encuestas para este idAdmin
 */
 
+
 if(isset($_POST['idAdmin'])) {
     $idAdmin = $_POST['idAdmin'];
 } else {
