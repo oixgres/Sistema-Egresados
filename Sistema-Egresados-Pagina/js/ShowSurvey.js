@@ -7,7 +7,6 @@ const CHECKBOX = 3;
 
 class QuestionCreator{
 
-
     constructor(parent) {
         this.question_id = 0;
         this.parent = parent;
