@@ -13,6 +13,7 @@
         tr:hover{
             background-color: #f2f2f2;
         }
+
     </style>
 </head>
 <body>
@@ -63,9 +64,9 @@
     <!-- Contenedor para los offcanvas -->
     <div class="container">
 
-        <div class="offcanvas offcanvas-start w-25" tabindex="-1" id="SurveyContainerShow">
+        <div class="offcanvas offcanvas-start w-50" tabindex="-1" id="SurveyContainerShow">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Ver encuesta</h5>
+                <h5 class="offcanvas-title">Ver encuesta</h5>
                 <button type="button" data-bs-dismiss="offcanvas" class="btn-close text-reset"></button>
             </div>
             <div class="offcanvas-body overflow-scroll">
@@ -74,8 +75,46 @@
                 </div>
             </div>
         </div>
+
+        <div class="offcanvas offcanvas-end w-100" tabindex="-1" id="SurveyContainerEdit">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title">Editar encuesta</h5>
+                <button type="button" data-bs-dismiss="offcanvas" class="btn-close text-reset"></button>
+            </div>
+            <div class="offcanvas-body overflow-scroll">
+                <div class="row" id="QuestionEdit">
+
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
+    <!-- Contenedor de los modal -->
+
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="ConfirmDeleteDialog" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="">Seguro que desea eliminar la encuesta?</p>
+                        <p class="text-danger">No podrá recuperarla</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="ConfirmDeleteSurvey">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <script src="../js/boostrap/jquery-3.6.0.min.js"></script>
     <script src="../js/boostrap/popper.min.js"></script>
     <script src="../js/boostrap/bootstrap.bundle.js"></script>

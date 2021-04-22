@@ -30,7 +30,7 @@ if($res->num_rows == 0) {
     exit();
 }
 
-$sql = "DELETE FROM Encuesta WHERE idEncuesta = $idEncuesta";
+$sql = "DELETE FROM Encuesta WHERE idEncuesta = '$idEncuesta'";
 if(mysqli_query($conn, $sql)) {
     echo 0;
 } else {

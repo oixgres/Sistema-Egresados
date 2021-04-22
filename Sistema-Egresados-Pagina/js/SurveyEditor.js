@@ -6,7 +6,9 @@ $(document).ready(function () {
 
     class TableManager{ //clase para manejar las filas de las encuestas
         constructor(container) {
-            this.Offcanvas = new bootstrap.Offcanvas($('#SurveyContainerShow')[0]);
+            this.ShowSurveyOffcanvas = new bootstrap.Offcanvas($('#SurveyContainerShow')[0]);
+            this.ShowEditSurveyCanvas = new bootstrap.Offcanvas($('#SurveyContainerEdit')[0]);
+            this.ConfirmDeleteModal = new bootstrap.Modal($('#ConfirmDeleteDialog')[0]);
             this.numberRegex = RegExp('[0-9]+')
             this.container = container; //contenedor padre
             this.scopeTypes = ["UNIVERSIDAD", "CAMPUS", "FACULTAD", "PROGRAMA ACADEMICO"]
@@ -14,7 +16,9 @@ $(document).ready(function () {
             //funcion para mostrar una nueva encuesta
             this.createSurveyDataRow =  function (surveyId,surveyName, type_scope, scope_name, num_questions) {
                 let regex = this.numberRegex
-                let offcanvas = this.Offcanvas;
+                let showSurveyCanvas = this.ShowSurveyOffcanvas;
+                let showEditCanvas = this.ShowEditSurveyCanvas;
+                let showConfirmDeleteModal = this.ConfirmDeleteModal;
                 //Nodo html para crear una nueva fila
                 let node = $(`
                     <tr id="surveyNumber_${surveyId}">
@@ -28,11 +32,13 @@ $(document).ready(function () {
                                     <span class="fa fa-search"></span>
                                     <span class="spinner-border spinner-border-sm float-right d-none" role="status"></span>
                                 </button>
-                                <button class="btn btn-info mr-1 sendEmailProfile" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar">
+                                <button class="btn btn-info mr-1 showEditSurvey" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar">
                                     <span class="fa fa-edit"></span>
+                                    <span class="spinner-border spinner-border-sm float-right d-none" role="status"></span>
                                 </button>
-                                <button class="btn btn-danger deleteUser" data-bs-toggle="tooltip" data-bs-placement="right" title="Eliminar">
+                                <button class="btn btn-danger deleteSurvey" data-bs-toggle="tooltip" data-bs-placement="right" title="Eliminar">
                                     <span class="fa fa-times"></span>
+                                    <span class="spinner-border spinner-border-sm float-right d-none" role="status"></span>
                                 </button>
                             </div>
                         </td>
@@ -47,7 +53,7 @@ $(document).ready(function () {
                     let searchIcon = $(this).children().first();
                     let spinner = $(this).children().last();
 
-                    console.log("click = " + idEncuesta)
+
                     searchIcon.addClass('d-none');
                     spinner.removeClass('d-none');
 
@@ -55,10 +61,68 @@ $(document).ready(function () {
                     showSurveyFromDatabase(idEncuesta);
                     /*********************************/
 
-                    offcanvas.toggle(); //mostrar offcanvas
+                    showSurveyCanvas.toggle(); //mostrar offcanvas
 
                     spinner.addClass('d-none');
                     searchIcon.removeClass('d-none');
+
+                })
+
+                node.find('.showEditSurvey').on('click', function (e) {
+                    e.stopPropagation();
+                    let row = $(this).parent().parent().parent() //Obtener la fila
+                    let idEncuesta = regex.exec(row.attr('id')).pop(); //obtener id de la encuesta
+                    let searchIcon = $(this).children().first();
+                    let spinner = $(this).children().last();
+
+                    searchIcon.addClass('d-none');
+                    spinner.removeClass('d-none');
+
+                    //peticion ajax
+
+                    //
+
+                    showEditCanvas.toggle(); //mostrar offcanvas
+
+                    spinner.addClass('d-none');
+                    searchIcon.removeClass('d-none');
+
+                })
+
+                node.find('.deleteSurvey').on('click', function (e) {
+                    e.stopPropagation();
+                    let row = $(this).parent().parent().parent() //Obtener la fila
+                    let idEncuesta = regex.exec(row.attr('id')).pop(); //obtener id de la encuesta
+                    let searchIcon = $(this).children().first();
+                    let spinner = $(this).children().last();
+                    let ConfirmDeleteSurvey = $('#ConfirmDeleteSurvey');
+                    let ConfirmDeleteDialog = $('#ConfirmDeleteDialog');
+
+                    searchIcon.addClass('d-none');
+                    spinner.removeClass('d-none');
+
+                    //Quitar listener
+                    ConfirmDeleteSurvey.off('click');
+
+                    //agregar nuevo listener
+                    ConfirmDeleteSurvey.on('click', function (e) {
+                        e.stopPropagation()
+                        showConfirmDeleteModal.hide();
+
+                    })
+
+                    //peticion ajax para mostrar la enceusta
+                    showConfirmDeleteModal.show();
+                    /*********************************/
+
+                    ConfirmDeleteDialog.off('hidden.bs.modal')
+                    ConfirmDeleteDialog.on('hidden.bs.modal', function (e) {
+
+                        deleteSurvey(idEncuesta);
+
+                        spinner.addClass('d-none');
+                        searchIcon.removeClass('d-none');
+                    })
 
                 })
 
@@ -66,6 +130,10 @@ $(document).ready(function () {
 
                 this.container.append(node); //insertamos el nodo al contenedor
             }
+            this.cleanContainer = function () {
+                $('#surveyDataContainer').children().remove('tr')
+            }
+
         }
     }
     class QuestionCreator{
@@ -150,6 +218,13 @@ $(document).ready(function () {
             }
         }
     }
+    class QuestionEditorManager{
+        constructor(parent) {
+            this.parent = parent;
+            this.offCanvas = $('#QuestionEdit');
+
+        }
+    }
 
     function initializeTooltips() {
         const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')); //initialize tooltips
@@ -158,6 +233,7 @@ $(document).ready(function () {
         });
     }
     function refreshTable() {
+        tableManager.cleanContainer();
         $.ajax({
             url: '../php/getAdminSurveys.php',
             data:   {idAdmin},
@@ -260,10 +336,33 @@ $(document).ready(function () {
         })
 
     }
+    function deleteSurvey(idEncuesta) {
+
+
+        $.ajax({
+            url: '../php/deleteSurvey.php',
+            data: {idEncuesta},
+            async: false,
+            type: 'POST',
+            success: function (response) {
+                if(parseInt(response, 10) === 0){
+                    refreshTable();
+                }
+                else{
+                    console.log(response)
+                }
+            },
+            error:  function (jqXHR, textStatus, errorThrown) {
+                alert("error")
+            }
+
+        })
+    }
 
 
     const idAdmin = 1;
     const tableManager = new TableManager($('#surveyDataContainer'));
+
 
 
     refreshTable();
