@@ -8,7 +8,24 @@ checkSession();
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title><?php echo $_COOKIE["name"]."".$_COOKIE["lastname"] ?></title>
+    <title><?php echo $_COOKIE["name"]." ".$_COOKIE["lastname"] ?></title>
+
+    <?php
+    /* Consultas */
+    require_once "dbh.php";
+
+    $datos_personales = mysqli_query($conn, "SELECT * FROM Datos_Personales WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
+    $datos_laborales = mysqli_query($conn, "SELECT * FROM Datos_Laborales WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
+    $datos_escolares = mysqli_query($conn, "SELECT * FROM Datos_Escolares WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
+    $historial_laboral = mysqli_query($conn, "SELECT * FROM Historial_Laboral WHERE Usuario_idUsuario='".$_COOKIE["id"]."' ORDER BY Inicio DESC");
+
+    $datos_personales = mysqli_fetch_assoc($datos_personales);
+    $datos_laborales = mysqli_fetch_assoc($datos_laborales);
+    $datos_escolares = mysqli_fetch_assoc($datos_escolares);
+
+    $city = getFirstQueryElement($conn, "Ciudad", "Nombre", "idCiudad", $datos_personales["Ciudad_idCiudad"]);
+    $state = getFirstQueryElement($conn, "Estado", "Nombre", "idEstado", $datos_personales["Estado_idEstado"]);
+    ?>
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -17,26 +34,20 @@ checkSession();
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/index.css">
-
+    <link rel="stylesheet" href="../css/generalcss.css">
     <link rel="stylesheet" href="../css/profile.css">
   </head>
   <body class="profile-body">
 
-    <nav class="navbar navbar-collapse navbar-dark bg-dark">
-      <div class="container-fluid">
-
-      </div>
+    <!-- navbar -->
+    <nav class="navbar navbar-collapse navbar-dark bg-dark modified-navbar">
       <a class="navbar-brand" href="profile.php">Sistema Egresados</a>
 
-      <ul class="navbar ml-auto justify-content-end">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Perfil <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Acerca de</a>
-        </li>
-      </ul>
-      <a href="logout.php" class="btn btn-outline-success">Salir</a>
+      <div class="row ml-auto justify-content-end">
+        <a class="nav-link modified-navbar-elements" href="#">Perfil </a>
+        <a class="nav-link modified-navbar-elements" href="#">Acerca de</a>
+        <a href="logout.php" class="nav-link modified-navbar-quit">Salir</a>
+      </div>
     </nav>
 
     <div class="container emp-profile">
@@ -57,7 +68,7 @@ checkSession();
                             <?php echo $_COOKIE["name"]." ".$_COOKIE["lastname"] ?>
                         </h5>
                         <h6>
-                            Desarrollador y Diseñador Web
+                            <?php echo $datos_laborales["Empleo"]; ?>
                         </h6>
                         <ul class="mt-5 nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
@@ -95,6 +106,7 @@ checkSession();
                 <div class="col-md-8">
                     <div class="tab-content profile-tab" id="myTabContent">
                         <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                          <!-- Nombre -->
                           <div class="row">
                                 <div class="col-md-4">
                                     <label>Nombre:</label>
@@ -103,20 +115,34 @@ checkSession();
                                     <p><?php echo $_COOKIE["name"]." ".$_COOKIE["lastname"] ?></p>
                                 </div>
                             </div>
+
+                            <!-- Correo -->
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label>Correo:</label>
+                                    <label>Correo Personal:</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p>kshitighelani@gmail.com</p>
+                                    <p><?php echo $_COOKIE["mail"]; ?></p>
                                 </div>
                             </div>
+
+                            <!-- Telefono -->
                             <div class="row">
                                 <div class="col-md-4">
                                     <label>Telefono:</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p>123 456 7890</p>
+                                    <p><?php echo $datos_personales["Telefono"]; ?></p>
+                                </div>
+                            </div>
+
+                            <!-- Ubicacion -->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Ubicacion:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p><?php echo $state.", ".$city; ?></p>
                                 </div>
                             </div>
 
@@ -125,7 +151,7 @@ checkSession();
                                     <label>Empleo:</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p>Web Developer and Designer</p>
+                                    <p><?php echo $datos_laborales["Empleo"]; ?></p>
                                 </div>
                             </div>
 
@@ -134,7 +160,7 @@ checkSession();
                                     <label>Empresa:</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p>Que te valga verga prro</p>
+                                    <p><?php echo $datos_laborales["Empresa"]; ?></p>
                                 </div>
                             </div>
 
@@ -143,7 +169,16 @@ checkSession();
                                     <label>Puesto:</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p>Quete</p>
+                                    <p> <?php echo $datos_laborales["Puesto"]; ?></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Departamento:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p><?php echo $datos_laborales["Departamento"]; ?></p>
                                 </div>
                             </div>
                         </div>
@@ -161,14 +196,6 @@ checkSession();
                             <div class="row">
                                 <div class="col-md-8 mt-1">
                                   <p>EncuestaPrueba1</p>
-                                </div>
-                                <div class="col-md-4">
-                                  <a href="#" class="btn btn-primary btn-sm">Contestar</a>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-8 mt-1">
-                                  <p>EncuestaPrueba2</p>
                                 </div>
                                 <div class="col-md-4">
                                   <a href="#" class="btn btn-primary btn-sm">Contestar</a>
@@ -192,21 +219,19 @@ checkSession();
                                   <a href="#" class="btn btn-secondary btn-sm">Modificar</a>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-8 mt-1">
-                                  <p>EncuestaPrueba2</p>
-                                </div>
-                                <div class="col-md-4">
-                                  <a href="#" class="btn btn-secondary btn-sm">Modificar</a>
-                                </div>
-                            </div>
                         </div>
 
                         <!-- Historial Laboral -->
                         <div class="tab-pane fade show active" id="history" role="tabpanel" aria-labelledby="history-tab">
+                          <?php while($row = mysqli_fetch_assoc($historial_laboral)): ?>
                           <div class="row">
                             <div class="col-md-8">
-                              <label>21/04/2021 - Actualidad</label>
+                              <?php if(!isset($row["Fin"])): ?>
+                              <label><?php echo date("d/m/Y",strtotime($row["Inicio"]))." - Actualidad"; ?></label>
+                              <?php else: ?>
+                              <label><?php echo date("d/m/Y",strtotime($row["Inicio"]))." - ".date("d/m/Y",strtotime($row["Fin"])); ?></label>
+                              <?php endif; ?>
+
                             </div>
                             <div class="col-md-4">
                               <p></p>
@@ -217,7 +242,7 @@ checkSession();
                                   <label>Empleo:</label>
                               </div>
                               <div class="col-md-8">
-                                  <p>Diseñador UI/UX</p>
+                                  <p><?php echo $row["Empleo"]; ?></p>
                               </div>
                           </div>
                           <div class="row">
@@ -225,7 +250,7 @@ checkSession();
                                   <label>Empresa:</label>
                               </div>
                               <div class="col-md-8">
-                                  <p>Samsung</p>
+                                  <p><?php echo $row["Empresa"]; ?></p>
                               </div>
                           </div>
                           <div class="row">
@@ -233,7 +258,7 @@ checkSession();
                                   <label>Puesto:</label>
                               </div>
                               <div class="col-md-8">
-                                  <p>Gerente</p>
+                                  <p><?php echo $row["Puesto"]; ?></p>
                               </div>
                           </div>
 
@@ -242,7 +267,7 @@ checkSession();
                                   <label>Departamento:</label>
                               </div>
                               <div class="col-md-8">
-                                  <p>Diseño y Gestion de Aplicaciones</p>
+                                  <p><?php echo $row["Departamento"]; ?></p>
                               </div>
                           </div>
 
@@ -251,16 +276,16 @@ checkSession();
                                   <label>Actividades:</label>
                               </div>
                               <div class="col-md-8">
-                                  <p>Medir KPIs / metricas, propuestas de optimizacion de sistemas y creacion de propuestas de diseño</p>
+                                  <p><?php echo $row["Actividades"]; ?></p>
                               </div>
                           </div>
 
                           <div class="row">
                               <div class="col-md-4">
-                                  <label>Herramientas:</label>
+                                  <label>Tecnologias:</label>
                               </div>
                               <div class="col-md-8">
-                                  <p>Personas, Journey Mapping y Card Sorting</p>
+                                  <p><?php echo $row["Tecnologias"]; ?></p>
                               </div>
                           </div>
 
@@ -269,9 +294,10 @@ checkSession();
                                   <label>Correo Laboral:</label>
                               </div>
                               <div class="col-md-8">
-                                  <p>trabajo_empresa@hotmail.com</p>
+                                  <p><?php echo $row["Correo_Emp"]; ?></p>
                               </div>
                           </div>
+                        <?php endwhile; ?>
                         </div>
                         <script src="../js/showHide.js" charset="utf-8"></script>
                     </div>
