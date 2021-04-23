@@ -8,6 +8,10 @@
     <title>Editor de encuestas</title>
     <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css"> <!-- Nuevos estilos de boostrap -->
     <link rel="stylesheet" href="../css/boostrap/bootstrap_pulse.min.css"> <!-- Nuevos estilos de boostrap -->
+    <link rel="stylesheet" href="../plugins/owl-carousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="../plugins/owl-carousel/assets/owl.theme.default.min.css">
+
+
 
     <style>
         tr:hover{
@@ -82,9 +86,59 @@
                 <button type="button" data-bs-dismiss="offcanvas" class="btn-close text-reset"></button>
             </div>
             <div class="offcanvas-body overflow-scroll">
-                <div class="row" id="QuestionEdit">
+                <div class="container-fluid"
+                    <div class="row" id="QuestionEdit">
+                    <div class="col-12">
+
+                        <div class="owl-carousel owl-theme">
+                            <div class="">
+                                <div class="form-group w-75">
+                                    <label for="QuestionTheme_1">Tema</label>
+                                    <input type="text" class="form-control" id="QuestionTheme_1">
+
+                                </div>
+                                <div class="form-group w-75">
+                                    Titulo:
+                                    <label for="QuestionTitle_1"></label>
+                                    <input type="text" class="form-control" id="QuestionTitle_1">
+                                </div>
+
+                                <div class="dropdown w-75">
+                                    <button type="button" class="btn btn-block btn-info dropdown-toggle rounded-pill" data-bs-toggle="dropdown">Tipo de respuesta</button>
+                                    <ul class="dropdown-menu w-100">
+                                        <li class="dropdown-item">Radio</li>
+                                        <li class="dropdown-item">Text Area</li>
+                                        <li class="dropdown-item">Checkbox</li>
+                                        <li class="dropdown-item">Input</li>
+                                    </ul>
+                                </div>
+
+                                <div class="form-group w-75">
+                                    <input type="text" class="form-control mt-2 Answer" placeholder="Respuesta">
+                                    <input type="text" class="form-control mt-2 Answer" placeholder="Respuesta">
+                                    <input type="text" class="form-control mt-2 Answer" placeholder="Respuesta">
+                                    <input type="text" class="form-control mt-2 Answer" placeholder="Respuesta">
+                                </div>
+
+                                
+
+                            </div>
+                            <div> 2 </div>
+                            <div> 3 </div>
+                            <div> 4 </div>
+                            <div> 5 </div>
+                            <div> 6 </div>
+                            <div> 7 </div>
+                        </div>
+                    </div>
+
 
                 </div>
+
+
+
+                ></div>
+
             </div>
         </div>
 
@@ -120,6 +174,7 @@
     <script src="../js/boostrap/bootstrap.bundle.js"></script>
     <script src="../js/boostrap/bootstrap.js"></script>
     <script src="https://kit.fontawesome.com/5d2293cbbc.js" crossorigin="anonymous"></script>
+    <script src="../plugins/owl-carousel/owl.carousel.min.js"></script>
     <script src="../js/SurveyEditor.js"></script>
 </body>
 </html>

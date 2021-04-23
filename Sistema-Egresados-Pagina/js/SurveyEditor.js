@@ -119,8 +119,6 @@ $(document).ready(function () {
                     ConfirmDeleteDialog.off('hidden.bs.modal')
                     ConfirmDeleteDialog.on('hidden.bs.modal', function (e) {
 
-
-
                         spinner.addClass('d-none');
                         searchIcon.removeClass('d-none');
                     })
@@ -364,7 +362,22 @@ $(document).ready(function () {
     const idAdmin = 1;
     const tableManager = new TableManager($('#surveyDataContainer'));
 
+    $(document).ready(function(){
+        $(".owl-carousel").owlCarousel({
+            responsive: {
+                0:{
+                    items: 1
+                },
+                575: {
+                    items: 2
+                },
+                767: {
+                    items: 3
+                },
 
+            }
+        });
+    });
 
     refreshTable();
 })
