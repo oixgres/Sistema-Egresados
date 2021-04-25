@@ -16,15 +16,23 @@ checkSession();
 
     $datos_personales = mysqli_query($conn, "SELECT * FROM Datos_Personales WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
     $datos_laborales = mysqli_query($conn, "SELECT * FROM Datos_Laborales WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
-    $datos_escolares = mysqli_query($conn, "SELECT * FROM Datos_Escolares WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
+
+    /* Obtenemos el historial laboral*/
     $historial_laboral = mysqli_query($conn, "SELECT * FROM Historial_Laboral WHERE Usuario_idUsuario='".$_COOKIE["id"]."' ORDER BY Inicio DESC");
+
+    /* Encuestas contestadas */
+    $unansweredSurveys = mysqli_query($conn, "SELECT * FROM Encuestas_Pendientes WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
+    $answeredSurveys = mysqli_query($conn, "SELECT * FROM Encuestas_Contestadas WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
 
     $datos_personales = mysqli_fetch_assoc($datos_personales);
     $datos_laborales = mysqli_fetch_assoc($datos_laborales);
-    $datos_escolares = mysqli_fetch_assoc($datos_escolares);
 
+    /* Obtenemos ciudad y estado */
     $city = getFirstQueryElement($conn, "Ciudad", "Nombre", "idCiudad", $datos_personales["Ciudad_idCiudad"]);
     $state = getFirstQueryElement($conn, "Estado", "Nombre", "idEstado", $datos_personales["Estado_idEstado"]);
+
+
+
     ?>
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -190,17 +198,19 @@ checkSession();
                                     <label>Encuestas Pendientes</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <p></p>
+                                  <a href="#" class="btn btn-primary modified-small-button">Ver</a>
                                 </div>
                             </div>
+
+                            <?php while ($row = mysqli_fetch_assoc($unansweredSurveys)): ?>
                             <div class="row">
                                 <div class="col-md-8 mt-1">
-                                  <p>EncuestaPrueba1</p>
+                                  <p><?php $row["Nombre"]; ?></p>
                                 </div>
                                 <div class="col-md-4">
-                                  <a href="#" class="btn btn-primary btn-sm">Contestar</a>
                                 </div>
                             </div>
+                            <?php endwhile; ?>
 
                             <!-- Encuestas  Contestadas -->
                             <div class="row mt-3">
@@ -211,14 +221,17 @@ checkSession();
                                     <p></p>
                                 </div>
                             </div>
+
+                            <?php while($row = mysqli_fetch_assoc($answeredSurveys)): ?>
                             <div class="row">
                                 <div class="col-md-8 mt-1">
-                                  <p>EncuestaPrueba1</p>
+                                  <p><?php $row["Nombre"]; ?></p>
                                 </div>
                                 <div class="col-md-4">
-                                  <a href="#" class="btn btn-secondary btn-sm">Modificar</a>
+                                  <a href="#" class="btn btn-secondary modified-small-button">Modificar</a>
                                 </div>
                             </div>
+                          <?php endwhile; ?>
                         </div>
 
                         <!-- Historial Laboral -->
