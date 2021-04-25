@@ -151,9 +151,9 @@ $(document).ready(function () {
                     //create a answer node
                     let answerNode = $(` 
                     <div class="custom-control custom-checkbox">
-                    <input type="checkbox" id="customRadio_${answers_id[i]}" class="custom-control-input">
-                    <label class="custom-control-label Answer" for="customRadio_${answers_id[i]}">${answers_text[i]}</label>
-                </div>
+                        <input type="checkbox" id="customRadio_${answers_id[i]}" class="custom-control-input">
+                        <label class="custom-control-label Answer" for="customRadio_${answers_id[i]}">${answers_text[i]}</label>
+                    </div>
                 `)
 
                     parentNode.append(answerNode); //append answer to the question

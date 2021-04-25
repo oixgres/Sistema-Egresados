@@ -86,58 +86,83 @@
                 <button type="button" data-bs-dismiss="offcanvas" class="btn-close text-reset"></button>
             </div>
             <div class="offcanvas-body overflow-scroll">
-                <div class="container-fluid"
+                <div class="container-fluid">
                     <div class="row" id="QuestionEdit">
-                    <div class="col-12">
+                        <div class="col-12">
+                            <div class="owl-carousel owl-theme">
+                                <div class="">
+                                    <div class="form-group w-75">
+                                        <label for="QuestionTheme_1">Tema</label>
+                                        <input type="text" class="form-control" id="QuestionTheme_1">
 
-                        <div class="owl-carousel owl-theme">
-                            <div class="">
-                                <div class="form-group w-75">
-                                    <label for="QuestionTheme_1">Tema</label>
-                                    <input type="text" class="form-control" id="QuestionTheme_1">
+                                    </div>
+                                    <div class="form-group w-75">
+                                        Titulo:
+                                        <label for="QuestionTitle_1"></label>
+                                        <input type="text" class="form-control" id="QuestionTitle_1">
+                                    </div>
+
+                                    <div class="dropdown w-75">
+                                        <button type="button" class="btn btn-block btn-info dropdown-toggle rounded-pill" data-bs-toggle="dropdown">Tipo de respuesta</button>
+                                        <ul class="dropdown-menu w-100">
+                                            <li class="dropdown-item">Radio</li>
+                                            <li class="dropdown-item">Text Area</li>
+                                            <li class="dropdown-item">Checkbox</li>
+                                            <li class="dropdown-item">Input</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="form-group w-75 mt-3">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control Answer" placeholder="Texto de la Respuesta">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-secondary deleteAnswer" type="button">
+                                                    <img class="img-fluid" src="../img/Icons/eliminar-simbolo.png" alt="Eliminar"/>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Preview -->
+                                    <div class="mt-5 w-75">
+                                        <h2>Titulo</h2>
+
+                                        <div class="form-group">
+                                            <input type="text" class="form-control">
+                                        </div>
+
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="customRadio_${answers_id[i]}" name="radio_${this.question_id}" class="custom-control-input">
+                                            <label class="custom-control-label Answer" id="answer_${answers_id[i]}" for="customRadio_${answers_id[i]}">${answers_text[i]}</label>
+                                        </div>
+
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" id="customRadio_${answers_id[i]}" class="custom-control-input">
+                                            <label class="custom-control-label Answer" for="customRadio_${answers_id[i]}">${answers_text[i]}</label>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <textarea type="text" class="form-control"> </textarea>
+                                        </div>
+
+                                    </div>
+
+                                    <button class="btn btn-block w-75 btn-warning">Aceptar Cambios</button>
 
                                 </div>
-                                <div class="form-group w-75">
-                                    Titulo:
-                                    <label for="QuestionTitle_1"></label>
-                                    <input type="text" class="form-control" id="QuestionTitle_1">
-                                </div>
-
-                                <div class="dropdown w-75">
-                                    <button type="button" class="btn btn-block btn-info dropdown-toggle rounded-pill" data-bs-toggle="dropdown">Tipo de respuesta</button>
-                                    <ul class="dropdown-menu w-100">
-                                        <li class="dropdown-item">Radio</li>
-                                        <li class="dropdown-item">Text Area</li>
-                                        <li class="dropdown-item">Checkbox</li>
-                                        <li class="dropdown-item">Input</li>
-                                    </ul>
-                                </div>
-
-                                <div class="form-group w-75">
-                                    <input type="text" class="form-control mt-2 Answer" placeholder="Respuesta">
-                                    <input type="text" class="form-control mt-2 Answer" placeholder="Respuesta">
-                                    <input type="text" class="form-control mt-2 Answer" placeholder="Respuesta">
-                                    <input type="text" class="form-control mt-2 Answer" placeholder="Respuesta">
-                                </div>
-
-                                
-
-                            </div>
-                            <div> 2 </div>
-                            <div> 3 </div>
-                            <div> 4 </div>
-                            <div> 5 </div>
-                            <div> 6 </div>
-                            <div> 7 </div>
+                                <div> 2 </div>
+                                <div> 3 </div>
+                                <div> 4 </div>
+                                <div> 5 </div>
+                                <div> 6 </div>
+                                <div> 7 </div>
                         </div>
                     </div>
-
-
                 </div>
 
 
 
-                ></div>
+            </div>
 
             </div>
         </div>
