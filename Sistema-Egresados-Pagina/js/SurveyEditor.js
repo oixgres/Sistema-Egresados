@@ -72,17 +72,26 @@ $(document).ready(function () {
 
                 node.find('.showEditSurvey').on('click', function (e) {
                     e.stopPropagation();
+                    const scopeMap = {'UNIVERSIDAD':0, 'CAMPUS':1, 'FACULTAD':2, 'PROGRAMA ACADEMICO': 3};
+
                     let row = $(this).parent().parent().parent() //Obtener la fila
                     let idEncuesta = regex.exec(row.attr('id')).pop(); //obtener id de la encuesta
                     let searchIcon = $(this).children().first();
                     let spinner = $(this).children().last();
 
 
+                    let scopeName = $(this).parent().parent().siblings('td:eq(2)').text()
+                    let scopeType = scopeMap[$(this).parent().parent().siblings('td:eq(1)').text()]
+
+                    console.log(scopeName)
+                    console.log(scopeType)
+
                     searchIcon.addClass('d-none');
                     spinner.removeClass('d-none');
 
                     //peticion ajax
-                    questionEditor.refreshEditSurvey(idEncuesta, e);
+                    $('#SaveChanges').val(idEncuesta)
+                    questionEditor.refreshEditSurvey(idEncuesta, scopeName, scopeMap,  e);
                     //
 
                     showEditCanvas.toggle(); //mostrar offcanvas
@@ -225,11 +234,11 @@ $(document).ready(function () {
             this.parent = parent;
 
 
-            this.refreshEditSurvey = function (idEncuesta, e) {
+            this.refreshEditSurvey = function (idEncuesta, scopeName, scopeType,  e) {
                 //primeramente traerse las preguntas
                 let parent = this.parent;
 
-
+                $('#Scope_name').val(scopeName)
                 for(let i = 0; i < 100; i++){
                     parent.trigger('remove.owl.carousel', [i])
                 }
@@ -466,7 +475,7 @@ $(document).ready(function () {
                             <h2></h2>
                         </div>
                         
-                        <button class="btn btn-block w-75 btn-warning" id="saveQuestion_${question_id}">Aceptar Cambios</button>
+                     
 
                     </div>
                 `)
@@ -490,6 +499,10 @@ $(document).ready(function () {
 
 
         //Añadir
+
+        nodeParent.find(`#QuestionTheme_${question_id},#QuestionTitle_${question_id},.Answer`).on('change', function () {
+            $(this).addClass('alert alert-warning change');
+        })
 
         parent.trigger('add.owl.carousel', [nodeParent])
         parent.trigger('refresh.owl.carousel', [event, 200])

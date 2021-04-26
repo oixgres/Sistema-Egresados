@@ -80,7 +80,7 @@
             </div>
         </div>
 
-        <div class="offcanvas offcanvas-end w-100" tabindex="-1" id="SurveyContainerEdit">
+        <div class="offcanvas offcanvas-end w-75" tabindex="-1" id="SurveyContainerEdit">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title">Editar encuesta</h5>
                 <button type="button" data-bs-dismiss="offcanvas" class="btn-close text-reset"></button>
@@ -88,12 +88,29 @@
             <div class="offcanvas-body overflow-scroll">
                 <div class="container-fluid">
                     <div class="row" id="QuestionEdit">
+
+                        <div class="form-group">
+                            <label>
+                                Alcance Actual
+                                <input type="text" class="form-control" id="Scope_name" disabled>
+                            </label>
+
+                            <label>
+                                Nuevo Alcance
+                                <input type="text" class="form-control" id="New_Scope_name">
+                            </label>
+                        </div>
+
                         <div class="col-12">
                             <div class="owl-carousel owl-theme" id="mainCarousel">
 
 
                             </div>
-                    </div>
+                        </div>
+
+                        <div class="form-group d-flex justify-content-center mt-3">
+                            <button class="btn btn-warning" id="SaveChanges" value="-1">Aceptar Cambios</button>
+                        </div>
                 </div>
 
 
