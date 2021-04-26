@@ -2,15 +2,15 @@
 require_once "dbh.php";
 /*
  * Recibe:
- * 	Campus : VARCHAR(45)
+ * 	Campus : VARCHAR(45)		
  *	Facultad : VARCHAR(45)	
- *	Plan_Estudio : VARCHAR(45)
+ *	Plan_Estudio : VARCHAR(45)	
  *	Empresa : VARCHAR(45)
- *  Cargo : VARCHAR(45)
+ *  Puesto : VARCHAR(45)
  *	Ciudad : VARCHAR(45)
  *	Nombres : VARCHAR(45)
  *	Apellidos : VARCHAR(45)
- *	IdAdministrador : INT
+ *	IdAdmin : INT
  * 
  * Devuelve:
  * 	Todas los usuarios que empiecen o contengan valores iguales a los recibidos.
@@ -74,7 +74,7 @@ foreach($indices_post as $indice)
 }
 
  //Aqui verifico que el administrador este registrado en la tabla.
-if(!isset($_POST['idAdmin']))
+if(!isset($_POST['IdAdmin']))
 {
 	echo -1;		//No se mandó alguno de los datos en _POST
 	$conn->close();
@@ -82,7 +82,7 @@ if(!isset($_POST['idAdmin']))
 }
 else
 {
-	$idAdmin = $_POST['idAdmin'];
+	$idAdmin = $_POST['IdAdmin'];
 	$sql = "SELECT idAdmin FROM Admin WHERE idAdmin = $idAdmin";
 	$admin_exists = $conn->query($sql);
 	
