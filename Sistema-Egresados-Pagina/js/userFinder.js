@@ -1,36 +1,53 @@
 /*
     TEMPLATES
 
-  <tr class="">
-    <td>1252892</td>
-    <td>Omar Antonio</td>
-    <td>Montoya Valdivia</td>
-    <td>Tijuana</td>
-    <td>FCQI</td>
-    <td>Ingenieria en computacion</td>
-    <td>Microchip</td>
-    <td>Desarrollador de firmware</td>
-    <td>So far away from here</td>
-    <td>
-        <div class="btn-group">
-            <button class="btn mr-1 btn-success showProfileBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ver perfil">
-                <span class="fa fa-user"></span>
-            </button>
-            <button class="btn btn-info mr-1 sendEmailProfile" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enviar correo">
-                <span class="fa fa-envelope"></span>
-            </button>
-            <button class="btn btn-danger deleteUser" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliminar usuario">
-                <span class="fa fa-times"></span>
-            </button>
-        </div>
 
-    </td>
-
-</tr>
  */
 
 
 $(document).ready(function (e) {
+
+    function UserRow(Matricula, Nombres, Apellidos, Campus, Facultad, Programa, Empresa, Puesto, Ciudad, id) {
+        let node =  $(`
+                <tr id="user_${id}">
+                <td>${Matricula}</td>
+                <td>${Nombres}</td>
+                <td>${Apellidos}</td>
+                <td>${Campus}</td>
+                <td>${Facultad}</td>
+                <td>${Programa}</td>
+                <td>${Empresa}</td>
+                <td>${Puesto}</td>
+                <td>${Ciudad}</td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn mr-1 btn-success showProfileBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ver perfil">
+                            <span class="fa fa-user"></span>
+                        </button>
+                        <button class="btn btn-info mr-1 sendEmailProfile" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enviar correo">
+                            <span class="fa fa-envelope"></span>
+                        </button>
+                        <button class="btn btn-danger deleteUser" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliminar usuario">
+                            <span class="fa fa-times"></span>
+                        </button>
+                    </div>
+                </td>
+        </tr>  
+        `)
+
+        node.find('.showProfileBtn').on('click', function (e) {
+            e.stopPropagation();
+            UserProfile.toggle();
+        })
+
+        node.find('.sendEmailProfile').on('click', function (e) {
+            e.stopPropagation();
+            SendEmail.toggle();
+        })
+
+        return node;
+    }
+
     function initTooltips() {
         //habilitar los tooltips
         const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
@@ -45,17 +62,15 @@ $(document).ready(function (e) {
 
         //obtener los nombres
         let Nombres = "N_A"
-        if($('#Names').siblings().children().prop('checked')){ //verificar si está seleccionado
-            if($('#Names').val() !== "") //verificar que no está vacio
-                Nombres = $('#Names').val();
-        }
+        if($('#Names').val() !== "") //verificar que no está vacio
+            Nombres = $('#Names').val();
+
 
         //obtener los apellidos
         let Apellidos = "N_A"
-        if($('#SecondNames').siblings().children().prop('checked')){ //verificar si está seleccionado
-            if($('#SecondNames').val() !== "") //verificar que no está vacio
-                Apellidos = $('#SecondNames').val();
-        }
+        if($('#SecondNames').val() !== "") //verificar que no está vacio
+            Apellidos = $('#SecondNames').val();
+
 
         //obtener el campus
         let Campus = "N_A"
@@ -108,9 +123,14 @@ $(document).ready(function (e) {
             data: {Campus, Facultad, Plan_Estudio, Empresa, Puesto, Ciudad, Nombres, Apellidos, IdAdmin},
             success: function (response){
                 try{
-                    let users = JSON.parse(response);
+                        let users = JSON.parse(response);
+                        $('#UsersContainer').children().remove('tr');
+                        users.forEach(user => {
+                            $('#UsersContainer').append(UserRow(user.Matricula, user.Nombres, user.Apellidos,
+                                                                user.Campus, user.Facultad, user.Plan_Estudio,
+                                                                user.Empresa, user.Puesto, "", user.idUsuario));
+                            })
 
-                    console.log(users)
 
                 }catch (e){
                     console.log("Error + " + response)
@@ -139,15 +159,6 @@ $(document).ready(function (e) {
         $(this).parent().siblings().attr('disabled', !$(this).prop('checked'))
     })
 
-    $('.showProfileBtn').on('click', function (e) {
-        e.stopPropagation();
-        UserProfile.toggle();
-    })
-
-    $('.sendEmailProfile').on('click', function (e) {
-        e.stopPropagation();
-        SendEmail.toggle();
-    })
 
     FiltersContainer.hide();
     FiltersContainer.removeClass('d-none');
@@ -166,7 +177,7 @@ $(document).ready(function (e) {
         FilterContainer.toggle(700);
     })
 
-    $('#Names').on('keyup', function (e) {
+    $('#Names,#SecondNames,#CampusText,#FacultyText,#Program,#Company,#City,#rol').on('keyup', function (e) {
         refreshTable();
     })
 })
