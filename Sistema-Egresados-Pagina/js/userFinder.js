@@ -180,16 +180,26 @@ $(document).ready(function (e) {
     })
 
     $('#sendEmailToUser').on('click', function (e) {
-
+        console.log("se dio click")
         let asunto = $('#Asunto').val();
-        let body = $('#message').val();
-        let userEmail = $('#userEmailSelected').val()
+        let mensaje = $('#message').val();
+        let correoUsuario = $('#userEmailSelected').val()
 
+        $.ajax({
+            url: '../php/sendMail.php',
+            type: 'POST',
+            data: {correoUsuario, asunto, mensaje},
+            success: function (response) {
+               if(parseInt(response, 10) === 0){
+                   alert("Mensaje enviado con exito")
+               }
+               else
+               {
+                   alert("No se pudo enviar el mensaje")
+               }
+            }
 
-
-        console.log(asunto)
-        console.log(body)
-        console.log(userEmail)
+        })
 
 
     })
