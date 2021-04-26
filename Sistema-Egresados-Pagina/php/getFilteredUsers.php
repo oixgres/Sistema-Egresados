@@ -272,7 +272,7 @@ $indices_resultado = array(
 'Puesto'
 );
 
-while($fila = $resultados->fetch_array())
+while($fila = $resultados->fetch_row())
 {
 							//Llaves/indices   , datos
 	$json [] = array_combine($indices_resultado, $fila);
