@@ -76,6 +76,7 @@ $(document).ready(function () {
                     let idEncuesta = regex.exec(row.attr('id')).pop(); //obtener id de la encuesta
                     let searchIcon = $(this).children().first();
                     let spinner = $(this).children().last();
+                    
 
                     searchIcon.addClass('d-none');
                     spinner.removeClass('d-none');
@@ -222,77 +223,17 @@ $(document).ready(function () {
     class QuestionEditorManager{
         constructor(parent) {
             this.parent = parent;
-            this.offCanvas = $('#QuestionEdit');
-            this.typeAnswers = ['Radio', 'Text Area', 'Checkbox', 'Input']
-
-            this.createNewQuestion = function (topic, title, type, answers = [], answers_id = [], question_id, event) {
-
-                //Crear el nodo principal
-                let nodeParent = $(`
-                    <div class="question_edit" id="item_${question_id}">
-                        <div class="form-group w-75">
-                            <label for="QuestionTheme_${question_id}">Tema</label>
-                            <input type="text" class="form-control" id="QuestionTheme_${question_id}" value="${topic}">
-
-                        </div>
-                        <div class="form-group w-75">
-                            Titulo:
-                            <label for="QuestionTitle_${question_id}"></label>
-                            <input type="text" class="form-control" id="QuestionTitle_${question_id}" value="${title}">
-                        </div>
-                        <div class="dropdown w-75">
-                            <button type="button" class="btn btn-block btn-info dropdown-toggle rounded-pill" data-bs-toggle="dropdown">${this.typeAnswers[type]}</button>
-                            <ul class="dropdown-menu w-100">
-                                <li class="dropdown-item">Radio</li>
-                                <li class="dropdown-item">Text Area</li>
-                                <li class="dropdown-item">Checkbox</li>
-                                <li class="dropdown-item">Input</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="AnswerContainer">
-                            <!-- Anwers container -->
-                          
-                        </div>
-                        
-                        <!-- Answers preview -->
-                        <div class="mt-2 w-75 preview">
-                            <h2></h2>
-                        </div>
-                        
-                        <button class="btn btn-block w-75 btn-warning" id="saveQuestion_${question_id}">Aceptar Cambios</button>
-
-                    </div>
-                `)
 
 
-                //crear los nodos de las respuestas
-                for(let i = 0; i < answers.length; i++){
-                    let node = $(`
-                         <div class="form-group w-75 mt-3">
-                            <div class="input-group">
-                                <input type="text" class="form-control Answer" placeholder="Texto de la Respuesta" value="${answers[i]}" id="${answers_id[i]}">
-                                <span class="input-group-append">
-                                    <button class="btn btn-secondary deleteAnswer" type="button">
-                                        <img class="img-fluid" src="../img/Icons/eliminar-simbolo.png" alt="Eliminar"/>
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                    `)
+            this.refreshEditSurvey = function (idEncuesta, e) {
+                //primeramente traerse las preguntas
+                let parent = this.parent;
 
-                    nodeParent.find('.AnswerContainer').append(node);
+
+                for(let i = 0; i < 100; i++){
+                    parent.trigger('remove.owl.carousel', [i])
                 }
 
-
-                //Añadir
-                parent.trigger('add.owl.carousel', [nodeParent])
-                parent.trigger('refresh.owl.carousel', [event, 200])
-
-            }
-
-            this.refreshEditSurvey = function (idEncuesta, event) {
-                //primeramente traerse las preguntas
                 $.ajax({
                     url: '../php/getQuestions.php',
                     data: {idEncuesta},
@@ -308,26 +249,50 @@ $(document).ready(function () {
                                 let type = 0;
                                 let answers = [];
                                 let answers_id = [];
-                                let question_id = 0;
+                                let idPregunta = 0;
 
-                                question_id = question.idPregunta;
+                                idPregunta = question.idPregunta;
                                 title = question.pregunta;
                                 type = question.tipo;
                                 topic = question.tema;
 
+                                //peticion para traerme las respuestas
+
+                                $.ajax({
+                                    url: '../php/getAnswers.php',
+                                    async: false,
+                                    type: 'POST',
+                                    data: {idPregunta},
+                                    success: function (response) {
+                                        try {
+                                            let answers_response = JSON.parse(response);
+
+                                            answers_response.forEach(answer => {
+                                                answers.push(answer.respuesta);
+                                                answers_id.push(answer.idRespuesta);
+                                            })
+
+                                        }catch (e){
+                                            alert("error respuesta")
+                                        }
+
+                                    },
+                                    error:  function (jqXHR, textStatus, errorThrown) {
+                                        alert("error error archivo")
+                                    }
+
+                                })
+
+                                createNewQuestion(parent, topic, title, type, answers, answers_id, idPregunta, e)
                             })
 
 
-
-
-
-
                         }catch (e){
-
+                            console.log(e)
                         }
                     },
                     error:  function (jqXHR, textStatus, errorThrown) {
-                        alert("error")
+                        alert("error pregungta archivo")
                     }
                 })
             }
@@ -404,12 +369,12 @@ $(document).ready(function () {
 
 
                                 }catch (e) {
-                                    alert("error")
+                                    alert("error en respuestas")
                                 }
 
                             },
                             error:  function (jqXHR, textStatus, errorThrown) {
-                                alert("error")
+                                alert("error en el archivo php de respuesta")
                             }
                         })
                         switch(type){
@@ -466,12 +431,74 @@ $(document).ready(function () {
 
         })
     }
+    function createNewQuestion (parent, topic, title, type, answers = [], answers_id = [], question_id, event) {
+        const typeAnswers = ['Radio', 'Text Area', 'Checkbox', 'Input']
+        //Crear el nodo principal
+        let nodeParent = $(`
+                    <div class="question_edit" id="item_${question_id}">
+                        <div class="form-group w-75">
+                            <label for="QuestionTheme_${question_id}">Tema</label>
+                            <input type="text" class="form-control" id="QuestionTheme_${question_id}" value="${topic}">
 
-    //$('#mainCarousel').trigger('refresh.owl.carousel', [e, 1000])
+                        </div>
+                        <div class="form-group w-75">
+                            Titulo:
+                            <label for="QuestionTitle_${question_id}"></label>
+                            <input type="text" class="form-control" id="QuestionTitle_${question_id}" value="${title}">
+                        </div>
+                        <div class="dropdown w-75">
+                            <button type="button" class="btn btn-block btn-info dropdown-toggle rounded-pill" data-bs-toggle="dropdown">${typeAnswers[type]}</button>
+                            <ul class="dropdown-menu w-100">
+                                <li class="dropdown-item">Radio</li>
+                                <li class="dropdown-item">Text Area</li>
+                                <li class="dropdown-item">Checkbox</li>
+                                <li class="dropdown-item">Input</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="AnswerContainer">
+                            <!-- Anwers container -->
+                          
+                        </div>
+                        
+                        <!-- Answers preview -->
+                        <div class="mt-2 w-75 preview">
+                            <h2></h2>
+                        </div>
+                        
+                        <button class="btn btn-block w-75 btn-warning" id="saveQuestion_${question_id}">Aceptar Cambios</button>
+
+                    </div>
+                `)
+        //crear los nodos de las respuestas
+        for(let i = 0; i < answers.length; i++){
+            let node = $(`
+                         <div class="form-group w-75 mt-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control Answer" placeholder="Texto de la Respuesta" value="${answers[i]}" id="${answers_id[i]}">
+                                <span class="input-group-append">
+                                    <button class="btn btn-secondary deleteAnswer" type="button">
+                                        <img class="img-fluid" src="../img/Icons/eliminar-simbolo.png" alt="Eliminar"/>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    `)
+
+            nodeParent.find('.AnswerContainer').append(node);
+        }
+
+
+        //Añadir
+
+        parent.trigger('add.owl.carousel', [nodeParent])
+        parent.trigger('refresh.owl.carousel', [event, 200])
+
+    }
+
+
     const idAdmin = 1;
     const tableManager = new TableManager($('#surveyDataContainer'));
-
-
 
     $(".owl-carousel").owlCarousel({
         responsive: {
