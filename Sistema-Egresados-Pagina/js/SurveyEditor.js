@@ -76,7 +76,7 @@ $(document).ready(function () {
                     let idEncuesta = regex.exec(row.attr('id')).pop(); //obtener id de la encuesta
                     let searchIcon = $(this).children().first();
                     let spinner = $(this).children().last();
-                    
+
 
                     searchIcon.addClass('d-none');
                     spinner.removeClass('d-none');

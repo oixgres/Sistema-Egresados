@@ -41,8 +41,8 @@
                             <h2>Busqueda de usuarios</h2>
                         </div>
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Nombres">
-                            <input type="text" class="form-control" placeholder="Apellidos">
+                            <input type="text" class="form-control" placeholder="Nombres" id="Names">
+                            <input type="text" class="form-control" placeholder="Apellidos" id="SecondNames">
                             <div class="input-group-append">
                                 <button class="btn btn-secondary" id="AdvanceSearch">Busqueda Avanzada</button>
                             </div>
@@ -110,6 +110,16 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-6 col-lg-3">
+                                <label for="rol">Puesto</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control d-inline-block" placeholder="Introduce la ciudad" id="rol">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" class="custom-checkbox" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Habilita o deshabilita éste filtro">
+                                    </div>
+                                </div>
+                            </div>
+
 
                         </div>
 
@@ -139,33 +149,9 @@
                     <!-- .table-warning -->
                     <!-- .table-danger -->
                     <!-- .table-info -->
-                    <tr class="">
-                        <td>1252892</td>
-                        <td>Omar Antonio</td>
-                        <td>Montoya Valdivia</td>
-                        <td>Tijuana</td>
-                        <td>FCQI</td>
-                        <td>Ingenieria en computacion</td>
-                        <td>Microchip</td>
-                        <td>Desarrollador de firmware</td>
-                        <td>So far away from here</td>
-                        <td>
-                            <div class="btn-group">
-                                <button class="btn mr-1 btn-success showProfileBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ver perfil">
-                                    <span class="fa fa-user"></span>
-                                </button>
-                                <button class="btn btn-info mr-1 sendEmailProfile" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enviar correo">
-                                    <span class="fa fa-envelope"></span>
-                                </button>
-                                <button class="btn btn-danger deleteUser" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliminar usuario">
-                                    <span class="fa fa-times"></span>
-                                </button>
-                            </div>
-
-                        </td>
 
 
-                    </tr>
+
 
 
                 </table>

@@ -1,4 +1,132 @@
+/*
+    TEMPLATES
+
+  <tr class="">
+    <td>1252892</td>
+    <td>Omar Antonio</td>
+    <td>Montoya Valdivia</td>
+    <td>Tijuana</td>
+    <td>FCQI</td>
+    <td>Ingenieria en computacion</td>
+    <td>Microchip</td>
+    <td>Desarrollador de firmware</td>
+    <td>So far away from here</td>
+    <td>
+        <div class="btn-group">
+            <button class="btn mr-1 btn-success showProfileBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ver perfil">
+                <span class="fa fa-user"></span>
+            </button>
+            <button class="btn btn-info mr-1 sendEmailProfile" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enviar correo">
+                <span class="fa fa-envelope"></span>
+            </button>
+            <button class="btn btn-danger deleteUser" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliminar usuario">
+                <span class="fa fa-times"></span>
+            </button>
+        </div>
+
+    </td>
+
+</tr>
+ */
+
+
 $(document).ready(function (e) {
+    function initTooltips() {
+        //habilitar los tooltips
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+
+    }
+
+    function refreshTable() {
+        //obtener todos los filtros
+
+        //obtener los nombres
+        let Nombres = "N_A"
+        if($('#Names').siblings().children().prop('checked')){ //verificar si está seleccionado
+            if($('#Names').val() !== "") //verificar que no está vacio
+                Nombres = $('#Names').val();
+        }
+
+        //obtener los apellidos
+        let Apellidos = "N_A"
+        if($('#SecondNames').siblings().children().prop('checked')){ //verificar si está seleccionado
+            if($('#SecondNames').val() !== "") //verificar que no está vacio
+                Apellidos = $('#SecondNames').val();
+        }
+
+        //obtener el campus
+        let Campus = "N_A"
+        if($('#CampusText').siblings().children().prop('checked')){ //verificar si está seleccionado
+            if($('#CampusText').val() !== "") //verificar que no está vacio
+                Campus = $('#CampusText').val();
+        }
+
+        //obtener la facultad
+        let Facultad = "N_A";
+        if($('#FacultyText').siblings().children().prop('checked')){
+            if($('#FacultyText').val() !== "")
+                Facultad = $('#FacultyText').val();
+        }
+
+        //obtener Plan_Estudio
+        let Plan_Estudio = "N_A";
+        if($('#Program').siblings().children().prop('checked')){
+            if($('#Program').val() !== "")
+                Plan_Estudio = $('#Program').val();
+        }
+
+        //obtener Empresa
+        let Empresa = "N_A";
+        if($('#Company').siblings().children().prop('checked')){
+            if($('#Company').val() !== "")
+                Empresa = $('#Company').val();
+        }
+
+        //obtener puesto
+        let Puesto = "N_A";
+        if($('#rol').siblings().children().prop('checked')){
+            if($('#rol').val() !== "")
+                Puesto = $('#rol').val();
+        }
+
+        let Ciudad = "N_A";
+        if($('#City').siblings().children().prop('checked')){
+            if($('#City').val() !== "")
+                Ciudad = $('#City').val();
+        }
+
+        //PRUEBA//
+        let IdAdmin = 1;
+
+
+        $.ajax({
+            url: '../php/getFilteredUsers.php',
+            type: 'POST',
+            data: {Campus, Facultad, Plan_Estudio, Empresa, Puesto, Ciudad, Nombres, Apellidos, IdAdmin},
+            success: function (response){
+                try{
+                    let users = JSON.parse(response);
+
+                    console.log(users)
+
+                }catch (e){
+                    console.log("Error + " + response)
+                }
+            },
+            error:  function (jqXHR, textStatus, errorThrown) {
+                alert(errorThrown)
+            }
+        })
+
+
+
+
+    }
+
+
     const filters = $('.custom-checkbox');
     const AdvanceSearch = $('#AdvanceSearch');
     const FiltersContainer =  $('#FiltersContainer');
@@ -6,15 +134,7 @@ $(document).ready(function (e) {
     const SendEmail = new bootstrap.Offcanvas($('#SendEmail')[0]);
 
     filters.parent().siblings().attr('disabled', true); //deshabilitar por default los filtros
-
-
-    //habilitar los tooltips
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    });
-
-
+    initTooltips();
     filters.on('click', function (e) {
         $(this).parent().siblings().attr('disabled', !$(this).prop('checked'))
     })
@@ -44,5 +164,9 @@ $(document).ready(function (e) {
             $(this).text(hideAdvanceSearch)
         }
         FilterContainer.toggle(700);
+    })
+
+    $('#Names').on('keyup', function (e) {
+        refreshTable();
     })
 })
