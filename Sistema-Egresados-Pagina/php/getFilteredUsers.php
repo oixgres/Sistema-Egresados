@@ -25,6 +25,9 @@ require_once "dbh.php";
  *	Plan_Estudio : VARCHAR(45)
  *  Empresa : VARCHAR(45)
  *	Puesto : VARCHAR(45)
+ *  Ciudad : VARCHAR(45)
+ +	Correo : VARCHAR(45)
+ *  
  *  
  *	Notas: 
  *	- Si en campus, facultad, plan_estudio,empresa, ciudad,
@@ -104,7 +107,9 @@ $tablas = array(
 "Facultad",
 "Plan_Estudio",
 "Datos_Laborales",
-"Datos_Laborales"
+"Datos_Laborales",
+"Ciudad",
+"Usuario"
 );
 						
 $columnas = array(
@@ -116,7 +121,9 @@ $columnas = array(
 "Nombre",
 "Nombre",
 "Empresa",
-"Puesto"
+"Puesto",
+"Nombre",
+"Correo"
 );
 					
 /*
@@ -269,7 +276,9 @@ $indices_resultado = array(
 'Facultad',
 'Plan_Estudio',
 'Empresa',
-'Puesto'
+'Puesto',
+'Ciudad',
+'Correo'
 );
 
 while($fila = $resultados->fetch_row())
@@ -291,6 +300,8 @@ while($fila = $resultados->fetch_row())
  *	Plan_Estudio : VARCHAR(45)
  *  Empresa : VARCHAR(45)
  *	Puesto : VARCHAR(45)
+ *  Ciudad : VARCHAR(45)
+ *  Correo : VARCHAR(45)
 */
 
 if(!empty($json)) 
