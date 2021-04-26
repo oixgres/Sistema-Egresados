@@ -180,4 +180,6 @@ $(document).ready(function (e) {
     $('#Names,#SecondNames,#CampusText,#FacultyText,#Program,#Company,#City,#rol').on('keyup', function (e) {
         refreshTable();
     })
+
+    refreshTable();
 })

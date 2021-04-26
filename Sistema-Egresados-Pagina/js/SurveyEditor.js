@@ -512,6 +512,9 @@ $(document).ready(function () {
 
     const idAdmin = 1;
     const tableManager = new TableManager($('#surveyDataContainer'));
+    $('#Home').on('click', function (e) {
+
+    })
 
     $(".owl-carousel").owlCarousel({
         responsive: {
