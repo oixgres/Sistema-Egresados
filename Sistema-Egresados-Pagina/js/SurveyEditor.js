@@ -222,6 +222,70 @@ $(document).ready(function () {
             this.parent = parent;
             this.offCanvas = $('#QuestionEdit');
 
+            this.createNewQuestion = function (topic, title, type, answers = [], answers_id = [], question_id, event) {
+
+                //Crear el nodo principal
+                let nodeParent = $(`
+                    <div class="question_edit" id="item_${question_id}">
+                        <div class="form-group w-75">
+                            <label for="QuestionTheme_${question_id}">Tema</label>
+                            <input type="text" class="form-control" id="QuestionTheme_${question_id}" value="${topic}">
+
+                        </div>
+                        <div class="form-group w-75">
+                            Titulo:
+                            <label for="QuestionTitle_${question_id}"></label>
+                            <input type="text" class="form-control" id="QuestionTitle_${question_id}" value="${title}">
+                        </div>
+                        <div class="dropdown w-75">
+                            <button type="button" class="btn btn-block btn-info dropdown-toggle rounded-pill" data-bs-toggle="dropdown">Tipo de respuesta</button>
+                            <ul class="dropdown-menu w-100">
+                                <li class="dropdown-item">Radio</li>
+                                <li class="dropdown-item">Text Area</li>
+                                <li class="dropdown-item">Checkbox</li>
+                                <li class="dropdown-item">Input</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="AnswerContainer">
+                            <!-- Anwers container -->
+                          
+                        </div>
+                        
+                        <!-- Answers preview -->
+                        <div class="mt-2 w-75 preview">
+                            <h2></h2>
+                        </div>
+                        
+                        <button class="btn btn-block w-75 btn-warning" id="saveQuestion_${question_id}">Aceptar Cambios</button>
+
+                    </div>
+                `)
+
+
+                //crear los nodos de las respuestas
+                for(let i = 0; i < answers.length; i++){
+                    let node = $(`
+                         <div class="form-group w-75 mt-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control Answer" placeholder="Texto de la Respuesta" value="${answers[i]}" id="${answers_id[i]}">
+                                <span class="input-group-append">
+                                    <button class="btn btn-secondary deleteAnswer" type="button">
+                                        <img class="img-fluid" src="../img/Icons/eliminar-simbolo.png" alt="Eliminar"/>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    `)
+
+                    nodeParent.find('.AnswerContainer').append(node);
+                }
+
+                parent.trigger('add.owl.carousel', [nodeParent])
+                parent.trigger('refresh.owl.carousel', [event, 200])
+
+            }
+
         }
     }
 
@@ -358,26 +422,41 @@ $(document).ready(function () {
         })
     }
 
-
+    //$('#mainCarousel').trigger('refresh.owl.carousel', [e, 1000])
     const idAdmin = 1;
     const tableManager = new TableManager($('#surveyDataContainer'));
 
-    $(document).ready(function(){
-        $(".owl-carousel").owlCarousel({
-            responsive: {
-                0:{
-                    items: 1
-                },
-                575: {
-                    items: 2
-                },
-                767: {
-                    items: 3
-                },
+    const questionEditor = new QuestionEditorManager($('#mainCarousel'))
 
+    $(".owl-carousel").owlCarousel({
+        responsive: {
+            575: {
+                items: 1
+            },
+            767: {
+                items: 2
+            },
+            991: {
+                items: 3
+            },
+            1199: {
+                items: 4
+            },
+            1280:{
+                items: 5
             }
+
+        }
         });
-    });
+
+    $('#addItem').on('click', function (e) {
+        e.stopPropagation();
+
+        questionEditor.createNewQuestion('Tema A', 'Pruba de valor', 0, ['OP 1', 'OP 2'], [0, 1], 0, e);
+
+
+
+    })
 
     refreshTable();
 })
