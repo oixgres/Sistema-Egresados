@@ -1,6 +1,6 @@
 $(document).ready(function (e) {
 
-    function UserRow(Matricula, Nombres, Apellidos, Campus, Facultad, Programa, Empresa, Puesto, Ciudad, id) {
+    function UserRow(Matricula, Nombres, Apellidos, Campus, Facultad, Programa, Empresa, Puesto, Ciudad, Correo, id) {
         let node =  $(`
                 <tr id="user_${id}">
                 <td>${Matricula}</td>
@@ -12,7 +12,7 @@ $(document).ready(function (e) {
                 <td>${Empresa}</td>
                 <td>${Puesto}</td>
                 <td>${Ciudad}</td>
-                <td>Correo</td>
+                <td>${Correo}</td>
                 <td>
                     <div class="btn-group">
                         <button class="btn mr-1 btn-success showProfileBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ver perfil">
@@ -36,7 +36,7 @@ $(document).ready(function (e) {
 
         node.find('.sendEmailProfile').on('click', function (e) {
             e.stopPropagation();
-            $('#sendEmailToUser').val($(this).parent().parent().siblings('td:eq(9)').text())
+            $('#userEmailSelected').val($(this).parent().parent().siblings('td:eq(9)').text())
             SendEmail.toggle();
         })
 
@@ -126,7 +126,7 @@ $(document).ready(function (e) {
                         users.forEach(user => {
                             $('#UsersContainer').append(UserRow(user.Matricula, user.Nombres, user.Apellidos,
                                                                 user.Campus, user.Facultad, user.Plan_Estudio,
-                                                                user.Empresa, user.Puesto, user.Ciudad, user.idUsuario));
+                                                                user.Empresa, user.Puesto, user.Ciudad, user.Correo, user.idUsuario));
                             })
 
                         initTooltips();
@@ -183,9 +183,13 @@ $(document).ready(function (e) {
 
         let asunto = $('#Asunto').val();
         let body = $('#message').val();
-        let userEmail = $(this).val();
+        let userEmail = $('#userEmailSelected').val()
 
-        //peticion ajax
+
+
+        console.log(asunto)
+        console.log(body)
+        console.log(userEmail)
 
 
     })
