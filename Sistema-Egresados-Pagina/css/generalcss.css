@@ -17,12 +17,11 @@
   color: white;
   background-color: rgb(52,58,64);
   height: 60px;
+  min-width: 100px;
   display: flex;
   align-items: center;
+  justify-content: center;
   text-align: center;
-  padding-left: 2rem;
-  padding-right: 2rem;
-
 }
 
 .modified-navbar-elements:hover{
@@ -33,4 +32,16 @@
 .modified-navbar-quit:hover{
   color: white;
   background-color: rgb(231,91,91);
+}
+
+.welcome{
+  margin: 0;
+  padding: 0;
+  color: rgb(33, 96, 212);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  text-align: center;
 }

@@ -52,9 +52,32 @@
 
     if($_COOKIE["token"] != $_SESSION["token"] || !isset($_SESSION['token']))
     {
-      header("Location: ../html/error.html");
+      header("Location: ../index.html");
       exit();
     }
+  }
+
+  function createToken()
+  {
+    return sha1(uniqid(rand(10000000,99999999), true));
+  }
+
+  function setUserCookies($token, $idUser, $name, $lastname, $mail)
+  {
+    /* Creamos una cookie para almacenar el token del lado del egresado */
+    setcookie("token",$token,time()+(60*60*24*30), "/");
+
+    /* Creamos cookie para almacenar el nombre de egresado */
+    setcookie("name", getFirstQueryElement($conn, "Usuario", "Nombres", "Correo", $mail), time()+(60*60*24*30),"/");
+
+    /* Creamos cookie para almacenar los apellidos del egresado */
+    setcookie("lastname", getFirstQueryElement($conn, "Usuario", "Apellidos", "Correo", $mail), time()+(60*60*24*30),"/");
+
+    /* Creamos cookie para almacenar el correo del egresado */
+    setcookie("mail", $mail, time()+(60*60*24*30),"/");
+
+    /* Creamps cookie para el id del usuario */
+    setcookie("id",  $idUser, time()+(60*60*24*30),"/");
   }
 
 ?>
