@@ -38,7 +38,7 @@ if($typeLogin == "asUser")
       /* Guardamos el token en el servidor */
       $_SESSION['token'] = $token;
 
-      setUserCookies($token, $idUser, $name, $lastname, $mail);
+      setUserCookies($token, $idUser, $name, $lastname, $mail, "user");
 
       header("Location: profile.php");
       exit();
@@ -69,7 +69,7 @@ else
       /* Guardamos el token en el servidor */
       $_SESSION['token'] = $token;
 
-      setUserCookies($token, $idUser, $name, $lastname, $mail);
+      setUserCookies($token, $idUser, $name, $lastname, $mail, "admin");
 
       header("Location: adminMenu.php");
       exit();

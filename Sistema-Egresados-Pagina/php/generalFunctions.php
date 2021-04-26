@@ -45,16 +45,23 @@
     return $res[0];
   }
 
-  function checkSession()
+  function checkSession($userType)
   {
     session_start();
 
-
+    /* Si la cookie y session no coinciden o si no existe session*/
     if($_COOKIE["token"] != $_SESSION["token"] || !isset($_SESSION['token']))
     {
       header("Location: ../index.html");
       exit();
     }
+    else
+      /* Si el tipo de usuario no coincide */
+      if($_COOKIE["userType"] != $userType)
+      {
+        header("Location: ../html/denied.html");
+        exit();
+      }
   }
 
   function createToken()
@@ -62,7 +69,7 @@
     return sha1(uniqid(rand(10000000,99999999), true));
   }
 
-  function setUserCookies($token, $idUser, $name, $lastname, $mail)
+  function setUserCookies($token, $idUser, $name, $lastname, $mail, $userType)
   {
     /* Creamos una cookie para almacenar el token del lado del egresado */
     setcookie("token",$token,time()+(60*60*24*30), "/");
@@ -78,6 +85,8 @@
 
     /* Creamps cookie para el id del usuario */
     setcookie("id",  $idUser, time()+(60*60*24*30),"/");
+
+    setcookie("userType", $userType, time()+(60*60*24*30),"/");
   }
 
 ?>

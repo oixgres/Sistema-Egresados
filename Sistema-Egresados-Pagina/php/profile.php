@@ -1,7 +1,7 @@
 <?php
 require_once 'generalFunctions.php';
 
-checkSession();
+checkSession("user");
 ?>
 
 <!DOCTYPE html>

@@ -1,7 +1,7 @@
 <?php
 require_once "generalFunctions.php";
 
-checkSession();
+checkSession("admin");
  ?>
 !DOCTYPE html>
 <html lang="en" dir="ltr">
