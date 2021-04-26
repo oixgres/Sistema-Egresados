@@ -1,10 +1,3 @@
-/*
-    TEMPLATES
-
-
- */
-
-
 $(document).ready(function (e) {
 
     function UserRow(Matricula, Nombres, Apellidos, Campus, Facultad, Programa, Empresa, Puesto, Ciudad, id) {
@@ -19,6 +12,7 @@ $(document).ready(function (e) {
                 <td>${Empresa}</td>
                 <td>${Puesto}</td>
                 <td>${Ciudad}</td>
+                <td>Correo</td>
                 <td>
                     <div class="btn-group">
                         <button class="btn mr-1 btn-success showProfileBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ver perfil">
@@ -42,8 +36,11 @@ $(document).ready(function (e) {
 
         node.find('.sendEmailProfile').on('click', function (e) {
             e.stopPropagation();
+            $('#sendEmailToUser').val($(this).parent().parent().siblings('td:eq(9)').text())
             SendEmail.toggle();
         })
+
+
 
         return node;
     }
@@ -107,6 +104,7 @@ $(document).ready(function (e) {
                 Puesto = $('#rol').val();
         }
 
+        //Obtener ciudad
         let Ciudad = "N_A";
         if($('#City').siblings().children().prop('checked')){
             if($('#City').val() !== "")
@@ -128,8 +126,10 @@ $(document).ready(function (e) {
                         users.forEach(user => {
                             $('#UsersContainer').append(UserRow(user.Matricula, user.Nombres, user.Apellidos,
                                                                 user.Campus, user.Facultad, user.Plan_Estudio,
-                                                                user.Empresa, user.Puesto, "", user.idUsuario));
+                                                                user.Empresa, user.Puesto, user.Ciudad, user.idUsuario));
                             })
+
+                        initTooltips();
 
 
                 }catch (e){
@@ -140,8 +140,6 @@ $(document).ready(function (e) {
                 alert(errorThrown)
             }
         })
-
-
 
 
     }
@@ -179,6 +177,17 @@ $(document).ready(function (e) {
 
     $('#Names,#SecondNames,#CampusText,#FacultyText,#Program,#Company,#City,#rol').on('keyup', function (e) {
         refreshTable();
+    })
+
+    $('#sendEmailToUser').on('click', function (e) {
+
+        let asunto = $('#Asunto').val();
+        let body = $('#message').val();
+        let userEmail = $(this).val();
+
+        //peticion ajax
+
+
     })
 
     refreshTable();
