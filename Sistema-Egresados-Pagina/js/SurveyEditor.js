@@ -12,6 +12,7 @@ $(document).ready(function () {
             this.numberRegex = RegExp('[0-9]+')
             this.container = container; //contenedor padre
             this.scopeTypes = ["UNIVERSIDAD", "CAMPUS", "FACULTAD", "PROGRAMA ACADEMICO"]
+            this.questionEditor = new QuestionEditorManager($('#mainCarousel'))
 
             //funcion para mostrar una nueva encuesta
             this.createSurveyDataRow =  function (surveyId,surveyName, type_scope, scope_name, num_questions) {
@@ -19,6 +20,7 @@ $(document).ready(function () {
                 let showSurveyCanvas = this.ShowSurveyOffcanvas;
                 let showEditCanvas = this.ShowEditSurveyCanvas;
                 let showConfirmDeleteModal = this.ConfirmDeleteModal;
+                let questionEditor = this.questionEditor;
                 //Nodo html para crear una nueva fila
                 let node = $(`
                     <tr id="surveyNumber_${surveyId}">
@@ -79,7 +81,7 @@ $(document).ready(function () {
                     spinner.removeClass('d-none');
 
                     //peticion ajax
-
+                    questionEditor.refreshEditSurvey(idEncuesta, e);
                     //
 
                     showEditCanvas.toggle(); //mostrar offcanvas
@@ -221,6 +223,7 @@ $(document).ready(function () {
         constructor(parent) {
             this.parent = parent;
             this.offCanvas = $('#QuestionEdit');
+            this.typeAnswers = ['Radio', 'Text Area', 'Checkbox', 'Input']
 
             this.createNewQuestion = function (topic, title, type, answers = [], answers_id = [], question_id, event) {
 
@@ -238,7 +241,7 @@ $(document).ready(function () {
                             <input type="text" class="form-control" id="QuestionTitle_${question_id}" value="${title}">
                         </div>
                         <div class="dropdown w-75">
-                            <button type="button" class="btn btn-block btn-info dropdown-toggle rounded-pill" data-bs-toggle="dropdown">Tipo de respuesta</button>
+                            <button type="button" class="btn btn-block btn-info dropdown-toggle rounded-pill" data-bs-toggle="dropdown">${this.typeAnswers[type]}</button>
                             <ul class="dropdown-menu w-100">
                                 <li class="dropdown-item">Radio</li>
                                 <li class="dropdown-item">Text Area</li>
@@ -281,11 +284,53 @@ $(document).ready(function () {
                     nodeParent.find('.AnswerContainer').append(node);
                 }
 
+
+                //Añadir
                 parent.trigger('add.owl.carousel', [nodeParent])
                 parent.trigger('refresh.owl.carousel', [event, 200])
 
             }
 
+            this.refreshEditSurvey = function (idEncuesta, event) {
+                //primeramente traerse las preguntas
+                $.ajax({
+                    url: '../php/getQuestions.php',
+                    data: {idEncuesta},
+                    async: false,
+                    type : 'POST',
+                    success: function (response) {
+                        try{
+                            let questions = JSON.parse(response);
+
+                            questions.forEach(question => {
+                                let topic = "";
+                                let title = "";
+                                let type = 0;
+                                let answers = [];
+                                let answers_id = [];
+                                let question_id = 0;
+
+                                question_id = question.idPregunta;
+                                title = question.pregunta;
+                                type = question.tipo;
+                                topic = question.tema;
+
+                            })
+
+
+
+
+
+
+                        }catch (e){
+
+                        }
+                    },
+                    error:  function (jqXHR, textStatus, errorThrown) {
+                        alert("error")
+                    }
+                })
+            }
         }
     }
 
@@ -426,7 +471,7 @@ $(document).ready(function () {
     const idAdmin = 1;
     const tableManager = new TableManager($('#surveyDataContainer'));
 
-    const questionEditor = new QuestionEditorManager($('#mainCarousel'))
+
 
     $(".owl-carousel").owlCarousel({
         responsive: {
@@ -449,14 +494,6 @@ $(document).ready(function () {
         }
         });
 
-    $('#addItem').on('click', function (e) {
-        e.stopPropagation();
-
-        questionEditor.createNewQuestion('Tema A', 'Pruba de valor', 0, ['OP 1', 'OP 2'], [0, 1], 0, e);
-
-
-
-    })
 
     refreshTable();
 })
