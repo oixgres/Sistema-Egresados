@@ -253,6 +253,12 @@ $(document).ready(function (e) {
     const ProgressBarDatabase = $('#progressBarRow');
     const btnDismiss = $('#btnDismiss');
 
+    const myModalEl = document.getElementById('ModalDatabaseSuccess');
+    myModalEl.addEventListener('hidden.bs.modal', function (event) {
+        window.location = "../php/profile.php";
+    })
+
+
 
 
 
@@ -279,6 +285,8 @@ $(document).ready(function (e) {
         ProgressBarDatabase.show(0)
         answersToDatabase =  new AnswersToDatabase(questionCreator.totalQuestions);
         answersToDatabase.SaveAnswersToDatabase(idUsuario);
+
+        $(this).attr('disabled', true);
     })
 
     showSelectedSurvey.on('click', function (e) {
