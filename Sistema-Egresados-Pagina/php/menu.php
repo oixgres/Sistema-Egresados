@@ -36,7 +36,7 @@ checkSession("admin");
           >Encuestas</a>
           <div class="dropdown-menu" aria-labelledby="navDropdown">
             <a class="dropdown-item" href="../html/SurveyCreator.html">Crear Encuesta</a>
-            <a class="dropdown-item" href="#">Editar Encuestas</a>
+            <a class="dropdown-item" href="../html/SurveyEditor.html">Editar Encuestas</a>
           </div>
         </div>
 

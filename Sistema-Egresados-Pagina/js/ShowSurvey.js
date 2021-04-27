@@ -240,10 +240,8 @@ function getCookie(cname) {
 $(document).ready(function (e) {
 
     const survey_selected_id = 'survey_selected_id'; //nombre para guardar el ID de la encuesta seleccionada
-
-    //cookie de prueba del php
     const id = "id";
-    ///
+
 
     const container = $('.container');
     const QuestionsContainer = $('#QuestionsContainer');
@@ -269,6 +267,12 @@ $(document).ready(function (e) {
     })
     container.hide(0, function (e) {
         container.show(700);
+    })
+
+    $('#GoHome').on('click', function (e){
+
+        window.location = "../php/profile.php";
+
     })
 
     SaveAnswersToDatabase.on('click', function (e) {

@@ -428,6 +428,12 @@ $(document).ready(function (e) {
             $(this).show(SHOW_DELAY);
         });
 
+        $('#GoHome').on('click', function (e){
+
+            window.location = "../php/menu.php";
+
+        })
+
         SurveyScope.on('click', function (e) {
             e.stopPropagation();
             const dropdownMenu = $(this).siblings('.dropdown-menu');

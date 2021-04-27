@@ -198,7 +198,7 @@ checkSession("user");
                                     <label>Encuestas Pendientes</label>
                                 </div>
                                 <div class="col-md-4">
-                                  <a href="#" class="btn btn-primary modified-small-button">Ver</a>
+                                  <a href="../html/ShowSurvey.html" class="btn btn-primary modified-small-button">Ver</a>
                                 </div>
                             </div>
 
