@@ -75,10 +75,10 @@
     setcookie("token",$token,time()+(60*60*24*30), "/");
 
     /* Creamos cookie para almacenar el nombre de egresado */
-    setcookie("name", getFirstQueryElement($conn, "Usuario", "Nombres", "Correo", $mail), time()+(60*60*24*30),"/");
+    setcookie("name", $name, time()+(60*60*24*30),"/");
 
     /* Creamos cookie para almacenar los apellidos del egresado */
-    setcookie("lastname", getFirstQueryElement($conn, "Usuario", "Apellidos", "Correo", $mail), time()+(60*60*24*30),"/");
+    setcookie("lastname", $lastname, time()+(60*60*24*30),"/");
 
     /* Creamos cookie para almacenar el correo del egresado */
     setcookie("mail", $mail, time()+(60*60*24*30),"/");

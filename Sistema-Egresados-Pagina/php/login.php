@@ -59,7 +59,7 @@ else
     if($nr == 1)
     {
       /* Obtenemos datos para almacenar en la cookie */
-      $idUser = getFirstQueryElement($conn, "Admin", "idUsuario", "Correo", $mail);
+      $idUser = getFirstQueryElement($conn, "Admin", "idAdmin", "Correo", $mail);
       $name = getFirstQueryElement($conn, "Admin", "Nombres", "Correo", $mail);
       $lastname = getFirstQueryElement($conn, "Admin", "Apellidos", "Correo", $mail);
 
@@ -71,7 +71,7 @@ else
 
       setUserCookies($token, $idUser, $name, $lastname, $mail, "admin");
 
-      header("Location: adminMenu.php");
+      header("Location: menu.php");
       exit();
 
     }

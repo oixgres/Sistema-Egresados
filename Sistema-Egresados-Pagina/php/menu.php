@@ -3,7 +3,7 @@ require_once "generalFunctions.php";
 
 checkSession("admin");
  ?>
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -44,6 +44,6 @@ checkSession("admin");
         <a href="logout.php" class="nav-link modified-navbar-quit">Salir</a>
       </div>
     </nav>
-    <h1 class="welcome">Bienvenido <?php $_COOKIE["name"]." ".$_COOKIE["lastname"]; ?></h1>
+    <h1 class="welcome">Bienvenido <?php echo $_COOKIE["name"]." ".$_COOKIE["lastname"] ?></h1>
   </body>
 </html>
