@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Editor de encuestas</title>
+    <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css"> <!-- Nuevos estilos de boostrap -->
+    <link rel="stylesheet" href="../css/boostrap/bootstrap_pulse.min.css"> <!-- Nuevos estilos de boostrap -->
+    <link rel="stylesheet" href="../plugins/owl-carousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="../plugins/owl-carousel/assets/owl.theme.default.min.css">
+
+
+
+    <style>
+        tr:hover{
+            background-color: #f2f2f2;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row"> <!-- Una navbar clasica -->
+                    <div class="col-12">
+                        <nav class="nav navbar-dark bg-dark p-3 d-flex justify-content-between">
+                            <div class="navbar-brand">Editor de encuestas</div>
+                            <button type="button" class="btn btn-info" id="Home">
+                                <i class="fa fa-home"></i>
+                                Regresar
+                            </button> <!-- Boton para regresar -->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h2 class="display-6">Seleccione una encuesta</h2>
+                        </div>
+
+                        <table class="table table-bordered table-hover text-center" id="surveyDataContainer">
+                            <thead class="thead-default" id="UsersContainer">
+                            <th>Nombre</th>
+                            <th>Alcance</th>
+                            <th>Nombre del alcance</th>
+                            <th>Preguntas</th>
+                            <th>Opciones</th>
+                            </thead>
+
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Contenedor para los offcanvas -->
+    <div class="container">
+
+        <div class="offcanvas offcanvas-start w-50" tabindex="-1" id="SurveyContainerShow">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title">Ver encuesta</h5>
+                <button type="button" data-bs-dismiss="offcanvas" class="btn-close text-reset"></button>
+            </div>
+            <div class="offcanvas-body overflow-scroll">
+                <div class="row" id="QuestionContainer">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="offcanvas offcanvas-end w-75" tabindex="-1" id="SurveyContainerEdit">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title">Editar encuesta</h5>
+                <button type="button" data-bs-dismiss="offcanvas" class="btn-close text-reset"></button>
+            </div>
+            <div class="offcanvas-body overflow-scroll">
+                <div class="container-fluid">
+                    <div class="row" id="QuestionEdit">
+
+                        <div class="form-group">
+                            <label>
+                                Alcance Actual
+                                <input type="text" class="form-control" id="Scope_name" disabled>
+                            </label>
+
+                            <label>
+                                Nuevo Alcance
+                                <input type="text" class="form-control" id="New_Scope_name">
+                            </label>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="owl-carousel owl-theme" id="mainCarousel">
+
+
+                            </div>
+                        </div>
+
+                        <div class="form-group d-flex justify-content-center mt-3">
+                            <button class="btn btn-warning" id="SaveChanges" value="-1">Aceptar Cambios</button>
+                        </div>
+                </div>
+
+
+
+            </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Contenedor de los modal -->
+
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="ConfirmDeleteDialog" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Advertencia</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="">Seguro que desea eliminar la encuesta?</p>
+                        <p class="text-danger">No podrá recuperarla</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="ConfirmDeleteSurvey">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="../js/boostrap/jquery-3.6.0.min.js"></script>
+    <script src="../js/boostrap/popper.min.js"></script>
+    <script src="../js/boostrap/bootstrap.bundle.js"></script>
+    <script src="../js/boostrap/bootstrap.js"></script>
+    <script src="https://kit.fontawesome.com/5d2293cbbc.js" crossorigin="anonymous"></script>
+    <script src="../plugins/owl-carousel/owl.carousel.min.js"></script>
+    <script src="../js/SurveyEditor.js"></script>
+</body>
+</html>
