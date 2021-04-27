@@ -20,7 +20,7 @@ class QuestionCreator{
             parentNode.append(titleNode); //append title node to the parentNode
             for(let i = 0; i < answers_text.length; i++){
                 //create a answer node
-                let answerNode = $(` 
+                let answerNode = $(`
                     <div class="custom-control custom-checkbox">
                     <input type="checkbox" id="customRadio_${answers_id[i]}" class="custom-control-input">
                     <label class="custom-control-label Answer" for="customRadio_${answers_id[i]}">${answers_text[i]}</label>
@@ -244,7 +244,6 @@ $(document).ready(function (e) {
 
     //cookie de prueba del php
     const id = "id";
-    document.cookie = "id=1"
     ///
 
     const container = $('.container');

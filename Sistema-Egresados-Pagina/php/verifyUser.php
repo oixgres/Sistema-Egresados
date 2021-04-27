@@ -31,6 +31,16 @@ else
       /* Eliminamos el codigo */
       mysqli_query($conn, "DELETE FROM Claves_Confirmacion WHERE Usuario_idUsuario='".$idUser."'");
 
+      /* Creamos token, cookies y session */
+      $name = getFirstQueryElement($conn, "Usuario", "Nombres", "idUsuario", $idUser);
+      $lastname = getFirstQueryElement($conn, "Usuario", "Apellidos", "idUsuario", $idUser);
+      $email = getFirstQueryElement($conn, 'Usuario', 'Correo', 'idUsuario', $idUser);
+
+      $token = createToken();
+      $_SESSION['token'] = $token;
+
+      setUserCookies($token, $idUser, $name, $lastname, $email, "user");
+
       header("Location: profile.php");
       exit();
     }

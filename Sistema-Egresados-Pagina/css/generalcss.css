@@ -1,5 +1,47 @@
-/*
+.modified-navbar{
+  height: 60px;
+  padding-top: 0;
+}
 
-Avisa antes de pinchi mover algo OMAR >:(
+.modified-small-button{
+    width: 80px;
+    height: 27px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
 
-*/
+}
+
+.modified-navbar-elements, .modified-navbar-quit{
+  color: white;
+  background-color: rgb(52,58,64);
+  height: 60px;
+  min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.modified-navbar-elements:hover{
+  color: white;
+  background-color: rgb(33, 96, 212);
+}
+
+.modified-navbar-quit:hover{
+  color: white;
+  background-color: rgb(231,91,91);
+}
+
+.welcome{
+  margin: 0;
+  padding: 0;
+  color: rgb(33, 96, 212);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  text-align: center;
+}

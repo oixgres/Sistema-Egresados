@@ -1,7 +1,7 @@
 <?php
 require_once 'generalFunctions.php';
 
-checkSession("user");
+checkSession();
 ?>
 
 <!DOCTYPE html>
@@ -201,16 +201,13 @@ checkSession("user");
                                   <a href="#" class="btn btn-primary modified-small-button">Ver</a>
                                 </div>
                             </div>
-
-                            <?php while ($row = mysqli_fetch_assoc($unansweredSurveys)): ?>
                             <div class="row">
                                 <div class="col-md-8 mt-1">
-                                  <p><?php $row["Nombre"]; ?></p>
+                                  <p>EncuestaPrueba1</p>
                                 </div>
                                 <div class="col-md-4">
                                 </div>
                             </div>
-                            <?php endwhile; ?>
 
                             <!-- Encuestas  Contestadas -->
                             <div class="row mt-3">
@@ -221,17 +218,14 @@ checkSession("user");
                                     <p></p>
                                 </div>
                             </div>
-
-                            <?php while($row = mysqli_fetch_assoc($answeredSurveys)): ?>
                             <div class="row">
                                 <div class="col-md-8 mt-1">
-                                  <p><?php $row["Nombre"]; ?></p>
+                                  <p>EncuestaPrueba1</p>
                                 </div>
                                 <div class="col-md-4">
-                                  <a href="#" class="btn btn-secondary modified-small-button">Modificar</a>
+                                  <a href="#" class="btn btn-secondary btn-sm">Modificar</a>
                                 </div>
                             </div>
-                          <?php endwhile; ?>
                         </div>
 
                         <!-- Historial Laboral -->
