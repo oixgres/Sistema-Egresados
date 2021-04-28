@@ -3,7 +3,7 @@ function checkSession(userType){
         url: '../php/checkSession.php',
         async: false,
         type: 'POST',
-        data: {usertype},
+        data: {userType},
         success: function (response) {
             try{
                 json = JSON.parse(response)
