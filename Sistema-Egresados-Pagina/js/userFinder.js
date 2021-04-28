@@ -195,6 +195,12 @@ $(document).ready(function (e) {
         refreshTable();
     })
 
+    $('#GoHome').on('click', function (e){
+       
+        window.location = "../php/menu.php";
+
+    })
+
     $('#sendEmailToUser').on('click', function (e) {
         console.log("se dio click")
         let asunto = $('#Asunto').val();

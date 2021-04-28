@@ -376,7 +376,7 @@ CREATE TABLE IF NOT EXISTS Encuestas_Contestadas (
   Encuesta_idEncuesta INT NOT NULL,
   Nombre VARCHAR(45) NOT NULL,
   Usuario_idUsuario INT NOT NULL,
-  PRIMARY KEY (idEncuesta_Contestadas),
+  PRIMARY KEY (idEncuesta_Pendientes),
   FOREIGN KEY (Encuesta_idEncuesta)
   REFERENCES Encuesta (idEncuesta)
   ON DELETE CASCADE,
