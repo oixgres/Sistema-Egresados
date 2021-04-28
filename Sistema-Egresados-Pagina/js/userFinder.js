@@ -196,7 +196,7 @@ $(document).ready(function (e) {
     })
 
     $('#GoHome').on('click', function (e){
-       
+
         window.location = "../php/menu.php";
 
     })
