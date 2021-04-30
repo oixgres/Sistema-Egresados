@@ -13,7 +13,7 @@
         /* Si el tipo de usuario no coincide */
         if($_COOKIE["userType"] != $userType)
         {
-            if($userType=="new")
+            if($userType=='new')
             {
               header("Location: ../index.html");
               exit();

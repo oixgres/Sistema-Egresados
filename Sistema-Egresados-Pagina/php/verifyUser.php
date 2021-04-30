@@ -4,7 +4,7 @@ session_start();
 require_once 'dbh.php';
 require_once 'generalFunctions.php';
 
-$idUser = $_SESSION['idUser'];
+$idUser = $_COOKIE["verification"];
 
 /* Clave nueva */
 if(isset($_POST['sendNewCode']))
