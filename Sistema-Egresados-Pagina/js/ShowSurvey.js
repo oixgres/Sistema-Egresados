@@ -238,6 +238,7 @@ function getCookie(cname) {
 } //funcion para obtener un cookie
 
 $(document).ready(function (e) {
+    checkSession('user');
 
     const survey_selected_id = 'survey_selected_id'; //nombre para guardar el ID de la encuesta seleccionada
     const id = "id";

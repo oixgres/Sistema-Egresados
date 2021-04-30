@@ -5,8 +5,9 @@ function checkSession(userType){
         type: 'POST',
         data: {userType},
         success: function (response) {
+            console.log(response)
             try{
-                json = JSON.parse(response)
+                let json = JSON.parse(response)
                 if(json.location){
                     alert("Por favor verifique sus datos")
                     window.location = json.location;

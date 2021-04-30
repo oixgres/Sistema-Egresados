@@ -1,4 +1,5 @@
 $(document).ready(function (e) {
+    checkSession('admin');
 
     function UserRow(Matricula, Nombres, Apellidos, Campus, Facultad, Programa, Empresa, Puesto, Ciudad, Correo, id) {
         let node =  $(`

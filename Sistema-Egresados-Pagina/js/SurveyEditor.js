@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    checkSession('admin');
+
     const RADIO = 0;
     const TEXT_AREA = 1;
     const INPUT = 2;

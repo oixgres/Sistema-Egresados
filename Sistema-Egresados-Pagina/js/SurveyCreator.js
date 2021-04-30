@@ -1,4 +1,5 @@
 $(document).ready(function (e) {
+    checkSession('admin');
     /*
         case 'Radio':   return 0;
         case 'Text Area':   return 1;
