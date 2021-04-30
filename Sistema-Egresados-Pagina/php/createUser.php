@@ -38,7 +38,11 @@ if($conn)
         sendCode($conn, $email, "Codigo de Verificación", $key);
 
         /* Nos servira para verificar al usuario */
-        $_SESSION['idUser'] = $idUser;
+        //$_SESSION['idUser'] = $idUser;
+
+        /* Creamos cookie de verificacion */
+        setcookie("verification", $idUser, time()+(60*60*24*30),"/");
+        setcookie("userType", "new",time()+(60*60*24*30),"/");
 
         mysqli_close($conn);
         header("Location: ../html/verificationPage.html");

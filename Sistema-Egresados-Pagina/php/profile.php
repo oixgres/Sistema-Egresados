@@ -100,14 +100,10 @@ checkSession("user");
                     <div class="profile-work">
                         <p>LINKS</p>
                         <a href="">Github</a><br/>
-                        <a href="">Empresa Osi Osi</a><br/>
-                        <a href="">Linkedin</a>
+                        <a href="">+</a>
                         <p>HABILIDADES</p>
                         <a href="">Diseño Web</a><br/>
-                        <a href="">Desarrollo Web</a><br/>
-                        <a href="">Sistemas Embebidos</a><br/>
-                        <a href="">Aplicaciones Moviles</a><br/>
-                        <a href="">Experto en Miches</a><br/>
+                        <a href="">+</a><br/>
                     </div>
                 </div>
                 <!-- Acerca de -->

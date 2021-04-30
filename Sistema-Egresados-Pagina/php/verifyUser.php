@@ -28,6 +28,10 @@ else
 
     if($key == $insertedKey)
     {
+      /* Eliminamos cookie de verificacion*/
+      setcookie("verification", "",time()-1,"/");
+      setcookie("userType", "",time()-1,"/");
+
       /* Eliminamos el codigo */
       mysqli_query($conn, "DELETE FROM Claves_Confirmacion WHERE Usuario_idUsuario='".$idUser."'");
 

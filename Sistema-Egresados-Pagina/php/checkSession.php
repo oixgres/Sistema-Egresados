@@ -13,7 +13,15 @@
         /* Si el tipo de usuario no coincide */
         if($_COOKIE["userType"] != $userType)
         {
-            header("Location: ../html/denied.html");
-            exit();
+            if($userType=="new")
+            {
+              header("Location: ../index.html");
+              exit();
+            }
+            else
+            {
+              header("Location: ../html/denied.html");
+              exit();
+            }
         }
 ?>

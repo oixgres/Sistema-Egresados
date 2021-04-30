@@ -26,7 +26,8 @@ if($typeLogin == "asUser")
     /* si no esta activa la cuenta */
     if($status == "INACTIVO")
     {
-      $_SESSION['idUser'] = $idUser;
+      setcookie("verification", $status,time()+(60*60*24*30),"/");
+      setcookie("userType", "new",time()+(60*60*24*30),"/");
       header("Location: ../html/verificationPage.html");
       exit();
     }

@@ -52,16 +52,24 @@
     /* Si la cookie y session no coinciden o si no existe session*/
     if($_COOKIE["token"] != $_SESSION["token"] || !isset($_SESSION['token']))
     {
-      header("Location: ../index.html");
-      exit();
+        header("Location: ../index.html");
+        exit();
     }
     else
-      /* Si el tipo de usuario no coincide */
-      if($_COOKIE["userType"] != $userType)
-      {
-        header("Location: ../html/denied.html");
-        exit();
-      }
+        /* Si el tipo de usuario no coincide */
+        if($_COOKIE["userType"] != $userType)
+        {
+            if($userType=="new")
+            {
+              header("Location: ../index.html");
+              exit();
+            }
+            else
+            {
+              header("Location: ../html/denied.html");
+              exit();
+            }
+        }
   }
 
   function createToken()
