@@ -9,7 +9,7 @@ function checkSession(userType){
             try{
                 let json = JSON.parse(response)
                 if(json.location){
-                    alert("Por favor verifique sus datos")
+                    $('body').hide();
                     window.location = json.location;
                 }
             }catch (e){

@@ -7,7 +7,6 @@ $dbName = "sistemaegresados";
 */
 
 
-
 $dbServername = "localhost";
 $dbUsername = "root";
 $dbPassword = "harry6627";

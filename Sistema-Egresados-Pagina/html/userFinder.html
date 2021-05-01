@@ -168,7 +168,7 @@
                         <h5 class="offcanvas-title text-white">Perfil de usuario</h5>
                     </div>
                     <div class="container emp-profile">
-                        <form method="post">
+                        <form>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="profile-img">
@@ -177,10 +177,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="profile-head">
-                                        <h5>
+                                        <h5 id="userName">
                                             Omar Valdivia
                                         </h5>
-                                        <h6>
+                                        <h6 id="department">
                                             Sistemas
                                         </h6>
                                         <ul class="mt-5 nav nav-tabs" id="myTab" role="tablist">
@@ -197,7 +197,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Editar"/>
+                                    <input type="button" class="profile-edit-btn" name="btnAddMore" value="Editar"/>
                                 </div>
                             </div>
                             <div class="row">
@@ -221,7 +221,7 @@
                                                     <label>Nombre:</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <p>Omar Valdivia</p>
+                                                    <p id="userName_info">Omar Valdivia</p>
                                                 </div>
                                             </div>
 
@@ -230,7 +230,7 @@
                                                 <div class="col-md-4">
                                                     <label>Correo Personal:</label>
                                                 </div>
-                                                <div class="col-md-8">
+                                                <div class="col-md-8" id="userEmail_info">
                                                     <p>omar5antonio@gmail.com?></p>
                                                 </div>
                                             </div>
@@ -241,7 +241,7 @@
                                                     <label>Telefono:</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <p>6641787612?></p>
+                                                    <p id="userPhone_number">6641787612?></p>
                                                 </div>
                                             </div>
 
@@ -251,7 +251,7 @@
                                                     <label>Ubicacion:</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <p>Baja California, Tijuana</p>
+                                                    <p id="userLocation_info">Baja California, Tijuana</p>
                                                 </div>
                                             </div>
 
@@ -260,7 +260,7 @@
                                                     <label>Empleo:</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <p>Desarrolador de firmware</p>
+                                                    <p id="userWork_info">Desarrolador de firmware</p>
                                                 </div>
                                             </div>
 
@@ -269,7 +269,7 @@
                                                     <label>Empresa:</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <p>Microchip</p>
+                                                    <p id="userCompany_info">Microchip</p>
                                                 </div>
                                             </div>
 
@@ -278,7 +278,7 @@
                                                     <label>Puesto:</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <p> Empleado</p>
+                                                    <p id="userTypeWork_info"> Empleado</p>
                                                 </div>
                                             </div>
 
@@ -287,7 +287,7 @@
                                                     <label>Departamento:</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <p>Desarrollo</p>
+                                                    <p id="userDepartment_info">Desarrollo</p>
                                                 </div>
                                             </div>
                                         </div>
