@@ -409,7 +409,7 @@ DROP TABLE IF EXISTS Habilidades_Usuario;
 
 CREATE TABLE IF NOT EXISTS Habilidades_Usuario (
   idHabilidades_Usuario INT NOT NULL AUTO_INCREMENT,
-  Texto VARCHAR(45) NOT NULL,
+  Nombre VARCHAR(45) NOT NULL,
   Usuario_idUsuario INT NOT NULL,
   PRIMARY KEY (idHabilidades_Usuario),
   FOREIGN KEY (Usuario_idUsuario)

@@ -100,10 +100,15 @@ checkSession("user");
                 <div class="col-md-4">
                     <div class="profile-work">
                         <p>LINKS</p>
-                        <a href="">Github</a><br/>
-                        <a href="">+</a>
+                        <?php while($row = mysqli_fetch_assoc($links)): ?>
+                          <a href=""><?php echo $row['Nombre']; ?></a><br/>
+                        <?php endwhile; ?>
+                        <a>+</a>
+
                         <p>HABILIDADES</p>
-                        <a href="">Diseño Web</a><br/>
+                        <?php while ($row = mysqli_fetch_assoc($skills)): ?>
+                          <a href=""<?php echo $row['Nombre']; ?></a><br/>
+                        <?php endwhile; ?>
                         <a href="">+</a><br/>
                     </div>
                 </div>
@@ -309,11 +314,14 @@ checkSession("user");
                           </div>
                         <?php endwhile; ?>
                         </div>
-                        <script src="../js/showHide.js" charset="utf-8"></script>
+                        <script src="../../js/showHide.js" charset="utf-8"></script>
                     </div>
                 </div>
             </div>
         </form>
     </div>
+    <script src="../../js/profile.js">
+
+    </script>
   </body>
 </html>
