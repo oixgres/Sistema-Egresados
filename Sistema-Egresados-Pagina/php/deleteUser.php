@@ -12,17 +12,14 @@ require_once "dbh.php";
  *  -2 : No existe pregunta o usuario
  *  -3 : Error al eliminar
 */
-/*
+
 if (!isset($_POST['idUsuario'])){
     echo -1;
     $conn->close();
     exit();
-} else {
-    $idUsuario = $_POST['idUsuario'];
 }
-*/
-$idUsuario = 1;
 
+$idUsuario = $_POST['idUsuario'];
 $sql = "SELECT idUsuario FROM Usuario WHERE idUsuario = {$idUsuario}";
 $res = mysqli_query($conn, $sql);
 
