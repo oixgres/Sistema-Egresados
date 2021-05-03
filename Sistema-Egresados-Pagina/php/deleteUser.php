@@ -21,7 +21,7 @@ if (!isset($_POST['idUsuario'])){
     $idUsuario = $_POST['idUsuario'];
 }
 */
-$idUsuario = 1;
+$idUsuario = $_POST['idUsuario'];
 
 $sql = "SELECT idUsuario FROM Usuario WHERE idUsuario = {$idUsuario}";
 $res = mysqli_query($conn, $sql);
