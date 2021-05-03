@@ -1,9 +1,11 @@
 /* Modificaciones propias */
-.modified-navbar{
-  height: 60px;
-  padding-top: 0;
+
+/* input */
+.modified-middle-input{
+  height: 30px;
 }
 
+/* Botones */
 .modified-small-button{
     width: 80px;
     height: 27px;
@@ -11,7 +13,22 @@
     justify-content: center;
     align-items: center;
     font-size: 15px;
+}
 
+.modified-middle-button{
+    min-width: 80px;
+    max-width: 140px;
+    height: 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+}
+
+/* Navbar */
+.modified-navbar{
+  height: 60px;
+  padding-top: 0;
 }
 
 .modified-navbar-elements, .modified-navbar-quit{
@@ -52,6 +69,11 @@
   text-align: center;
 }
 
+/* popup */
+.popup-title{
+  color: rgb(33, 96, 212);
+}
+
 .popup .overlay{
   position: fixed;
   top: 0;
@@ -70,7 +92,7 @@
   transform: translate(-50%, -50%) scale(0);
   background: #fff;
   width: 450px;
-  height: 220px;
+  height: auto;
   z-index: 2;
   text-align: center;
   padding: 20px;
@@ -84,14 +106,22 @@
   top: 20px;
   width: 30px;
   height: 30px;
-  background: #222;
+  background: rgb(82,82,82);
   color: #fff;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 600;
-  line-height: 30px;
+  line-height: 26px;
   text-align: center;
+  vertical-align: middle;
   border-radius: 50%;
 }
+
+.close-button:hover{
+  color: white;
+  background-color: rgb(231,91,91);
+}
+
+
 
 .popup.active .overlay{
   display: block;

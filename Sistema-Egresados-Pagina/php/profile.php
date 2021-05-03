@@ -314,14 +314,12 @@ checkSession("user");
                           </div>
                         <?php endwhile; ?>
                         </div>
-                        <script src="../../js/showHide.js" charset="utf-8"></script>
+                        <script src="../js/showHide.js" charset="utf-8"></script>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-    <script src="../../js/profile.js">
-
-    </script>
+    <script src="../js/popup.js"></script>
   </body>
 </html>
