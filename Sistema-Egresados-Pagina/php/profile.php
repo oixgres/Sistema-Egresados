@@ -103,13 +103,12 @@ checkSession("user");
                         <?php while($row = mysqli_fetch_assoc($links)): ?>
                           <a href=""><?php echo $row['Nombre']; ?></a><br/>
                         <?php endwhile; ?>
-                        <a>+</a>
-
+                        <a class="cursor-on" onclick="linkPopup()">+</a>
                         <p>HABILIDADES</p>
                         <?php while ($row = mysqli_fetch_assoc($skills)): ?>
-                          <a href=""<?php echo $row['Nombre']; ?></a><br/>
+                          <a href=""><?php echo $row['Nombre']; ?></a><br/>
                         <?php endwhile; ?>
-                        <a href="">+</a><br/>
+                        <a class="cursor-on" onclick="skillPopup()">+</a><br/>
                     </div>
                 </div>
                 <!-- Acerca de -->
@@ -319,6 +318,100 @@ checkSession("user");
                 </div>
             </div>
         </form>
+    </div>
+
+    <!-- Popup de los links -->
+    <div class="popup" id="popup-link">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="close-button" onclick="linkPopup()">&times;</div>
+        <h1 class="popup-title">LINKS</h1>
+
+        <div id="all-links">
+          <?php while($row = mysqli_fetch_assoc()) ?>
+
+          <div class="row mb-3">
+            <div class="col-8">
+              <input type="text" class="form-control modified-middle-input ml-3 input-link-name" placeholder="Nombre">
+            </div>
+            <div class="col-4">
+              <button
+                type="button"
+                name="button"
+                class="btn btn-primary modified-middle-button"
+              >Guardar</button>
+            </div>
+          </div>
+          <div class="row mb-5">
+            <div class="col-8">
+              <input type="text" class="form-control modified-middle-input ml-3 input-link-url" placeholder="Enlace">
+            </div>
+            <div class="col-4">
+              <button
+                type="button"
+                name="button"
+                class="btn btn-danger modified-middle-button"
+              >Eliminar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <button
+            type="button"
+            name="button"
+            class="btn btn-primary modified-middle-button"
+            onclick="incrementLinks()"
+          >Nuevo</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- popup de los skills -->
+    <div class="popup" id="popup-skill">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="close-button" onclick="skillPopup()">&times;</div>
+        <h1 class="popup-title">HABILIDADES</h1>
+
+        <div id="all-skills">
+          <div class="">
+            <div class="row mb-2">
+              <div class="col-8">
+                <input type="text" class="form-control modified-middle-input ml-3" placeholder="Habilidad">
+              </div>
+              <div class="col-4">
+                <button
+                  type="button"
+                  name="button"
+                  class="btn btn-primary modified-middle-button"
+                >Guardar</button>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-8">
+              </div>
+              <div class="col-4">
+                <button
+                  type="button"
+                  name="button"
+                  class="btn btn-danger modified-middle-button"
+                >Eliminar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <button
+            type="button"
+            name="button"
+            class="btn btn-primary modified-middle-button"
+            onclick="incrementSkills()"
+          >Nuevo</button>
+        </div>
+      </div>
     </div>
     <script src="../js/popup.js"></script>
   </body>

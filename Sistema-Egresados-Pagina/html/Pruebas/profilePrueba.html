@@ -103,12 +103,12 @@ checkSession("user");
                         <?php while($row = mysqli_fetch_assoc($links)): ?>
                           <a href=""><?php echo $row['Nombre']; ?></a><br/>
                         <?php endwhile; ?>
-                        <a class="cursor-on" onclick="togglePopup()">+</a>
+                        <a class="cursor-on" onclick="linkPopup()">+</a>
                         <p>HABILIDADES</p>
                         <?php while ($row = mysqli_fetch_assoc($skills)): ?>
                           <a href=""><?php echo $row['Nombre']; ?></a><br/>
                         <?php endwhile; ?>
-                        <a href="">+</a><br/>
+                        <a class="cursor-on" onclick="skillPopup()">+</a><br/>
                     </div>
                 </div>
                 <!-- Acerca de -->
@@ -199,7 +199,7 @@ checkSession("user");
                                     <label>Encuestas Pendientes</label>
                                 </div>
                                 <div class="col-md-4">
-                                  <a href="../html/ShowSurvey.html" class="btn btn-primary modified-small-button">Ver</a>
+                                  <a href="../../html/ShowSurvey.html" class="btn btn-primary modified-small-button">Ver</a>
                                 </div>
                             </div>
 
@@ -318,25 +318,40 @@ checkSession("user");
                 </div>
             </div>
         </form>
-        <button onclick="togglePopup()">+</button>
     </div>
+
+    <!-- Popup de los links -->
     <div class="popup" id="popup-link">
       <div class="overlay"></div>
       <div class="content">
-        <div class="close-button" onclick="togglePopup()">&times;</div>
+        <div class="close-button" onclick="linkPopup()">&times;</div>
         <h1 class="popup-title">LINKS</h1>
 
         <div id="all-links">
-          <div class="row mb-4">
+          <?php while($row = mysqli_fetch_assoc()) ?>
+
+          <div class="row mb-3">
             <div class="col-8">
-              <input type="text" class="form-control modified-middle-input ml-3">
+              <input type="text" class="form-control modified-middle-input ml-3 input-link-name" placeholder="Nombre">
             </div>
             <div class="col-4">
               <button
                 type="button"
                 name="button"
                 class="btn btn-primary modified-middle-button"
-              >Modificar</button>
+              >Guardar</button>
+            </div>
+          </div>
+          <div class="row mb-5">
+            <div class="col-8">
+              <input type="text" class="form-control modified-middle-input ml-3 input-link-url" placeholder="Enlace">
+            </div>
+            <div class="col-4">
+              <button
+                type="button"
+                name="button"
+                class="btn btn-danger modified-middle-button"
+              >Eliminar</button>
             </div>
           </div>
         </div>
@@ -345,14 +360,56 @@ checkSession("user");
           <button
             type="button"
             name="button"
-            class="btn btn-primary modified-middle-button mr-5"
-            onclick="incrementInputs()"
+            class="btn btn-primary modified-middle-button"
+            onclick="incrementLinks()"
           >Nuevo</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- popup de los skills -->
+    <div class="popup" id="popup-skill">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="close-button" onclick="skillPopup()">&times;</div>
+        <h1 class="popup-title">HABILIDADES</h1>
+
+        <div id="all-skills">
+          <div class="">
+            <div class="row mb-2">
+              <div class="col-8">
+                <input type="text" class="form-control modified-middle-input ml-3" placeholder="Habilidad">
+              </div>
+              <div class="col-4">
+                <button
+                  type="button"
+                  name="button"
+                  class="btn btn-primary modified-middle-button"
+                >Guardar</button>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-8">
+              </div>
+              <div class="col-4">
+                <button
+                  type="button"
+                  name="button"
+                  class="btn btn-danger modified-middle-button"
+                >Eliminar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
           <button
             type="button"
             name="button"
             class="btn btn-primary modified-middle-button"
-          >Guardar Cambios</button>
+            onclick="incrementSkills()"
+          >Nuevo</button>
         </div>
       </div>
     </div>
