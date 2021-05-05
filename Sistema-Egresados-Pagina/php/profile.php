@@ -101,7 +101,7 @@ checkSession("user");
                     <div class="profile-work">
                         <p>LINKS</p>
                         <?php while($row = mysqli_fetch_assoc($links)): ?>
-                          <a href=""><?php echo $row['Nombre']; ?></a><br/>
+                          <a href="<?php echo $row['link']; ?>"><?php echo $row['Nombre']; ?></a><br/>
                         <?php endwhile; ?>
                         <a class="cursor-on" onclick="linkPopup()">+</a>
                         <p>HABILIDADES</p>
@@ -328,32 +328,34 @@ checkSession("user");
         <h1 class="popup-title">LINKS</h1>
 
         <div id="all-links">
-          <?php while($row = mysqli_fetch_assoc()) ?>
-
-          <div class="row mb-3">
-            <div class="col-8">
-              <input type="text" class="form-control modified-middle-input ml-3 input-link-name" placeholder="Nombre">
+        <?php while($row = mysqli_fetch_assoc($links)): ?>
+          <div>
+            <div class="row mb-3">
+              <div class="col-8">
+                <input type="text" class="form-control modified-middle-input ml-3 input-link-name" placeholder="Nombre">
+              </div>
+              <div class="col-4">
+                <button
+                  type="button"
+                  name="button"
+                  class="btn btn-primary modified-middle-button"
+                >Guardar</button>
+              </div>
             </div>
-            <div class="col-4">
-              <button
-                type="button"
-                name="button"
-                class="btn btn-primary modified-middle-button"
-              >Guardar</button>
+            <div class="row mb-5">
+              <div class="col-8">
+                <input type="text" class="form-control modified-middle-input ml-3 input-link-url" placeholder="Enlace">
+              </div>
+              <div class="col-4">
+                <button
+                  type="button"
+                  name="button"
+                  class="btn btn-danger modified-middle-button delete-links"
+                >Eliminar</button>
+              </div>
             </div>
           </div>
-          <div class="row mb-5">
-            <div class="col-8">
-              <input type="text" class="form-control modified-middle-input ml-3 input-link-url" placeholder="Enlace">
-            </div>
-            <div class="col-4">
-              <button
-                type="button"
-                name="button"
-                class="btn btn-danger modified-middle-button"
-              >Eliminar</button>
-            </div>
-          </div>
+        <?php endwhile; ?>
         </div>
 
         <div class="d-flex justify-content-center">
@@ -367,7 +369,6 @@ checkSession("user");
       </div>
     </div>
 
-
     <!-- popup de los skills -->
     <div class="popup" id="popup-skill">
       <div class="overlay"></div>
@@ -379,7 +380,7 @@ checkSession("user");
           <div class="">
             <div class="row mb-2">
               <div class="col-8">
-                <input type="text" class="form-control modified-middle-input ml-3" placeholder="Habilidad">
+                <input type="text" class="form-control modified-middle-input ml-3 input-skill" placeholder="Habilidad">
               </div>
               <div class="col-4">
                 <button
@@ -396,7 +397,7 @@ checkSession("user");
                 <button
                   type="button"
                   name="button"
-                  class="btn btn-danger modified-middle-button"
+                  class="btn btn-danger modified-middle-button delete-skills"
                 >Eliminar</button>
               </div>
             </div>
