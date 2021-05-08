@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css"> <!-- Nuevos estilos de boostrap -->
+    <title>Datos Personales</title>
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-6 offset-xl-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Datos Personales</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="Fecha_Nacimiento" class="form-label">Fecha de nacimiento</label>
+                                <input type="date"  class="form-control" id="Fecha_Nacimiento">
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label for="Estados" class="form-label">Estado</label>
+                                <datalist id="Estados">
+                                    <option value="volvo" class="form-text">Volvo</option>
+                                    <option value="saab" class="form-text">Saab</option>
+                                    <option value="fiat" class="form-text" selected>Fiat</option>
+                                    <option value="audi" class="form-text">Audi</option>
+                                </datalist>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Estado" list="Estados" id="Estado">
+                                    <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Selecciona una de la lista disponible o da doble click en el campo">?</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="Ciudades" class="form-label">Ciudad</label>
+                                <datalist id="Ciudades">
+                                    <option value="volvo" class="form-text">Volvo</option>
+                                    <option value="saab" class="form-text">Saab</option>
+                                    <option value="fiat" class="form-text" selected>Fiat</option>
+                                    <option value="audi" class="form-text">Audi</option>
+                                </datalist>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Ciudad" list="Ciudades" id="Ciudad">
+                                    <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Selecciona una de la lista disponible o da doble click en el campo">?</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="Domicilio" class="form-label">Domicilio</label>
+                                <textarea placeholder="Domicilio Actual" id="Domicilio" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <label for="Telefono" class="form-label">Domicilio</label>
+                                <input id="Telefono" placeholder="Telefono actual" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="../js/boostrap/jquery-3.6.0.min.js"></script>
+    <script src="../js/boostrap/popper.min.js"></script>
+    <script src="../js/boostrap/bootstrap.bundle.js"></script>
+    <script src="../js/boostrap/bootstrap.js"></script>
+</body>
+</html>
