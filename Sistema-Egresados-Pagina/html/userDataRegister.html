@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css"> <!-- Nuevos estilos de boostrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
+    <title>Registro de datos</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="bs-stepper">
+                    <div class="bs-stepper-header" role="tablist">
+                        <!-- your steps here -->
+                        <div class="step" data-target="#logins-part">
+                            <button type="button" class="step-trigger" role="tab" aria-controls="logins-part" id="logins-part-trigger">
+                                <span class="bs-stepper-circle">1</span>
+                                <span class="bs-stepper-label">Datos Personales</span>
+                            </button>
+                        </div>
+                        <div class="line"></div>
+                        <div class="step" data-target="#information-part">
+                            <button type="button" class="step-trigger" role="tab" aria-controls="information-part" id="information-part-trigger">
+                                <span class="bs-stepper-circle">2</span>
+                                <span class="bs-stepper-label">Datos Escolares</span>
+                            </button>
+                        </div>
+                        <div class="line"></div>
+                        <div class="step" data-target="#data-part">
+                            <button type="button" class="step-trigger" role="tab" aria-controls="data-part" id="data-part-trigger">
+                                <span class="bs-stepper-circle">2</span>
+                                <span class="bs-stepper-label">Datos Laborales</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bs-stepper-content">
+                        <!-- your steps content here -->
+                        <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                            <div class="row h-100 align-content-center">
+                                <div class="col-xl-6 offset-xl-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h2 class="text-center">Datos Personales</h2>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="Fecha_Nacimiento" class="form-label">Fecha de nacimiento</label>
+                                                    <input type="date"  class="form-control" id="Fecha_Nacimiento">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-3">
+                                                <div class="col-md-6">
+                                                    <label for="Estados" class="form-label">Estado</label>
+                                                    <datalist id="Estados">
+                                                        <option value="volvo" class="form-text">Volvo</option>
+                                                        <option value="saab" class="form-text">Saab</option>
+                                                        <option value="fiat" class="form-text" selected>Fiat</option>
+                                                        <option value="audi" class="form-text">Audi</option>
+                                                    </datalist>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="Estado" list="Estados" id="Estado">
+                                                        <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Selecciona una de la lista disponible o da doble click en el campo">?</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="Ciudades" class="form-label">Ciudad</label>
+                                                    <datalist id="Ciudades">
+                                                        <option value="volvo" class="form-text">Volvo</option>
+                                                        <option value="saab" class="form-text">Saab</option>
+                                                        <option value="fiat" class="form-text" selected>Fiat</option>
+                                                        <option value="audi" class="form-text">Audi</option>
+                                                    </datalist>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="Ciudad" list="Ciudades" id="Ciudad" disabled>
+                                                        <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Selecciona una de la lista disponible o da doble click en el campo">?</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label for="Domicilio" class="form-label">Domicilio</label>
+                                                    <textarea placeholder="Domicilio Actual" id="Domicilio" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-3">
+                                                <div class="col-6">
+                                                    <label for="Telefono" class="form-label">Telefono</label>
+                                                    <input id="Telefono" placeholder="Telefono actual" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-3">
+                                                <div class="col-12 w-100 d-flex justify-content-center">
+                                                    <button type="button" class="btn btn-success">
+                                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                        Siguiente
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div id="information-part" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
+                            <div class="row h-100 align-content-center">
+                                <div class="col-xl-6 offset-xl-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h2 class="text-center">Datos Escolares</h2>
+                                        </div>
+                                        <div class="card-body mb-3">
+                                            <div class="row mt-3">
+                                                <div class="col-md-6">
+                                                    <label for="Universities" class="form-label">Universidad</label>
+                                                    <datalist id="Universities">
+                                                        <option value="volvo" class="form-text">Volvo</option>
+                                                        <option value="saab" class="form-text">Saab</option>
+                                                        <option value="fiat" class="form-text" selected>Fiat</option>
+                                                        <option value="audi" class="form-text">Audi</option>
+                                                    </datalist>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="Introduce universidad" list="Universities" id="University">
+                                                        <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Selecciona una de la lista disponible o da doble click en el campo">?</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6 mt-3 mt-md-0">
+                                                    <label for="CampusAll" class="form-label">Campus</label>
+                                                    <datalist id="CampusAll">
+                                                        <option value="volvo" class="form-text">Volvo</option>
+                                                        <option value="saab" class="form-text">Saab</option>
+                                                        <option value="fiat" class="form-text" selected>Fiat</option>
+                                                        <option value="audi" class="form-text">Audi</option>
+                                                    </datalist>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="Introduce campus" list="CampusAll" id="Campus" disabled>
+                                                        <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Selecciona una de la lista disponible o da doble click en el campo">?</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-3">
+                                                <div class="col-md-6">
+                                                    <label for="Faculties" class="form-label">Facultad</label>
+                                                    <datalist id="Faculties">
+                                                        <option value="volvo" class="form-text">Volvo</option>
+                                                        <option value="saab" class="form-text">Saab</option>
+                                                        <option value="fiat" class="form-text" selected>Fiat</option>
+                                                        <option value="audi" class="form-text">Audi</option>
+                                                    </datalist>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="Introduce tu facultad" list="Faculties" id="Faculty" disabled>
+                                                        <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Selecciona una de la lista disponible o da doble click en el campo">?</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mt-3 mt-md-0">
+                                                    <label for="Faculties" class="form-label">Carrera</label>
+                                                    <datalist id="Carrers">
+                                                        <option value="volvo" class="form-text">Volvo</option>
+                                                        <option value="saab" class="form-text">Saab</option>
+                                                        <option value="fiat" class="form-text" selected>Fiat</option>
+                                                        <option value="audi" class="form-text">Audi</option>
+                                                    </datalist>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="Introduce tu facultad" list="Carrers" id="Carrer" disabled>
+                                                        <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Selecciona una de la lista disponible o da doble click en el campo">?</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label" for="Ingreso">Fecha de Ingreso</label>
+                                                    <input type="date" class="form-control" id="Ingreso">
+                                                </div>
+
+                                                <div class="col-md-6 mt-3 mt-md-0">
+                                                    <label class="form-label" for="Egreso">Fecha de Egreso</label>
+                                                    <input type="date" class="form-control" id="Egreso">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label" for="Semestre_Grad">Semestre de graduacion</label>
+                                                    <input type="text" class="form-control" placeholder="Semestre de graduacion" id="Semestre_Grad">
+                                                </div>
+                                                <div class="col-md-6 mt-3 mt-md-0">
+                                                    <label class="form-label" for="Generacion">Generacion</label>
+                                                    <input type="text" class="form-control" placeholder="Numero de generacion" id="Generacion">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label" for="Titulacion">Fecha de titulacion</label>
+                                                    <input type="date" class="form-control" placeholder="Semestre de graduacion" id="Titulacion">
+                                                </div>
+                                                <div class="col-md-6 mt-3 mt-md-0">
+                                                    <label class="form-label" for="CorreoInstucional">Generacion</label>
+                                                    <input type="email" class="form-control" placeholder="Numero de generacion" id="CorreoInstucional">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-3">
+                                                <div class="col-12 w-100 d-flex justify-content-center">
+                                                    <button type="button" class="btn btn-success">Guardar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="data-part" class="content" role="tabpanel" aria-labelledby="data-part-trigger">
+                            <div class="row h-100 align-content-center">
+                                <div class="col-12 col-lg-8 col-xl-6 offset-lg-2 offset-xl-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h2 class="text-center">Datos Laborales</h2>
+                                        </div>
+                                        <div class="card-body">
+
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <h4>Usted se encuentra trabajando?</h4>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" name="isWorking" type="radio" id="isWorkingYes">
+                                                        <label class="form-check-label" for="isWorkingYes">
+                                                            Si
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" name="isWorking" type="radio" id="isWorkingNo">
+                                                        <label class="form-check-label" for="isWorkingNo">
+                                                            No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-3 d-none" id="questionContainerForIsWorking">
+
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <label class="w-100">
+                                                            Empleo:
+                                                            <input type="text" placeholder="Empleo Actual" class="form-control" id="Empleo">
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="col-6">
+                                                        <label class="w-100">
+                                                            Empresa:
+                                                            <input type="text" placeholder="Empresa Actual" class="form-control" id="Empresa">
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-3">
+                                                    <div class="col-6">
+                                                        <label class="w-100">
+                                                            Puesto:
+                                                            <input type="text" placeholder="Puesto Actual" class="form-control" id="Puesto">
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="col-6">
+                                                        <label class="w-100">
+                                                            Categoria:
+                                                            <input type="text" placeholder="Categoria del puesto" class="form-control" id="Categoria">
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-3">
+                                                    <div class="col-6">
+                                                        <label class="w-100">
+                                                            Correo Empresarial:
+                                                            <input type="text" placeholder="Correo electronico" class="form-control" id="CorreoEmpresa">
+                                                        </label>
+                                                    </div>
+
+
+                                                    <div class="col-6">
+                                                        <label class="w-100">
+                                                            Departamento:
+                                                            <input type="text" placeholder="Departamento" class="form-control" id="Departamento">
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-3">
+                                                    <div class="col-12">
+                                                        <label class="w-100">
+                                                            Tecnologias:
+                                                            <textarea type="text" placeholder="Tecnologias usadas" class="form-control" id="Tecnologias"></textarea>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-3">
+                                                    <div class="col-12">
+                                                        <label class="w-100">
+                                                            Actividades:
+                                                            <textarea type="text" placeholder="actividades que realiza" class="form-control" id="Actividades"></textarea>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row mt-3">
+                                                <div class="col-12 d-flex justify-content-center w-100">
+                                                    <button type="button" class="btn btn-success">Siguiente</button>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="../js/boostrap/jquery-3.6.0.min.js"></script>
+    <script src="../js/boostrap/popper.min.js"></script>
+    <script src="../js/boostrap/bootstrap.bundle.js"></script>
+    <script src="../js/boostrap/bootstrap.js"></script>
+    <script src="../js/userDataRegister.js"></script>
+    <script src="../js/userPersonalData.js"></script>
+    <script src="../js/userWorkData.js"></script>
+
+
+    <script src="../js/userPersonalData.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+</body>
+</html>
