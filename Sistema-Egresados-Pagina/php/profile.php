@@ -332,19 +332,29 @@ checkSession("user");
           <div>
             <div class="row mb-3">
               <div class="col-8">
-                <input type="text" class="form-control modified-middle-input ml-3 input-link-name" placeholder="Nombre">
+                <input 
+                  type="text"
+                  class="form-control modified-middle-input ml-3 input-link-name"
+                  placeholder="Nombre"
+                  value = "<?php echo $row['Nombre']?>"
+                  >
               </div>
               <div class="col-4">
                 <button
                   type="button"
                   name="button"
-                  class="btn btn-primary modified-middle-button"
+                  class="btn btn-primary modified-middle-button save-link"
                 >Guardar</button>
               </div>
             </div>
             <div class="row mb-5">
               <div class="col-8">
-                <input type="text" class="form-control modified-middle-input ml-3 input-link-url" placeholder="Enlace">
+                <input
+                  type="text"
+                  class="form-control modified-middle-input ml-3 input-link-url"
+                  placeholder="Enlace"
+                  value="<?php echo $row['Link'] ?>"
+                >
               </div>
               <div class="col-4">
                 <button
@@ -377,6 +387,7 @@ checkSession("user");
         <h1 class="popup-title">HABILIDADES</h1>
 
         <div id="all-skills">
+        <?php while($row = mysqli_fetch_assoc($skills)):?>
           <div class="">
             <div class="row mb-2">
               <div class="col-8">
@@ -402,6 +413,7 @@ checkSession("user");
               </div>
             </div>
           </div>
+        <?php endwhile; ?>
         </div>
 
         <div class="d-flex justify-content-center">

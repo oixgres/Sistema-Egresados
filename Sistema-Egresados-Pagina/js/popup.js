@@ -1,5 +1,7 @@
-var deleteSkillsButton;
-var listSkills;
+/**/
+var linksJSON = [];
+var inputLinkName = document.getElementsByClassName('form-control modified-middle-input ml-3 input-link-name');
+var inputLinkURL = document.getElementsByClassName('form-control modified-middle-input ml-3 input-link-url');
 
 function linkPopup(){
   document.getElementById("popup-link").classList.toggle("active");
@@ -10,9 +12,6 @@ function skillPopup(){
 }
 
 function incrementLinks(){
-  var inputLinkName = document.getElementsByClassName('form-control modified-middle-input ml-3 input-link-name');
-  var inputLinkURL = document.getElementsByClassName('form-control modified-middle-input ml-3 input-link-url');
-
   var nameValues = [];
   var urlValues = [];
 
@@ -41,6 +40,25 @@ function incrementLinks(){
     deleteLinkButton[i].addEventListener('click', function(e){
       this.parentNode.parentNode.parentNode.remove();
     }, false);
+
+  
+  let saveLinkButton = document.getElementsByClassName('save-link');
+  for(var i = 0; i < inputLinkName.value; i++){
+    saveLinkButton[i].addEventListener('click', function (e){
+      if(linksJSON.contains())
+
+      linksJSON.add = [{
+        id: inputLinkName[i].id
+      }]
+    })
+  }
+
+  /* Almacenamiento de los campos */
+  /*
+  let input
+
+  for(var i = 0; i <  )
+  */
 }
 
 function incrementSkills(){
@@ -70,3 +88,7 @@ function incrementSkills(){
     }, false);
   }
 }
+
+
+
+
