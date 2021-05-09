@@ -5,18 +5,27 @@ function checkSession(userType){
         type: 'POST',
         data: {userType},
         success: function (response) {
-            console.log(response)
-            try{
-                let json = JSON.parse(response)
-                if(json.location){
-                    $('body').hide();
-                    window.location = json.location;
-                }
-            }catch (e){
+            if(userType != 'new')
+            {
+              console.log(response)
+              try{
+                  let json = JSON.parse(response)
+                  if(json.location){
+                      alert("Por favor verifique sus datos")
+                      window.location = json.location;
+                  }
+              }catch (e){
 
+              }
             }
+            else
+              try {
+                let json = JSON.parse(response)
+                window.location = json.location;
+              } catch (e) {
+
+              }
+
         }
     })
 }
-
-
