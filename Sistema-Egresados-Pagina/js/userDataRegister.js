@@ -74,6 +74,7 @@ $(document).ready(function (e) {
     $.ajax({
         url: '../php/getStates.php',
         type: 'POST',
+        async: false,
         data: {},
         success: function (response) {
             try{
@@ -110,7 +111,7 @@ $(document).ready(function (e) {
                 console.log(e)
             }
         },
-        error: function (a,b,c) {
+        error: function () {
           alert("error")
         }
     })

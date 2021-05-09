@@ -16,7 +16,6 @@
             <div class="col-12">
                 <div class="bs-stepper">
                     <div class="bs-stepper-header" role="tablist">
-                        <!-- your steps here -->
                         <div class="step" data-target="#DatosPersonales">
                             <button type="button" class="step-trigger" role="tab" aria-controls="logins-part">
                                 <span class="bs-stepper-circle">1</span>
@@ -39,8 +38,6 @@
                         </div>
                     </div>
                     <div class="bs-stepper-content">
-                        <!-- your steps content here -->
-                        <!-- -->
                         <div id="DatosPersonales" class="content fade"  role="tabpanel">
                             <div class="row h-100 align-content-center">
                                 <div class="col-xl-6 offset-xl-3">
@@ -65,6 +62,13 @@
                                                     <div class="input-group">
                                                         <input type="text" class="form-control" placeholder="Estado" list="Estados" id="Estado">
                                                         <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Selecciona una de la lista disponible o da doble click en el campo">?</span>
+                                                        <div class="valid-feedback">
+                                                            Estado Valido
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            No existe
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
