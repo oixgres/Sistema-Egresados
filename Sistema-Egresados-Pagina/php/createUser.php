@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 require_once 'dbh.php';
 require_once 'generalFunctions.php';

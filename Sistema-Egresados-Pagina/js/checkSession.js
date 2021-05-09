@@ -15,7 +15,13 @@ function checkSession(userType){
             }catch (e){
 
             }
+            else
+              try {
+                let json = JSON.parse(response)
+                window.location = json.location;
+              } catch (e) {
 
+              }
         }
     })
 }
