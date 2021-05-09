@@ -34,3 +34,5 @@ if(gettype($res) != "boolean") {
 } else {
     echo -1;
 }
+
+$conn->close();
