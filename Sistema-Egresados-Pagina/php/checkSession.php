@@ -4,10 +4,10 @@
     $userType = $_POST['userType'];
 
     /* Si la cookie y session no coinciden o si no existe session*/
-    if(!isset($_SESSION['token']) || !isset($_COOKIE['token'])  || ($_COOKIE["token"] != $_SESSION["token"]))
+    if($_COOKIE["token"] != $_SESSION["token"] || (!isset($_SESSION['token']) && !isset($_COOKIE['verification'])))
     {
         echo json_encode(Array(
-           'location' => '../index.html'
+            'location' => '../index.html'
         ));
 
     }

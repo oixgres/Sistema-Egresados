@@ -10,6 +10,8 @@
   setcookie("lastname", "", time()-1,"/");
   setcookie("mail", "", time()-1,"/");
   setcookie("id",  "", time()-1,"/");
+  setcookie("userType",  "", time()-1,"/");
+  setcookie("verification", "",time()-1,"/");
 
   header("Location: ../index.html");
   exit();

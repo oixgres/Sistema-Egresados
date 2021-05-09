@@ -1,5 +1,5 @@
 /**/
-var linksJSON = [];
+var linksJSON = {items: []};
 var inputLinkName = document.getElementsByClassName('form-control modified-middle-input ml-3 input-link-name');
 var inputLinkURL = document.getElementsByClassName('form-control modified-middle-input ml-3 input-link-url');
 
@@ -24,7 +24,7 @@ function incrementLinks(){
   
   /* El contenido de los divs se pierde al ejecutar estas lineas, por lo que lo volvemos a vaciar */
   let preHTML = document.getElementById('all-links').innerHTML;
-  let newHTML = '<div><div class="row mb-3"><div class="col-8"><input type="text" class="form-control modified-middle-input ml-3 input-link-name" placeholder="Nombre"></div><div class="col-4"><button type="button"name="button"class="btn btn-primary modified-middle-button">Guardar</button></div></div><div class="row mb-5"><div class="col-8"><input type="text" class="form-control modified-middle-input ml-3 input-link-url" placeholder="Enlace"></div><div class="col-4"><button type="button"name="button"class="btn btn-danger modified-middle-button delete-links">Eliminar</button></div></div></div>';
+  let newHTML = '<div><div class="row mb-3"><div class="col-8"><input type="text" class="form-control modified-middle-input ml-3 input-link-name" placeholder="Nombre"></div><div class="col-4"><button type="button"name="button"class="btn btn-primary modified-middle-button save-link">Guardar</button></div></div><div class="row mb-5"><div class="col-8"><input type="text" class="form-control modified-middle-input ml-3 input-link-url" placeholder="Enlace"></div><div class="col-4"><button type="button"name="button"class="btn btn-danger modified-middle-button delete-links">Eliminar</button></div></div></div>';
   document.getElementById('all-links').innerHTML = preHTML+newHTML;
 
   /* Regresamos los valores */
@@ -43,22 +43,18 @@ function incrementLinks(){
 
   
   let saveLinkButton = document.getElementsByClassName('save-link');
-  for(var i = 0; i < inputLinkName.value; i++){
+  for(var i = 0; i < inputLinkName.length; i++){
     saveLinkButton[i].addEventListener('click', function (e){
-      if(linksJSON.contains())
-
-      linksJSON.add = [{
-        id: inputLinkName[i].id
-      }]
+      
+      /* Corregir */
+      console.log(i);
+      linksJSON.items.push({
+        id: inputLinkName[i].id,
+        name: inputLinkName[i].value,
+        link: inputLinkURL[i].value
+      });
     })
   }
-
-  /* Almacenamiento de los campos */
-  /*
-  let input
-
-  for(var i = 0; i <  )
-  */
 }
 
 function incrementSkills(){
