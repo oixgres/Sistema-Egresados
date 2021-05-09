@@ -13,10 +13,18 @@ function getCookie(cname) {
     }
     return "";
 } //funcion para obtener un cookie
+function CreateOptionComponent(value) {
+    /*
+      <option value="volvo" class="form-text">Volvo</option>
+    */
+    return $(`
+        <option value="${value}" class="form-text">${value}</option>
+    `)
+}
+const STATES_DOCUMENT = "Estados";
 
 $(document).ready(function (e) {
     document.cookie ="id=1" //cookie temporal
-
 
 
     let stepper = new Stepper($('.bs-stepper')[0]) //stteper principal
@@ -24,9 +32,9 @@ $(document).ready(function (e) {
 
     let questionContainerForIsWorking = $('#questionContainerForIsWorking');
 
-    $('.container').css({"height":`${WINDOW_HEIGHT}px`});
+    $('.container').css({"height":`${WINDOW_HEIGHT}px`}); //poner al contenedor la altura del dispositivo
 
-    $("#isWorkingYes,#isWorkingNo").on('click', function (e) {
+    $("#isWorkingYes,#isWorkingNo").on('click', function (e) { //
         e.stopPropagation()
         if($(this).attr('id') === "isWorkingYes"){
             questionContainerForIsWorking.hide();
@@ -51,8 +59,6 @@ $(document).ready(function (e) {
         const fechaNacimiento = $('#Fecha_Nacimiento').val(); //fecha de nacimiento
 
 
-
-        //stepper.next();
     })
     $('#DatosEscolaresButton').on('click', function (e) {
         e.stopPropagation();
@@ -63,5 +69,32 @@ $(document).ready(function (e) {
         alert("Guardado")
     })
 
+
+    $.ajax({
+        url: '../php/getStates.php',
+        type: 'POST',
+        data: {},
+        success: function (response) {
+            try{
+                let estados = JSON.parse(response); //obtener los estados
+                let estados_dictionary = {}; //crear diccionario
+                let dataListParent = $('#Estados');
+
+                estados.forEach(estado => {
+                    dataListParent.append(CreateOptionComponent(estado.nombre))
+
+                    estados_dictionary[estado.nombre] = estado.idEstado; //convertir json en diccionario
+                })
+                localStorage.setItem(STATES_DOCUMENT, JSON.stringify(estados_dictionary)); //guardar diccionario
+
+
+            }catch (e){
+                console.log(e)
+            }
+        },
+        error: function (a,b,c) {
+          alert("error")
+        }
+    })
 
 })
