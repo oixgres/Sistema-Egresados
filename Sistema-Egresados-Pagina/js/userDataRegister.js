@@ -1,7 +1,6 @@
 $(document).ready(function (e) {
-    let stepper = new Stepper($('.bs-stepper')[0])
-
-    const WINDOW_HEIGHT = $(window).height();;
+    let stepper = new Stepper($('.bs-stepper')[0]) //stteper principal
+    const WINDOW_HEIGHT = $(window).height(); //altura maxima del dispositivo
 
     let questionContainerForIsWorking = $('#questionContainerForIsWorking');
 
@@ -19,16 +18,25 @@ $(document).ready(function (e) {
         }
     })
 
-
-    if($("#isWorkingYes").prop('checked'))
+    if($("#isWorkingYes").prop('checked')) //validacion por la caché del navegador
     {
         questionContainerForIsWorking.hide();
         questionContainerForIsWorking.removeClass('d-none');
         questionContainerForIsWorking.show(600);
     }
 
-    stepper.next();
-    stepper.next();
+    $('#PersonalDataBtn').on('click', function (e) {
+        e.stopPropagation();
+        stepper.next();
+    })
+    $('#DatosEscolaresButton').on('click', function (e) {
+        e.stopPropagation();
+        stepper.next();
+    })
+    $('#DatosLaboralesBtn').on('click', function (e) {
+        e.stopPropagation();
+        alert("Guardado")
+    })
 
 
 })

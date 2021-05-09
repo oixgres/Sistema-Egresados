@@ -16,30 +16,31 @@
                 <div class="bs-stepper">
                     <div class="bs-stepper-header" role="tablist">
                         <!-- your steps here -->
-                        <div class="step" data-target="#logins-part">
-                            <button type="button" class="step-trigger" role="tab" aria-controls="logins-part" id="logins-part-trigger">
+                        <div class="step" data-target="#DatosPersonales">
+                            <button type="button" class="step-trigger" role="tab" aria-controls="logins-part">
                                 <span class="bs-stepper-circle">1</span>
                                 <span class="bs-stepper-label">Datos Personales</span>
                             </button>
                         </div>
                         <div class="line"></div>
-                        <div class="step" data-target="#information-part">
-                            <button type="button" class="step-trigger" role="tab" aria-controls="information-part" id="information-part-trigger">
+                        <div class="step" data-target="#DatosEscolares">
+                            <button type="button" class="step-trigger" role="tab" aria-controls="information-part">
                                 <span class="bs-stepper-circle">2</span>
                                 <span class="bs-stepper-label">Datos Escolares</span>
                             </button>
                         </div>
                         <div class="line"></div>
-                        <div class="step" data-target="#data-part">
-                            <button type="button" class="step-trigger" role="tab" aria-controls="data-part" id="data-part-trigger">
-                                <span class="bs-stepper-circle">2</span>
+                        <div class="step" data-target="#datosLaborales">
+                            <button type="button" class="step-trigger" role="tab" aria-controls="data-part">
+                                <span class="bs-stepper-circle">3</span>
                                 <span class="bs-stepper-label">Datos Laborales</span>
                             </button>
                         </div>
                     </div>
                     <div class="bs-stepper-content">
                         <!-- your steps content here -->
-                        <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                        <!-- -->
+                        <div id="DatosPersonales" class="content fade"  role="tabpanel">
                             <div class="row h-100 align-content-center">
                                 <div class="col-xl-6 offset-xl-3">
                                     <div class="card">
@@ -99,7 +100,7 @@
 
                                             <div class="row mt-3">
                                                 <div class="col-12 w-100 d-flex justify-content-center">
-                                                    <button type="button" class="btn btn-success">
+                                                    <button type="button" class="btn btn-success" id="PersonalDataBtn">
                                                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                                         Siguiente
                                                     </button>
@@ -111,7 +112,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="information-part" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
+                        <div id="DatosEscolares" class="content fade" role="tabpanel">
                             <div class="row h-100 align-content-center">
                                 <div class="col-xl-6 offset-xl-3">
                                     <div class="card">
@@ -121,15 +122,15 @@
                                         <div class="card-body mb-3">
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
-                                                    <label for="Universities" class="form-label">Universidad</label>
-                                                    <datalist id="Universities">
+                                                    <label for="Universidades" class="form-label">Universidad</label>
+                                                    <datalist id="Universidades">
                                                         <option value="volvo" class="form-text">Volvo</option>
                                                         <option value="saab" class="form-text">Saab</option>
                                                         <option value="fiat" class="form-text" selected>Fiat</option>
                                                         <option value="audi" class="form-text">Audi</option>
                                                     </datalist>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" placeholder="Introduce universidad" list="Universities" id="University">
+                                                        <input type="text" class="form-control" placeholder="Introduce universidad" list="Universidades" id="University">
                                                         <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Selecciona una de la lista disponible o da doble click en el campo">?</span>
                                                     </div>
                                                 </div>
@@ -207,14 +208,17 @@
                                                     <input type="date" class="form-control" placeholder="Semestre de graduacion" id="Titulacion">
                                                 </div>
                                                 <div class="col-md-6 mt-3 mt-md-0">
-                                                    <label class="form-label" for="CorreoInstucional">Generacion</label>
-                                                    <input type="email" class="form-control" placeholder="Numero de generacion" id="CorreoInstucional">
+                                                    <label class="form-label" for="CorreoInstucional">Correo Institucional</label>
+                                                    <input type="email" class="form-control" placeholder="Correo Institucional" id="CorreoInstucional">
                                                 </div>
                                             </div>
 
                                             <div class="row mt-3">
-                                                <div class="col-12 w-100 d-flex justify-content-center">
-                                                    <button type="button" class="btn btn-success">Guardar</button>
+                                                <div class="col-12 w-100 d-flex justify-content-center" id="DatosEscolaresButton">
+                                                    <button type="button" class="btn btn-success">
+                                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                        Siguiente
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -222,7 +226,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="data-part" class="content" role="tabpanel" aria-labelledby="data-part-trigger">
+                        <div id="datosLaborales" class="content fade" role="tabpanel">
                             <div class="row h-100 align-content-center">
                                 <div class="col-12 col-lg-8 col-xl-6 offset-lg-2 offset-xl-3">
                                     <div class="card">
@@ -321,8 +325,11 @@
                                             </div>
 
                                             <div class="row mt-3">
-                                                <div class="col-12 d-flex justify-content-center w-100">
-                                                    <button type="button" class="btn btn-success">Siguiente</button>
+                                                <div class="col-12 d-flex justify-content-center" id="DatosLaboralesBtn">
+                                                    <button type="button" class="btn btn-success">
+                                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                        Guardar
+                                                    </button>
                                                 </div>
                                             </div>
 
