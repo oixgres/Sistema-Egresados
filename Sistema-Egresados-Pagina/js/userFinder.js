@@ -40,6 +40,17 @@ $(document).ready(function (e) {
             $('#userEmailSelected').val($(this).parent().parent().siblings('td:eq(9)').text())
             SendEmail.toggle();
         })
+        
+        node.find('.deleteUser').on('click', function (e) {
+            e.stopPropagation();
+            let modal = new bootstrap.Modal($('#deleteUserModal')[0]);
+            let userId = $(this).parent().parent().parent().attr('id');
+            let regex = RegExp('[0-9]+')
+
+
+            $('#ConfirmDeleteUser').val(regex.exec(userId).toString());
+            modal.show();
+        })
 
 
 
@@ -161,6 +172,9 @@ $(document).ready(function (e) {
         return "";
     } //funcion para obtener un cookie
 
+    function deleteUser(userId) {
+
+    }
 
     const filters = $('.custom-checkbox');
     const AdvanceSearch = $('#AdvanceSearch');
@@ -194,6 +208,25 @@ $(document).ready(function (e) {
 
     $('#Names,#SecondNames,#CampusText,#FacultyText,#Program,#Company,#City,#rol').on('keyup', function (e) {
         refreshTable();
+    })
+
+    $('#ConfirmDeleteUser').on('click', function (e) {
+        e.stopPropagation();
+
+        let idUsuario = $(this).val();
+
+
+        $.ajax({
+            url: '../php/deleteUser.php',
+            type: 'POST',
+            data: {idUsuario},
+            success: function (response) {
+                if(parseInt(response, 10) === 0){
+                    alert("Eliminado con exito");
+                    refreshTable();
+                }
+            }
+        })
     })
 
     $('#GoHome').on('click', function (e){
