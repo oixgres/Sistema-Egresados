@@ -4,28 +4,24 @@
     $userType = $_POST['userType'];
 
     /* Si la cookie y session no coinciden o si no existe session*/
-    if(!isset($_SESSION['token']) || !isset($_COOKIE['token'])  || ($_COOKIE["token"] != $_SESSION["token"]))
+    if($_COOKIE["token"] != $_SESSION["token"] || !isset($_SESSION['token']))
     {
-        echo json_encode(Array(
-           'location' => '../index.html'
-        ));
-
+        header("Location: ../index.html");
+        exit();
     }
     else
-        /* Si el tipo de usuario no coincide */
-        if($_COOKIE["userType"] != $userType)
+    /* Si el tipo de usuario no coincide */
+    if($_COOKIE["userType"] != $userType)
+    {
+        if($userType=="new")
         {
-            if($userType=='new')
-            {
-                echo json_encode(Array(
-                    'location' => '../index.html'
-                ));
-            }
-            else
-            {
-                echo json_encode(Array(
-                    'location' => '../html/denied.html'
-                ));
-            }
+            header("Location: ../index.html");
+            exit();
         }
+        else
+        {
+            header("Location: ../html/denied.html");
+            exit();
+        }
+    }
 ?>

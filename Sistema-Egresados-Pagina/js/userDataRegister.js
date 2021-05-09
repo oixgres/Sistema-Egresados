@@ -1,29 +1,32 @@
-function getCookie(cname) {
-    const name = cname + "=";
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const ca = decodedCookie.split(';');
-    for(let i = 0; i <ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) === ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) === 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-} //funcion para obtener un cookie
-function CreateOptionComponent(value) {
-    /*
-      <option value="volvo" class="form-text">Volvo</option>
-    */
-    return $(`
-        <option value="${value}" class="form-text">${value}</option>
-    `)
-}
-const STATES_DOCUMENT = "Estados";
-
 $(document).ready(function (e) {
+    function getCookie(cname) {
+        const name = cname + "=";
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) === 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    } //funcion para obtener un cookie
+    function CreateOptionComponent(value) {
+        /*
+            <option value="volvo" class="form-text">Volvo</option>
+        */
+        let node = $(`
+            <option value="${value}" class="form-text">${value}</option>
+        `)
+
+        return node;
+    }
+    const STATES_DOCUMENT = "Estados";
+
+
     document.cookie ="id=1" //cookie temporal
 
 
@@ -80,9 +83,9 @@ $(document).ready(function (e) {
                 let estados_dictionary = {}; //crear diccionario
                 let dataListParent = $('#Estados');
 
-                estados.forEach(estado => {
-                    dataListParent.append(CreateOptionComponent(estado.nombre))
 
+                estados.forEach(estado => {
+                    dataListParent.append(CreateOptionComponent(estado.nombre))//agregar opciones a los estados
                     estados_dictionary[estado.nombre] = estado.idEstado; //convertir json en diccionario
                 })
                 localStorage.setItem(STATES_DOCUMENT, JSON.stringify(estados_dictionary)); //guardar diccionario
