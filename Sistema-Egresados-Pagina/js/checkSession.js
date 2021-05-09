@@ -5,7 +5,7 @@ function checkSession(userType){
         type: 'POST',
         data: {userType},
         success: function (response) {
-            if(userType != 'new')
+            if(userType !== 'new')
             {
               console.log(response)
               try{
