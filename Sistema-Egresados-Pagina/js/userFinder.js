@@ -52,13 +52,8 @@ $(document).ready(function (e) {
                 type: 'POST',
                 success: function (response) {
                     try{
-
-
                         $('#AnimationLoadingContainer').hide();
                         $('#userProfileContainer').show();
-
-
-
 
                         let datosUsuario = JSON.parse(response);
 
