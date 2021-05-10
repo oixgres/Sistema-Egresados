@@ -2,6 +2,7 @@ $(document).ready(function () {
     const UNIVERSITIES = "universities"
     const CAMPUS = "campus";
     const FACULTADES = "facultades";
+    const CARRERAS = "carreras";
 
     function CreateOptionComponent(value) {
         /*
@@ -108,10 +109,54 @@ $(document).ready(function () {
 
     })
     $('#Facultad').on('change', function (e) {
+        e.stopPropagation();
+        $(this).removeClass('alert alert-danger is-invalid is-valid alert-success');
+        const facultades = JSON.parse(localStorage.getItem(FACULTADES));
+        $('#Carrera').attr('disabled', true)
+        if(facultades[$(this).val()] !== undefined){
+            $(this).addClass('alert alert-success is-valid')
+            const idFacultad = facultades[$(this).val()];
+
+            $.ajax({
+                url: '../php/getPrograms.php',
+                data: {idFacultad},
+                type: 'POST',
+                success: function (response) {
+                    try{
+                        let carreras = JSON.parse(response);
+                        let carreras_object = {}
+
+                        carreras.forEach(carrera => {
+                            $('#Carreras').append(CreateOptionComponent(carrera.nombre))
+                            carreras_object[carrera.nombre] = carrera.idPlan_Estudio;
+                        })
+
+                        $('#Carrera').attr('disabled', false)
+                        localStorage.setItem(CARRERAS, JSON.stringify(carreras_object))
+
+                    }catch (e){
+
+                    }
 
 
-        
+
+                },
+                error: function () {
+                    alert("error al traer las carreras")
+                }
+
+
+            })
+
+        }
+        else{
+            $(this).addClass('alert alert-danger is-invalid')
+            $('#Carrera').attr('disabled', true)
+            $('#Carrera').val("")
+        }
+
     })
+    
 
     $.ajax({
         url: '../php/getUniversities.php',
