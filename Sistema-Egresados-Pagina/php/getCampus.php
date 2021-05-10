@@ -16,7 +16,7 @@ require_once "dbh.php";
 */
 
 if(isset($_POST['idUniversidad'])) {
-    $idEstado = $_POST['idUniversidad'];
+    $idUniversidad = $_POST['idUniversidad'];
 } else {
     echo -1;
     $conn->close();
