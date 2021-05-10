@@ -32,8 +32,56 @@ $(document).ready(function (e) {
 
         node.find('.showProfileBtn').on('click', function (e) {
             e.stopPropagation();
+            let userId = $(this).parent().parent().parent().attr('id');
+            let regex = RegExp('[0-9]+')
+            let idUsuario = regex.exec(userId).pop();
+
+            //AnimationLoadingContainer
+            $('#AnimationLoadingContainer').show();
+            $('#userProfileContainer').hide();
+
+            /*
+            for(let i = 0; i < 5000; i++){
+                console.log(i)
+            }
+             */
+
+            $.ajax({
+                url: '../php/getUserData.php',
+                data: {idUsuario},
+                type: 'POST',
+                success: function (response) {
+                    try{
 
 
+                        $('#AnimationLoadingContainer').hide();
+                        $('#userProfileContainer').show();
+
+
+
+
+                        let datosUsuario = JSON.parse(response);
+
+                        $('#userName').text(datosUsuario.nombres + " " + datosUsuario.apellidos)
+                        $('#department').text(datosUsuario.departamento);
+                        $('#userName_info').text(datosUsuario.nombres + " " + datosUsuario.apellidos)
+                        $('#userEmail_info').text(datosUsuario.correo);
+                        $('#userPhone_number').text(datosUsuario.telefono)
+                        $('#userLocation_info').text(datosUsuario.estado + ", " + datosUsuario.ciudad)
+                        $('#userWork_info').text(datosUsuario.empleo)
+                        $('#userCompany_info').text(datosUsuario.empresa)
+                        $('#userTypeWork_info').text(datosUsuario.puesto)
+                        $('#userDepartment_info').text(datosUsuario.departamento)
+
+                    }catch (e){
+                        console.log(e)
+                    }
+                },
+                error: function () {
+                    alert("Error al consultar usuario")
+                }
+
+            })
 
 
             UserProfile.toggle();

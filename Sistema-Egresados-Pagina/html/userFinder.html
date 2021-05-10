@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/profile.css">
     <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css"> <!-- Nuevos estilos de boostrap -->
     <link rel="stylesheet" href="../css/boostrap/bootstrap_pulse.min.css"> <!-- Nuevos estilos de boostrap -->
+    <link rel="stylesheet" href="../css/userFinder.css">
 
     <style>
         tr:hover{
@@ -160,14 +161,37 @@
     </div>
     <div class="container">
         <!-- Ofcanvas del perfil -->
+
         <div class="row">
             <div class="col-12">
 
                 <div class="offcanvas offcanvas-start w-75" tabindex="-1" id="UserProfile" style="background: -webkit-linear-gradient(left, #3931af, #00c6ff); overflow: scroll">
+
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title text-white">Perfil de usuario</h5>
                     </div>
-                    <div class="container emp-profile">
+
+
+                    <div class="h-100" id="AnimationLoadingContainer">
+                        <div class="row align-content-center h-100">
+                            <div class="col-12">
+                                <div class="loadingScreen h-100 align-content-center">
+                                    <div class="bounceItem blue"></div>
+                                    <div class="bounceItem yellow"></div>
+                                    <div class="bounceItem red"></div>
+                                    <div class="bounceItem violet"></div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <h2 class="text-white text-center">Cargando...</h2>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="container emp-profile"  id="userProfileContainer">
                         <form>
                             <div class="row">
                                 <div class="col-md-4">
@@ -230,7 +254,7 @@
                                                 <div class="col-md-4">
                                                     <label>Correo Personal:</label>
                                                 </div>
-                                                <div class="col-md-8" id="userEmail_info">
+                                                <div class="col-md-8 textInfoLink" id="userEmail_info">
                                                     <p>omar5antonio@gmail.com?></p>
                                                 </div>
                                             </div>
