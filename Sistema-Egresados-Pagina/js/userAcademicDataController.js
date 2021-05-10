@@ -4,6 +4,21 @@ $(document).ready(function () {
     const FACULTADES = "facultades";
     const CARRERAS = "carreras";
 
+    function getCookie(cname) {
+        const name = cname + "=";
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) === 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    } //funcion para obtener un cookie
     function CreateOptionComponent(value) {
         /*
             <option value="volvo" class="form-text">Volvo</option>
@@ -13,7 +28,8 @@ $(document).ready(function () {
         `);
     }
 
-
+    let stepper = mainSteper.stepper;
+    
     $('#Universidad').on('change', function (e) {
         e.stopPropagation();
         const universidades = JSON.parse(localStorage.getItem(UNIVERSITIES));
@@ -156,7 +172,112 @@ $(document).ready(function () {
         }
 
     })
-    
+    $('#Carrera').on('change', function (e) {
+        e.stopPropagation();
+        $(this).removeClass('alert alert-danger is-invalid is-valid alert-success');
+        const carreras = JSON.parse(localStorage.getItem(CARRERAS))
+
+        if(carreras[$(this).val()] !== undefined){
+            $(this).addClass('alert alert-success is-valid');
+        }
+        else{
+            $(this).addClass('alert alert-danger is-invalid')
+        }
+    })
+    $('#saveAcademicData').on('click', function (e) {
+        e.stopPropagation();
+
+        if(validateFields()){
+            const idUsuario = getCookie("id");
+            const idUniversidad = JSON.parse(localStorage.getItem(UNIVERSITIES))[$('#Universidad').val()];
+            const idCampus = JSON.parse(localStorage.getItem(CAMPUS))[$('#Campus').val()];
+            const idFacultad = JSON.parse(localStorage.getItem(FACULTADES))[$('#Facultad').val()];
+            const idPlanEstudio = JSON.parse(localStorage.getItem(CARRERAS))[$('#Carrera').val()];
+            const fechaIngreso = $('#Ingreso').val();
+            const fechaEgreso = $('#Egreso').val();
+            const semestreGrad = $('#Semestre_Grad').val();
+            const generacion = $('#Generacion').val();
+            const fechaTitulacion = $('#Titulacion').val();
+            const correo = $('#CorreoInstucional').val();
+
+            $.ajax({
+                url: '../php/registerAcademicData.php',
+                data: {idUsuario, idUniversidad, idCampus, idFacultad, idPlanEstudio, fechaIngreso, fechaEgreso, semestreGrad, generacion, fechaTitulacion, correo},
+                type: 'POST',
+                success: function (response) {
+                    try{
+                        if(parseInt(response, 10) === 0){
+                            alert("Registrado con exito")
+                            stepper.next();
+                        }
+                    }catch (e){
+                        console.log(e)
+                    }
+
+
+                },
+                error: function () {
+                    alert("error al registrar datos")
+                }
+            })
+
+
+        }else{
+            alert("Favor de verificar los datos")
+        }
+
+    })
+    function validateFields() {
+        let flag = true;
+
+        $('*').removeClass('alert alert-danger alert-success is-invalid is-invalid')
+
+        if($('#Universidad').val() === ""){
+            flag = false;
+            $('#Universidad').addClass('alert alert-danger is-invalid');
+        }
+        if($('#Campus').val() === ""){
+            flag = false;
+            $('#Campus').addClass('alert alert-danger is-invalid');
+        }
+        if($('#Facultad').val() === ""){
+            flag = false;
+            $('#Facultad').addClass('alert alert-danger is-invalid');
+        }
+        if($('#Carrera').val() === ""){
+            flag = false;
+            $('#Carrera').addClass('alert alert-danger is-invalid');
+        }
+        if($('#Ingreso').val() === ""){
+            flag = false;
+            $('#Ingreso').addClass('alert alert-danger is-invalid');
+        }
+        if($('#Egreso').val() === ""){
+            flag = false;
+            $('#Egreso').addClass('alert alert-danger is-invalid');
+        }
+        if($('#Semestre_Grad').val() === "" || isNaN($('#Semestre_Grad').val())){
+            flag = false;
+            $('#Semestre_Grad').addClass('alert alert-danger is-invalid');
+        }
+        if($('#Generacion').val() === "" || isNaN($('#Generacion').val())){
+            flag = false;
+            $('#Generacion').addClass('alert alert-danger is-invalid');
+        }
+        if($('#Titulacion').val() === ""){
+            flag = false;
+            $('#Titulacion').addClass('alert alert-danger is-invalid');
+        }
+        if($('#CorreoInstucional').val() === ""){
+            flag = false;
+            $('#CorreoInstucional').addClass('alert alert-danger is-invalid');
+        }
+
+
+
+
+        return flag;
+    }
 
     $.ajax({
         url: '../php/getUniversities.php',

@@ -1,3 +1,4 @@
+
 $(document).ready(function (e) {
     function getCookie(cname) {
         const name = cname + "=";
@@ -60,10 +61,7 @@ $(document).ready(function (e) {
     const STATES_DOCUMENT = "Estados";
     const CITIES_DOCUMENT = "Ciudades";
 
-    let stepper = new Stepper($('.bs-stepper')[0]) //stteper principal
-    stepper.next();
-
-
+    let stepper = mainSteper.stepper;
 
     let questionContainerForIsWorking = $('#questionContainerForIsWorking');
 
@@ -109,6 +107,7 @@ $(document).ready(function (e) {
                     try{
                         if(parseInt(response, 10) === 0){
                             spinner.addClass('d-none');
+                            alert("Registrado con exito")
                             stepper.next();
                         }
                         else {
@@ -256,3 +255,4 @@ $(document).ready(function (e) {
     })
 
 })
+
