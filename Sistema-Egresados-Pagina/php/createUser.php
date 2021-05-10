@@ -44,7 +44,7 @@ if($conn)
         setcookie("userType", "new",time()+(60*60*24*30),"/");
 
         mysqli_close($conn);
-        header("Location: ../html/verificationPage.html");
+        header("Location: ../html/userDataRegister.html");
         exit();
       }
   }

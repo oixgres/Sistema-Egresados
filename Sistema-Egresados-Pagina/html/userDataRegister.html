@@ -14,24 +14,25 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
+                <button class="btn btn-success" id="avanzar">Avanzar</button>
                 <div class="bs-stepper">
                     <div class="bs-stepper-header" role="tablist">
                         <div class="step" data-target="#DatosPersonales">
-                            <button type="button" class="step-trigger" role="tab" aria-controls="logins-part">
+                            <button type="button" class="step-trigger" role="tab">
                                 <span class="bs-stepper-circle">1</span>
                                 <span class="bs-stepper-label">Datos Personales</span>
                             </button>
                         </div>
                         <div class="line"></div>
                         <div class="step" data-target="#DatosEscolares">
-                            <button type="button" class="step-trigger" role="tab" aria-controls="information-part">
+                            <button type="button" class="step-trigger" role="tab">
                                 <span class="bs-stepper-circle">2</span>
                                 <span class="bs-stepper-label">Datos Escolares</span>
                             </button>
                         </div>
                         <div class="line"></div>
                         <div class="step" data-target="#datosLaborales">
-                            <button type="button" class="step-trigger" role="tab" aria-controls="data-part">
+                            <button type="button" class="step-trigger" role="tab">
                                 <span class="bs-stepper-circle">3</span>
                                 <span class="bs-stepper-label">Datos Laborales</span>
                             </button>
@@ -336,9 +337,9 @@
                                             </div>
 
                                             <div class="row mt-3">
-                                                <div class="col-12 d-flex justify-content-center" id="DatosLaboralesBtn">
-                                                    <button type="button" class="btn btn-success">
-                                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                <div class="col-12 d-flex justify-content-center">
+                                                    <button type="button" class="btn btn-success" id="sendWorkingDataBtn">
+                                                        <span class="spinner-border spinner-border-sm d-none" role="status"></span>
                                                         Guardar
                                                     </button>
                                                 </div>
@@ -369,6 +370,7 @@
     <script src="../js/userDataRegister.js"></script>
     <script src="../js/userPersonalDataController.js"></script>
     <script src="../js/userAcademicDataController.js"></script>
+    <script src="../js/userWorkingDataController.js"></script>
 
 
 

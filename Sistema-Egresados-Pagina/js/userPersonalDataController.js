@@ -63,24 +63,8 @@ $(document).ready(function (e) {
 
     let stepper = mainSteper.stepper;
 
-    let questionContainerForIsWorking = $('#questionContainerForIsWorking');
 
-    $("#isWorkingYes,#isWorkingNo").on('click', function (e) { //
-        e.stopPropagation()
-        if($(this).attr('id') === "isWorkingYes"){
-            questionContainerForIsWorking.hide();
-            questionContainerForIsWorking.removeClass('d-none');
-            questionContainerForIsWorking.show(600);
-        }
-        else{
-            questionContainerForIsWorking.hide(600);
-        }
-    })
-    if($("#isWorkingYes").prop('checked')){ //validacion por la caché del navegador
-        questionContainerForIsWorking.hide();
-        questionContainerForIsWorking.removeClass('d-none');
-        questionContainerForIsWorking.show(600);
-    }
+
     $('#PersonalDataBtn').on('click', function (e) {
         e.stopPropagation();
 
@@ -91,7 +75,7 @@ $(document).ready(function (e) {
             spinner.removeClass('d-none');
             //btn.text('Guardando')
 
-            const idUsuario = getCookie("id"); //obtener id de usuario
+            const idUsuario = getCookie("verification"); //obtener id de usuario
             const fechaNacimiento = $('#Fecha_Nacimiento').val(); //fecha de nacimiento
             const idEstado = JSON.parse(localStorage.getItem(STATES_DOCUMENT))[$('#Estado').val()];
             const idCiudad = JSON.parse(localStorage.getItem(CITIES_DOCUMENT))[$('#Ciudad').val()];
@@ -130,10 +114,6 @@ $(document).ready(function (e) {
     $('#DatosEscolaresButton').on('click', function (e) {
         e.stopPropagation();
         stepper.next();
-    })
-    $('#DatosLaboralesBtn').on('click', function (e) {
-        e.stopPropagation();
-        alert("Guardado")
     })
     $('#Fecha_Nacimiento').on('change', function (e) {
 

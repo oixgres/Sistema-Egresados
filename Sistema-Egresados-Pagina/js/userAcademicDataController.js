@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function (e) {
     const UNIVERSITIES = "universities"
     const CAMPUS = "campus";
     const FACULTADES = "facultades";
@@ -29,7 +29,9 @@ $(document).ready(function () {
     }
 
     let stepper = mainSteper.stepper;
-    
+
+
+
     $('#Universidad').on('change', function (e) {
         e.stopPropagation();
         const universidades = JSON.parse(localStorage.getItem(UNIVERSITIES));
@@ -188,7 +190,7 @@ $(document).ready(function () {
         e.stopPropagation();
 
         if(validateFields()){
-            const idUsuario = getCookie("id");
+            const idUsuario = getCookie("verification");
             const idUniversidad = JSON.parse(localStorage.getItem(UNIVERSITIES))[$('#Universidad').val()];
             const idCampus = JSON.parse(localStorage.getItem(CAMPUS))[$('#Campus').val()];
             const idFacultad = JSON.parse(localStorage.getItem(FACULTADES))[$('#Facultad').val()];
