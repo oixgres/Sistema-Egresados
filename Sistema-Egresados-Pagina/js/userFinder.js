@@ -32,6 +32,10 @@ $(document).ready(function (e) {
 
         node.find('.showProfileBtn').on('click', function (e) {
             e.stopPropagation();
+
+
+
+
             UserProfile.toggle();
         })
 

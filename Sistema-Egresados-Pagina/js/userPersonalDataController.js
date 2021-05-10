@@ -61,6 +61,10 @@ $(document).ready(function (e) {
     const CITIES_DOCUMENT = "Ciudades";
 
     let stepper = new Stepper($('.bs-stepper')[0]) //stteper principal
+    stepper.next();
+
+
+
     let questionContainerForIsWorking = $('#questionContainerForIsWorking');
 
     $("#isWorkingYes,#isWorkingNo").on('click', function (e) { //

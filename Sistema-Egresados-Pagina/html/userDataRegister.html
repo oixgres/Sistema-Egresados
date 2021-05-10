@@ -147,13 +147,10 @@
                                                 <div class="col-md-6">
                                                     <label for="Universidades" class="form-label">Universidad</label>
                                                     <datalist id="Universidades">
-                                                        <option value="volvo" class="form-text">Volvo</option>
-                                                        <option value="saab" class="form-text">Saab</option>
-                                                        <option value="fiat" class="form-text" selected>Fiat</option>
-                                                        <option value="audi" class="form-text">Audi</option>
+
                                                     </datalist>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" placeholder="Introduce universidad" list="Universidades" id="University">
+                                                        <input type="text" class="form-control" placeholder="Introduce universidad" list="Universidades" id="Universidad">
                                                         <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Selecciona una de la lista disponible o da doble click en el campo">?</span>
                                                     </div>
                                                 </div>
@@ -161,10 +158,7 @@
                                                 <div class="col-md-6 mt-3 mt-md-0">
                                                     <label for="CampusAll" class="form-label">Campus</label>
                                                     <datalist id="CampusAll">
-                                                        <option value="volvo" class="form-text">Volvo</option>
-                                                        <option value="saab" class="form-text">Saab</option>
-                                                        <option value="fiat" class="form-text" selected>Fiat</option>
-                                                        <option value="audi" class="form-text">Audi</option>
+
                                                     </datalist>
                                                     <div class="input-group">
                                                         <input type="text" class="form-control" placeholder="Introduce campus" list="CampusAll" id="Campus" disabled>
@@ -175,28 +169,22 @@
 
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
-                                                    <label for="Faculties" class="form-label">Facultad</label>
-                                                    <datalist id="Faculties">
-                                                        <option value="volvo" class="form-text">Volvo</option>
-                                                        <option value="saab" class="form-text">Saab</option>
-                                                        <option value="fiat" class="form-text" selected>Fiat</option>
-                                                        <option value="audi" class="form-text">Audi</option>
+                                                    <label for="Facultades" class="form-label">Facultad</label>
+                                                    <datalist id="Facultades">
+
                                                     </datalist>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" placeholder="Introduce tu facultad" list="Faculties" id="Faculty" disabled>
+                                                        <input type="text" class="form-control" placeholder="Introduce tu facultad" list="Facultades" id="Facultad" disabled>
                                                         <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Selecciona una de la lista disponible o da doble click en el campo">?</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mt-3 mt-md-0">
-                                                    <label for="Faculties" class="form-label">Carrera</label>
-                                                    <datalist id="Carrers">
-                                                        <option value="volvo" class="form-text">Volvo</option>
-                                                        <option value="saab" class="form-text">Saab</option>
-                                                        <option value="fiat" class="form-text" selected>Fiat</option>
-                                                        <option value="audi" class="form-text">Audi</option>
+                                                    <label for="Carreras" class="form-label">Carrera</label>
+                                                    <datalist id="Carreras">
+
                                                     </datalist>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" placeholder="Introduce tu facultad" list="Carrers" id="Carrer" disabled>
+                                                        <input type="text" class="form-control" placeholder="Introduce tu facultad" list="Carreras" id="Carrera" disabled>
                                                         <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Selecciona una de la lista disponible o da doble click en el campo">?</span>
                                                     </div>
                                                 </div>
@@ -239,7 +227,7 @@
                                             <div class="row mt-3">
                                                 <div class="col-12 w-100 d-flex justify-content-center" id="DatosEscolaresButton">
                                                     <button type="button" class="btn btn-success">
-                                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                        <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                                         Siguiente
                                                     </button>
                                                 </div>
@@ -380,6 +368,8 @@
     <script src="../js/boostrap/bootstrap.js"></script>
     <script src="../js/userDataRegister.js"></script>
     <script src="../js/userPersonalDataController.js"></script>
+    <script src="../js/userAcademicDataController.js"></script>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
