@@ -50,6 +50,12 @@
                                                 <div class="col-md-6">
                                                     <label for="Fecha_Nacimiento" class="form-label">Fecha de nacimiento</label>
                                                     <input type="date"  class="form-control" id="Fecha_Nacimiento">
+                                                    <div class="valid-feedback">
+                                                        Correcto
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                        Favor de llenar el campo
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -79,6 +85,12 @@
                                                     <div class="input-group">
                                                         <input type="text" class="form-control" placeholder="Ciudad" list="Ciudades" id="Ciudad" disabled>
                                                         <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Selecciona una de la lista disponible o da doble click en el campo">?</span>
+                                                        <div class="valid-feedback">
+                                                            Ciudad Valida
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            No existe
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -87,21 +99,33 @@
                                                 <div class="col-12">
                                                     <label for="Domicilio" class="form-label">Domicilio</label>
                                                     <textarea placeholder="Domicilio Actual" id="Domicilio" class="form-control"></textarea>
+                                                    <div class="valid-feedback">
+                                                        Valido
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                        Favor de llenar el campo
+                                                    </div>
                                                 </div>
                                             </div>
 
                                             <div class="row mt-3">
                                                 <div class="col-6">
                                                     <label for="Telefono" class="form-label">Telefono</label>
-                                                    <input id="Telefono" placeholder="Telefono actual" class="form-control">
+                                                    <input type="text" id="Telefono" placeholder="Telefono actual" class="form-control">
+                                                    <div class="valid-feedback">
+                                                        Valido
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                        Favor de llenar el campo
+                                                    </div>
                                                 </div>
                                             </div>
 
                                             <div class="row mt-3">
                                                 <div class="col-12 w-100 d-flex justify-content-center">
                                                     <button type="button" class="btn btn-success" id="PersonalDataBtn">
-                                                        <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                                                        Siguiente
+                                                        <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true" id="spinnerPersonalData"></span>
+                                                        Guardar
                                                     </button>
                                                 </div>
                                             </div>
