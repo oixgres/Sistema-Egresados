@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="../css/profile.css">
     <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css"> <!-- Nuevos estilos de boostrap -->
     <link rel="stylesheet" href="../css/boostrap/bootstrap_pulse.min.css"> <!-- Nuevos estilos de boostrap -->
-
     <link rel="stylesheet" href="../css/userFinder.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <style>
         tr:hover{
@@ -362,154 +362,20 @@
 
 
                                             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                                                <div class="carousel-inner">
-                                                    <div class="carousel-item active">
-                                                        <div class="row">
-                                                            <div class="col-md-8">
+                                                <div class="carousel-inner" id="HistorialLaboral">
 
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <p></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <label>Empleo:</label>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <p>empleo</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <label>Empresa:</label>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <p>Empresa</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <label>Puesto:</label>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <p>Puesto</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <label>Departamento:</label>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <p>Departamento</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <label>Actividades:</label>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <p>Actividades</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <label>Tecnologias:</label>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <p>Tecnologias</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <label>Correo Laboral:</label>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <p>Correo laboral</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="carousel-item">
-                                                        <div class="row">
-                                                            <div class="col-md-8">
-
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <p></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <label>Empleo:</label>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <p>empleo</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <label>Empresa:</label>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <p>Empresa</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <label>Puesto:</label>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <p>Puesto</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <label>Departamento:</label>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <p>Departamento</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <label>Actividades:</label>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <p>Actividades</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <label>Tecnologias:</label>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <p>Tecnologias</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <label>Correo Laboral:</label>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <p>Correo laboral</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-12">
-                                                        <button class="btn btn-success" data-bs-target="#carouselExampleControls">Click</button>
+                                                    <div class="col-12 w-100 d-flex justify-content-between">
+                                                        <button class="btn btn-secondary" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                                            <i class="fas fa-chevron-circle-left fa-2x"></i>
+                                                        </button>
+                                                        <button class="btn btn-secondary" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                                            <i class="fas fa-chevron-circle-right fa-2x"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                                                    <span class="carousel-control-prev-icon bg-success" aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Previous</span>
-                                                </button>
-                                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Next</span>
-                                                </button>
                                             </div>
 
 
