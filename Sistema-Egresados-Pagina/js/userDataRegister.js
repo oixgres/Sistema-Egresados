@@ -19,7 +19,7 @@ function getCookie(cname) {
 $(document).ready(function (){
     let stepper = new Stepper($('.bs-stepper')[0]) //stteper principal
     mainSteper["stepper"] = stepper;
-    
+
 })
 
 

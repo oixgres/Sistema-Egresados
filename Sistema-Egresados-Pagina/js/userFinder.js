@@ -40,11 +40,6 @@ $(document).ready(function (e) {
             $('#AnimationLoadingContainer').show();
             $('#userProfileContainer').hide();
 
-            /*
-            for(let i = 0; i < 5000; i++){
-                console.log(i)
-            }
-             */
 
             $.ajax({
                 url: '../php/getUserData.php',
@@ -52,8 +47,10 @@ $(document).ready(function (e) {
                 type: 'POST',
                 success: function (response) {
                     try{
-                        $('#AnimationLoadingContainer').hide();
-                        $('#userProfileContainer').show();
+                        $('#AnimationLoadingContainer').hide(600, function () {
+                            $('#userProfileContainer').show(600);
+                        });
+
 
                         let datosUsuario = JSON.parse(response);
 
