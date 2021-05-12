@@ -1,4 +1,19 @@
-/**/
+
+$(document).ready(function(){
+  console.log("Algo1");
+  $("form").on("submit", function(event){
+    event.preventDefault();
+
+    var formData = $(this).serialize();
+    console.log(formData.name)
+
+    $.post("../php/submitLink.php", formData, function(data){
+    });
+  });
+});
+
+
+
 var linksJSON = {items: []};
 var inputLinkName = document.getElementsByClassName('form-control modified-middle-input ml-3 input-link-name');
 var inputLinkURL = document.getElementsByClassName('form-control modified-middle-input ml-3 input-link-url');
@@ -41,12 +56,13 @@ function incrementLinks(){
       this.parentNode.parentNode.parentNode.remove();
     }, false);
 
-  
+  /*
   let saveLinkButton = document.getElementsByClassName('save-link');
   for(var i = 0; i < inputLinkName.length; i++){
     saveLinkButton[i].addEventListener('click', function (e){
       
       /* Corregir */
+      /*
       console.log(i);
       linksJSON.items.push({
         id: inputLinkName[i].id,
@@ -55,6 +71,7 @@ function incrementLinks(){
       });
     })
   }
+  */
 }
 
 function incrementSkills(){

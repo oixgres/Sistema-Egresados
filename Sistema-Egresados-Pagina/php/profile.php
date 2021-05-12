@@ -19,6 +19,8 @@ checkSession("user");
 
     /* Obtenemos enlaces y habilidades */
     $links = mysqli_query($conn, "SELECT * FROM Enlaces_Usuario WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
+    $linksPopup = mysqli_query($conn, "SELECT * FROM Enlaces_Usuario WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
+
     $skills = mysqli_query($conn, "SELECT * FROM Habilidades_Usuario WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
 
     /* Obtenemos el historial laboral*/
@@ -101,12 +103,12 @@ checkSession("user");
                     <div class="profile-work">
                         <p>LINKS</p>
                         <?php while($row = mysqli_fetch_assoc($links)): ?>
-                          <a href="<?php echo $row['link']; ?>"><?php echo $row['Nombre']; ?></a><br/>
+                          <a href="<?php echo $row['Link']; ?>"><?php echo $row['Nombre']; ?></a><br/>
                         <?php endwhile; ?>
                         <a class="cursor-on" onclick="linkPopup()">+</a>
                         <p>HABILIDADES</p>
                         <?php while ($row = mysqli_fetch_assoc($skills)): ?>
-                          <a href=""><?php echo $row['Nombre']; ?></a><br/>
+                          <a href=""><?php echo $row['Texto']; ?></a><br/>
                         <?php endwhile; ?>
                         <a class="cursor-on" onclick="skillPopup()">+</a><br/>
                     </div>
@@ -319,7 +321,6 @@ checkSession("user");
             </div>
         </form>
     </div>
-
     <!-- Popup de los links -->
     <div class="popup" id="popup-link">
       <div class="overlay"></div>
@@ -328,20 +329,30 @@ checkSession("user");
         <h1 class="popup-title">LINKS</h1>
 
         <div id="all-links">
-        <?php while($row = mysqli_fetch_assoc($links)): ?>
-          <div>
+        <?php while($row = mysqli_fetch_assoc($linksPopup)): ?>
+          <form>
+            <!-- ID del link -->
+            <input
+              type="hidden"
+              value="<?php echo $row['idEnlaces_Usuario'] ?>"
+              name="id"
+            >
+
             <div class="row mb-3">
               <div class="col-8">
+                <!-- Nombre del link -->
                 <input 
                   type="text"
                   class="form-control modified-middle-input ml-3 input-link-name"
                   placeholder="Nombre"
-                  value = "<?php echo $row['Nombre']?>"
+                  name="name"
+                  value = "<?php echo $row['Nombre'];?>"
                   >
               </div>
               <div class="col-4">
                 <button
-                  type="button"
+                  type="submit"
+                  value="submit"
                   name="button"
                   class="btn btn-primary modified-middle-button save-link"
                 >Guardar</button>
@@ -349,11 +360,13 @@ checkSession("user");
             </div>
             <div class="row mb-5">
               <div class="col-8">
+                <!-- Link -->
                 <input
                   type="text"
                   class="form-control modified-middle-input ml-3 input-link-url"
                   placeholder="Enlace"
-                  value="<?php echo $row['Link'] ?>"
+                  name="link"
+                  value="<?php echo $row['Link']; ?>"
                 >
               </div>
               <div class="col-4">
@@ -364,7 +377,7 @@ checkSession("user");
                 >Eliminar</button>
               </div>
             </div>
-          </div>
+          </form>
         <?php endwhile; ?>
         </div>
 
@@ -391,7 +404,7 @@ checkSession("user");
           <div class="">
             <div class="row mb-2">
               <div class="col-8">
-                <input type="text" class="form-control modified-middle-input ml-3 input-skill" placeholder="Habilidad">
+                <input type="text" class="form-control modified-middle-input ml-3 input-skill" placeholder="Habilidad" value="<?php echo "a";?>">
               </div>
               <div class="col-4">
                 <button

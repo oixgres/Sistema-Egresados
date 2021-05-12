@@ -1,0 +1,1 @@
+<p>Name: <b><?php echo $_POST["name"] ?? ''; ?></b></p>
