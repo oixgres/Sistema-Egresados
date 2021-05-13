@@ -330,7 +330,7 @@ checkSession("user");
 
         <div id="all-links">
         <?php while($row = mysqli_fetch_assoc($linksPopup)): ?>
-          <form>
+          <form class="form-links">
             <!-- ID del link -->
             <input
               type="hidden"
@@ -372,6 +372,7 @@ checkSession("user");
               <div class="col-4">
                 <button
                   type="button"
+                  value="<?php echo $row['idEnlaces_Usuario']?>"
                   name="button"
                   class="btn btn-danger modified-middle-button delete-links"
                 >Eliminar</button>
@@ -401,14 +402,14 @@ checkSession("user");
 
         <div id="all-skills">
         <?php while($row = mysqli_fetch_assoc($skills)):?>
-          <div class="">
+          <form class="form-skills">
             <div class="row mb-2">
               <div class="col-8">
-                <input type="text" class="form-control modified-middle-input ml-3 input-skill" placeholder="Habilidad" value="<?php echo "a";?>">
+                <input type="text" class="form-control modified-middle-input ml-3 input-skill" placeholder="Habilidad" value="<?php echo 'a';?>">
               </div>
               <div class="col-4">
                 <button
-                  type="button"
+                  type="submit"
                   name="button"
                   class="btn btn-primary modified-middle-button"
                 >Guardar</button>
@@ -425,7 +426,7 @@ checkSession("user");
                 >Eliminar</button>
               </div>
             </div>
-          </div>
+          </form>
         <?php endwhile; ?>
         </div>
 

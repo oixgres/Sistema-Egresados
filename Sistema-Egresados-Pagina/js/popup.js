@@ -1,20 +1,52 @@
-
-$(document).ready(function(){
-  console.log("Algo1");
-  $("form").on("submit", function(event){
-    event.preventDefault();
-
-    var formData = $(this).serialize();
-    console.log(formData.name)
-
-    $.post("../php/submitLink.php", formData, function(data){
+/* Preparativos */
+function setLinkForms(){
+  $('.form-links').on('submit', function (e) {
+    $.ajax({
+        type: 'post',
+        url: '../php/submitLink.php',
+        data: $(this).serialize(),
+        success: function (response) {
+          console.log(response)
+        }
     });
-  });
+    e.preventDefault();
 });
+}
+
+/* Preparamos los botones de borrado ya existentes */
+function setDeleteButtons(){
+  let deleteLinkButton = document.getElementsByClassName('btn btn-danger modified-middle-button delete-links');
+
+  for(var i = 0; i < deleteLinkButton.length; i++){
+    deleteLinkButton[i].addEventListener('click', function(e){
+      
+      let id = this.value;
+
+      $.ajax({
+        url: '../php/deleteLink.php',
+        type: 'post',
+        data: {id},
+
+        success: function(response){
+          console.log(response)
+        }
+
+      });
+      
+      this.parentNode.parentNode.parentNode.remove();
 
 
+    }, false);
+  }
+}
 
-var linksJSON = {items: []};
+
+/* Documento Listo */
+$(document).ready(function (e){
+  setLinkForms();
+  setDeleteButtons();  
+})
+
 var inputLinkName = document.getElementsByClassName('form-control modified-middle-input ml-3 input-link-name');
 var inputLinkURL = document.getElementsByClassName('form-control modified-middle-input ml-3 input-link-url');
 
@@ -39,7 +71,7 @@ function incrementLinks(){
   
   /* El contenido de los divs se pierde al ejecutar estas lineas, por lo que lo volvemos a vaciar */
   let preHTML = document.getElementById('all-links').innerHTML;
-  let newHTML = '<div><div class="row mb-3"><div class="col-8"><input type="text" class="form-control modified-middle-input ml-3 input-link-name" placeholder="Nombre"></div><div class="col-4"><button type="button"name="button"class="btn btn-primary modified-middle-button save-link">Guardar</button></div></div><div class="row mb-5"><div class="col-8"><input type="text" class="form-control modified-middle-input ml-3 input-link-url" placeholder="Enlace"></div><div class="col-4"><button type="button"name="button"class="btn btn-danger modified-middle-button delete-links">Eliminar</button></div></div></div>';
+  let newHTML = '<form class="form-links"><input type="hidden" value="" name="id"><div class="row mb-3"><div class="col-8"><input type="text" class="form-control modified-middle-input ml-3 input-link-name"placeholder="Nombre" name="name"value = ""></div><div class="col-4"><button type="submit" value="submit" name="button"class="btn btn-primary modified-middle-button save-link">Guardar</button></div></div><div class="row mb-5"><div class="col-8"><input type="text" class="form-control modified-middle-input ml-3 input-link-url" placeholder="Enlace" name="link" value=""></input></div><div class="col-4"><button type="button" name="button" class="btn btn-danger modified-middle-button delete-links">Eliminar</button></div></div></form>';
   document.getElementById('all-links').innerHTML = preHTML+newHTML;
 
   /* Regresamos los valores */
@@ -48,30 +80,8 @@ function incrementLinks(){
     inputLinkURL[i].value = urlValues[i];
   }
 
-  /* Borramos elementos al presionar el boton */ 
-  let deleteLinkButton = document.getElementsByClassName('btn btn-danger modified-middle-button delete-links');
-
-  for(var i = 0; i < deleteLinkButton.length; i++)
-    deleteLinkButton[i].addEventListener('click', function(e){
-      this.parentNode.parentNode.parentNode.remove();
-    }, false);
-
-  /*
-  let saveLinkButton = document.getElementsByClassName('save-link');
-  for(var i = 0; i < inputLinkName.length; i++){
-    saveLinkButton[i].addEventListener('click', function (e){
-      
-      /* Corregir */
-      /*
-      console.log(i);
-      linksJSON.items.push({
-        id: inputLinkName[i].id,
-        name: inputLinkName[i].value,
-        link: inputLinkURL[i].value
-      });
-    })
-  }
-  */
+  setDeleteButtons();
+  setLinkForms();
 }
 
 function incrementSkills(){
@@ -85,7 +95,8 @@ function incrementSkills(){
 
 
   let preHTML = document.getElementById('all-skills').innerHTML;
-  let newHTML = '<div class=""><div class="row mb-2"><div class="col-8"><input type="text" class="form-control modified-middle-input ml-3 input-skill" placeholder="Habilidad"></div><div class="col-4"><button type="button"name="button"class="btn btn-primary modified-middle-button">Guardar</button></div></div><div class="row mb-4"><div class="col-8"></div><div class="col-4"><button type="button"name="button"class="btn btn-danger modified-middle-button delete-skills">Eliminar</button></div></div></div>';
+  let newHTML = '<form class="form-skills"><div class="row mb-2"><div class="col-8"><input type="text" class="form-control modified-middle-input ml-3 input-skill" placeholder="Habilidad" value=""></div><div class="col-4"><button type="submit"name="button"class="btn btn-primary modified-middle-button">Guardar</button></div></div><div class="row mb-4"><div class="col-8"></div><div class="col-4"><button type="button"name="button"class="btn btn-danger modified-middle-button delete-skills">Eliminar</button></div></div></form>';
+
   document.getElementById('all-skills').innerHTML = preHTML+newHTML;
 
   /* Recuperamos valores */
