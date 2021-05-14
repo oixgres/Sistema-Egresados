@@ -1,15 +1,21 @@
+/* Asignar el ID mejor al form */
 /* Preparativos */
 function setLinkForms(){
   $('.form-links').on('submit', function (e) {
+    let a = this.childNodes[0];
     $.ajax({
         type: 'post',
         url: '../php/submitLink.php',
         data: $(this).serialize(),
         success: function (response) {
-          console.log(response)
+          if(response != 'actualizado')
+          {
+            a.value = response;
+          }
         }
     });
-    e.preventDefault();
+    
+    //e.preventDefault();
 });
 }
 
@@ -34,7 +40,6 @@ function setDeleteButtons(){
       });
       
       this.parentNode.parentNode.parentNode.remove();
-
 
     }, false);
   }
