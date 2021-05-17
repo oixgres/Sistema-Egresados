@@ -17,6 +17,9 @@ checkSession("user");
     $datos_personales = mysqli_query($conn, "SELECT * FROM Datos_Personales WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
     $datos_laborales = mysqli_query($conn, "SELECT * FROM Datos_Laborales WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
 
+    /* Obtenemos la foto de perfil */
+    $profilePicture = mysqli_query($conn, "SELECT * FROM Foto_Perfil WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
+
     /* Obtenemos enlaces y habilidades */
     $links = mysqli_query($conn, "SELECT * FROM Enlaces_Usuario WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
     $linksPopup = mysqli_query($conn, "SELECT * FROM Enlaces_Usuario WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
@@ -30,8 +33,10 @@ checkSession("user");
     $unansweredSurveys = mysqli_query($conn, "SELECT * FROM Encuestas_Pendientes WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
     $answeredSurveys = mysqli_query($conn, "SELECT * FROM Encuestas_Contestadas WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
 
+
     $datos_personales = mysqli_fetch_assoc($datos_personales);
     $datos_laborales = mysqli_fetch_assoc($datos_laborales);
+    $profilePicture = mysqli_fetch_all($profilePicture);
 
     /* Obtenemos ciudad y estado */
     $city = getFirstQueryElement($conn, "Ciudad", "Nombre", "idCiudad", $datos_personales["Ciudad_idCiudad"]);
@@ -62,15 +67,16 @@ checkSession("user");
     </nav>
 
     <div class="container emp-profile">
-        <form method="post">
+        <form method="post" action="uploadPicture.php">
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
+                        <img src= alt="<?php echo $profilePicture['Direccion'] ?>"/>
                         <div class="file btn btn-lg btn-primary">
                             Cambiar Foto
                             <input type="file" name="file"/>
                         </div>
+                        <button type="submit">Subir</button>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -103,12 +109,22 @@ checkSession("user");
                     <div class="profile-work">
                         <p>LINKS</p>
                         <?php while($row = mysqli_fetch_assoc($links)): ?>
-                          <a href="<?php echo $row['Link']; ?>"><?php echo $row['Nombre']; ?></a><br/>
+                          <a 
+                            name="<?php echo $row['idEnlaces_Usuario']; ?>"
+                            href="<?php echo $row['Link']; ?>"
+                            class="link-name-profile"
+                          ><?php echo $row['Nombre']; ?></a>
+                          <br/>
                         <?php endwhile; ?>
                         <a class="cursor-on" onclick="linkPopup()">+</a>
+                        
                         <p>HABILIDADES</p>
                         <?php while ($row = mysqli_fetch_assoc($skills)): ?>
-                          <a href=""><?php echo $row['Texto']; ?></a><br/>
+                          <a
+                            href=""
+                            class="link-url-profile"
+                          ><?php echo $row['Texto']; ?></a>
+                          <br/>
                         <?php endwhile; ?>
                         <a class="cursor-on" onclick="skillPopup()">+</a><br/>
                     </div>
@@ -331,7 +347,7 @@ checkSession("user");
         <div id="all-links">
         <?php while($row = mysqli_fetch_assoc($linksPopup)): ?>
           <!-- ID del link -->
-          <form class="form-links" value="<?php echo $row['idEnlaces_Usuario'] ?>">
+          <form class="form-links" id="<?php echo $row['idEnlaces_Usuario'] ?>">
             <div class="row mb-3">
               <div class="col-8">
                 <!-- Nombre del link -->

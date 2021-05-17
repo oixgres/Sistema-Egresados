@@ -22,7 +22,10 @@ function checkSession(userType){
           else
             try {
               let json = JSON.parse(response)
-              window.location = json.location;
+
+              if(json.location){
+                window.location = json.location;
+              }
             } catch (e) {
 
             }

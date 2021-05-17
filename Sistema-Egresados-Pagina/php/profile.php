@@ -17,6 +17,9 @@ checkSession("user");
     $datos_personales = mysqli_query($conn, "SELECT * FROM Datos_Personales WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
     $datos_laborales = mysqli_query($conn, "SELECT * FROM Datos_Laborales WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
 
+    /* Obtenemos la foto de perfil */
+    $profilePicture = mysqli_query($conn, "SELECT * FROM Foto_Perfil WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
+
     /* Obtenemos enlaces y habilidades */
     $links = mysqli_query($conn, "SELECT * FROM Enlaces_Usuario WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
     $linksPopup = mysqli_query($conn, "SELECT * FROM Enlaces_Usuario WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
@@ -30,8 +33,10 @@ checkSession("user");
     $unansweredSurveys = mysqli_query($conn, "SELECT * FROM Encuestas_Pendientes WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
     $answeredSurveys = mysqli_query($conn, "SELECT * FROM Encuestas_Contestadas WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
 
+
     $datos_personales = mysqli_fetch_assoc($datos_personales);
     $datos_laborales = mysqli_fetch_assoc($datos_laborales);
+    $profilePicture = mysqli_fetch_assoc($profilePicture);
 
     /* Obtenemos ciudad y estado */
     $city = getFirstQueryElement($conn, "Ciudad", "Nombre", "idCiudad", $datos_personales["Ciudad_idCiudad"]);
@@ -62,15 +67,16 @@ checkSession("user");
     </nav>
 
     <div class="container emp-profile">
-        <form method="post">
+        <form method="post" action="uploadPicture.php" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
+                        <img src="<?php echo $profilePicture['Direccion'] ?>"/>
                         <div class="file btn btn-lg btn-primary">
                             Cambiar Foto
                             <input type="file" name="file"/>
                         </div>
+                        <button type="submit" name="submit">Subir</button>
                     </div>
                 </div>
                 <div class="col-md-6">
