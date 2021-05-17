@@ -103,12 +103,22 @@ checkSession("user");
                     <div class="profile-work">
                         <p>LINKS</p>
                         <?php while($row = mysqli_fetch_assoc($links)): ?>
-                          <a href="<?php echo $row['Link']; ?>"><?php echo $row['Nombre']; ?></a><br/>
+                          <a 
+                            name="<?php echo $row['idEnlaces_Usuario']; ?>"
+                            href="<?php echo $row['Link']; ?>"
+                            class="link-name-profile"
+                          ><?php echo $row['Nombre']; ?></a>
+                          <br/>
                         <?php endwhile; ?>
                         <a class="cursor-on" onclick="linkPopup()">+</a>
+                        
                         <p>HABILIDADES</p>
                         <?php while ($row = mysqli_fetch_assoc($skills)): ?>
-                          <a href=""><?php echo $row['Texto']; ?></a><br/>
+                          <a
+                            href=""
+                            class="link-url-profile"
+                          ><?php echo $row['Texto']; ?></a>
+                          <br/>
                         <?php endwhile; ?>
                         <a class="cursor-on" onclick="skillPopup()">+</a><br/>
                     </div>
@@ -330,14 +340,8 @@ checkSession("user");
 
         <div id="all-links">
         <?php while($row = mysqli_fetch_assoc($linksPopup)): ?>
-          <form class="form-links">
-            <!-- ID del link -->
-            <input
-              type="hidden"
-              value="<?php echo $row['idEnlaces_Usuario'] ?>"
-              name="id"
-            >
-
+          <!-- ID del link -->
+          <form class="form-links" id="<?php echo $row['idEnlaces_Usuario'] ?>">
             <div class="row mb-3">
               <div class="col-8">
                 <!-- Nombre del link -->
@@ -387,7 +391,7 @@ checkSession("user");
             type="button"
             name="button"
             class="btn btn-primary modified-middle-button"
-            onclick="incrementLinks()"
+            onclick="newLinks()"
           >Nuevo</button>
         </div>
       </div>

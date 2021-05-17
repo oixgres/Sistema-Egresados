@@ -1,21 +1,39 @@
-/* Asignar el ID mejor al form */
+
+var inputLinkName = document.getElementsByClassName('form-control modified-middle-input ml-3 input-link-name');
+var inputLinkURL = document.getElementsByClassName('form-control modified-middle-input ml-3 input-link-url');
+var profileLinks = document.getElementsByClassName('link-name-profile');
+
+
+
 /* Preparativos */
 function setLinkForms(){
   $('.form-links').on('submit', function (e) {
-    let a = this.childNodes[0];
+    let a = this;
     $.ajax({
         type: 'post',
         url: '../php/submitLink.php',
-        data: $(this).serialize(),
+        data: $(this).serialize()+'&id='+a.id,
         success: function (response) {
-          if(response != 'actualizado')
+          let res = JSON.parse(response);
+
+          if(res['type'] == "new")
           {
-            a.value = response;
+            a.id = res['id'];
+          }
+          else{
+            for(var i = 0; i < profileLinks.length; i++){
+              if(profileLinks[i].name==a.id){
+                profileLinks[i].innerHTML = res['name'];
+                profileLinks[i].href =  res['link'];
+
+                break;
+              }
+            }
           }
         }
     });
     
-    //e.preventDefault();
+    e.preventDefault();
 });
 }
 
@@ -26,7 +44,7 @@ function setDeleteButtons(){
   for(var i = 0; i < deleteLinkButton.length; i++){
     deleteLinkButton[i].addEventListener('click', function(e){
       
-      let id = this.value;
+      let id = this.parentNode.parentNode.parentNode.id;
 
       $.ajax({
         url: '../php/deleteLink.php',
@@ -45,15 +63,11 @@ function setDeleteButtons(){
   }
 }
 
-
 /* Documento Listo */
 $(document).ready(function (e){
   setLinkForms();
   setDeleteButtons();  
 })
-
-var inputLinkName = document.getElementsByClassName('form-control modified-middle-input ml-3 input-link-name');
-var inputLinkURL = document.getElementsByClassName('form-control modified-middle-input ml-3 input-link-url');
 
 function linkPopup(){
   document.getElementById("popup-link").classList.toggle("active");
@@ -63,7 +77,7 @@ function skillPopup(){
   document.getElementById("popup-skill").classList.toggle("active");
 }
 
-function incrementLinks(){
+function newLinks(){
   var nameValues = [];
   var urlValues = [];
 
@@ -76,13 +90,23 @@ function incrementLinks(){
   
   /* El contenido de los divs se pierde al ejecutar estas lineas, por lo que lo volvemos a vaciar */
   let preHTML = document.getElementById('all-links').innerHTML;
-  let newHTML = '<form class="form-links"><input type="hidden" value="" name="id"><div class="row mb-3"><div class="col-8"><input type="text" class="form-control modified-middle-input ml-3 input-link-name"placeholder="Nombre" name="name"value = ""></div><div class="col-4"><button type="submit" value="submit" name="button"class="btn btn-primary modified-middle-button save-link">Guardar</button></div></div><div class="row mb-5"><div class="col-8"><input type="text" class="form-control modified-middle-input ml-3 input-link-url" placeholder="Enlace" name="link" value=""></input></div><div class="col-4"><button type="button" name="button" class="btn btn-danger modified-middle-button delete-links">Eliminar</button></div></div></form>';
+  let newHTML = '<form class="form-links"><div class="row mb-3"><div class="col-8"><input type="text" class="form-control modified-middle-input ml-3 input-link-name"placeholder="Nombre" name="name"value = ""></div><div class="col-4"><button type="submit" value="submit" name="button"class="btn btn-primary modified-middle-button save-link">Guardar</button></div></div><div class="row mb-5"><div class="col-8"><input type="text" class="form-control modified-middle-input ml-3 input-link-url" placeholder="Enlace" name="link" value=""></input></div><div class="col-4"><button type="button" name="button" class="btn btn-danger modified-middle-button delete-links">Eliminar</button></div></div></form>';
   document.getElementById('all-links').innerHTML = preHTML+newHTML;
 
   /* Regresamos los valores */
   for(var i = 0; i < nameValues.length; i++){
     inputLinkName[i].value = nameValues[i];
     inputLinkURL[i].value = urlValues[i];
+    /*
+    if(profileLinks[i]){
+      console.log(profileLinks[i].html)
+      profileLinks[i].innerHTML = nameValues[i];
+    }
+
+    if(linkURLProfile[i]){
+      linkURLProfile[i].innerHTML = urlValues[i];
+    }
+    */
   }
 
   setDeleteButtons();
