@@ -18,11 +18,9 @@ $(document).ready(function (e) {
         /*
             <option value="volvo" class="form-text">Volvo</option>
         */
-        let node = $(`
+        return $(`
             <option value="${value}" class="form-text">${value}</option>
-        `)
-
-        return node;
+        `);
     }
     const STATES_DOCUMENT = "Estados";
 
@@ -83,6 +81,23 @@ $(document).ready(function (e) {
                 let estados_dictionary = {}; //crear diccionario
                 let dataListParent = $('#Estados');
 
+                $('#Estado').on("change", function (e) { //listener para comprobar que el estado existe
+                    const estados = JSON.parse(localStorage.getItem(STATES_DOCUMENT));
+
+                    if(estados[$(this).val()] === undefined){
+                        $(this).removeClass('alert alert-success is-valid')
+                        $(this).addClass('alert alert-danger is-invalid')
+                        $('#Ciudad').attr('disabled', true);
+
+                    }
+                    else{
+                        $(this).removeClass('alert alert-danger is-invalid')
+                        $(this).addClass('alert alert-success is-valid')
+                        $('#Ciudad').attr('disabled', false);
+
+                    }
+
+                })
 
                 estados.forEach(estado => {
                     dataListParent.append(CreateOptionComponent(estado.nombre))//agregar opciones a los estados
