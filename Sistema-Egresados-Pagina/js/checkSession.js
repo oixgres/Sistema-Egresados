@@ -1,3 +1,4 @@
+  
 function checkSession(userType){
     $.ajax({
         url: '../php/checkSession.php',
@@ -18,14 +19,18 @@ function checkSession(userType){
 
               }
             }
-            else
-              try {
-                let json = JSON.parse(response)
+          }
+          else
+            try {
+              let json = JSON.parse(response)
+
+              if(json.location){
                 window.location = json.location;
-              } catch (e) {
-
               }
+            } catch (e) {
 
-        }
-    })
+            }
+
+      }
+  })
 }

@@ -417,5 +417,20 @@ CREATE TABLE IF NOT EXISTS Habilidades_Usuario (
   ON DELETE CASCADE)
 ;
 
+-- -----------------------------------------------------
+-- Table Foto_Perfil
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS Foto_Perfil;
+
+CREATE TABLE IF NOT EXISTS Foto_Perfil (
+  idFoto_Perfil INT NOT NULL AUTO_INCREMENT,
+  Usuario_idUsuario INT NOT NULL,
+  Direccion TEXT NULL,
+  PRIMARY KEY (idFoto_Perfil),
+  FOREIGN KEY (Usuario_idUsuario)
+  REFERENCES Usuario (idUsuario)
+  ON DELETE CASCADE)
+;
+
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
