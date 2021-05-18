@@ -17,9 +17,15 @@ checkSession("user");
     $datos_personales = mysqli_query($conn, "SELECT * FROM Datos_Personales WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
     $datos_laborales = mysqli_query($conn, "SELECT * FROM Datos_Laborales WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
 
+    /* Obtenemos la foto de perfil */
+    $profilePicture = mysqli_query($conn, "SELECT * FROM Foto_Perfil WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
+
     /* Obtenemos enlaces y habilidades */
     $links = mysqli_query($conn, "SELECT * FROM Enlaces_Usuario WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
+    $linksPopup = mysqli_query($conn, "SELECT * FROM Enlaces_Usuario WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
+
     $skills = mysqli_query($conn, "SELECT * FROM Habilidades_Usuario WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
+    $skillsPopup = mysqli_query($conn, "SELECT * FROM Habilidades_Usuario WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
 
     /* Obtenemos el historial laboral*/
     $historial_laboral = mysqli_query($conn, "SELECT * FROM Historial_Laboral WHERE Usuario_idUsuario='".$_COOKIE["id"]."' ORDER BY Inicio DESC");
@@ -28,8 +34,10 @@ checkSession("user");
     $unansweredSurveys = mysqli_query($conn, "SELECT * FROM Encuestas_Pendientes WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
     $answeredSurveys = mysqli_query($conn, "SELECT * FROM Encuestas_Contestadas WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
 
+
     $datos_personales = mysqli_fetch_assoc($datos_personales);
     $datos_laborales = mysqli_fetch_assoc($datos_laborales);
+    $profilePicture = mysqli_fetch_assoc($profilePicture);
 
     /* Obtenemos ciudad y estado */
     $city = getFirstQueryElement($conn, "Ciudad", "Nombre", "idCiudad", $datos_personales["Ciudad_idCiudad"]);
@@ -60,11 +68,11 @@ checkSession("user");
     </nav>
 
     <div class="container emp-profile">
-        <form method="post">
+        <form id="profile-picture" method="post" action="uploadPicture.php" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
+                        <img src="<?php echo $profilePicture['Direccion'] ?>"/>
                         <div class="file btn btn-lg btn-primary">
                             Cambiar Foto
                             <input type="file" name="file"/>
@@ -101,12 +109,23 @@ checkSession("user");
                     <div class="profile-work">
                         <p>LINKS</p>
                         <?php while($row = mysqli_fetch_assoc($links)): ?>
-                          <a href="<?php echo $row['link']; ?>"><?php echo $row['Nombre']; ?></a><br/>
+                          <a 
+                            name="<?php echo $row['idEnlaces_Usuario']; ?>"
+                            href="<?php echo $row['Link']; ?>"
+                            class="profile-link"
+                          ><?php echo $row['Nombre']; ?></a>
+                          <br/>
                         <?php endwhile; ?>
                         <a class="cursor-on" onclick="linkPopup()">+</a>
+                        
                         <p>HABILIDADES</p>
                         <?php while ($row = mysqli_fetch_assoc($skills)): ?>
-                          <a href=""><?php echo $row['Nombre']; ?></a><br/>
+                          <a
+                            href=""
+                            name = "<?php echo $row['idHabilidades_Usuario']?>"
+                            class="profile-skill"
+                          ><?php echo $row['Texto']; ?></a>
+                          <br/>
                         <?php endwhile; ?>
                         <a class="cursor-on" onclick="skillPopup()">+</a><br/>
                     </div>
@@ -319,7 +338,6 @@ checkSession("user");
             </div>
         </form>
     </div>
-
     <!-- Popup de los links -->
     <div class="popup" id="popup-link">
       <div class="overlay"></div>
@@ -328,20 +346,24 @@ checkSession("user");
         <h1 class="popup-title">LINKS</h1>
 
         <div id="all-links">
-        <?php while($row = mysqli_fetch_assoc($links)): ?>
-          <div>
+        <?php while($row = mysqli_fetch_assoc($linksPopup)): ?>
+          <!-- ID del link -->
+          <form class="form-links" id="<?php echo $row['idEnlaces_Usuario'] ?>">
             <div class="row mb-3">
               <div class="col-8">
+                <!-- Nombre del link -->
                 <input 
                   type="text"
                   class="form-control modified-middle-input ml-3 input-link-name"
                   placeholder="Nombre"
-                  value = "<?php echo $row['Nombre']?>"
+                  name="name"
+                  value = "<?php echo $row['Nombre'];?>"
                   >
               </div>
               <div class="col-4">
                 <button
-                  type="button"
+                  type="submit"
+                  value="submit"
                   name="button"
                   class="btn btn-primary modified-middle-button save-link"
                 >Guardar</button>
@@ -349,11 +371,13 @@ checkSession("user");
             </div>
             <div class="row mb-5">
               <div class="col-8">
+                <!-- Link -->
                 <input
                   type="text"
                   class="form-control modified-middle-input ml-3 input-link-url"
                   placeholder="Enlace"
-                  value="<?php echo $row['Link'] ?>"
+                  name="link"
+                  value="<?php echo $row['Link']; ?>"
                 >
               </div>
               <div class="col-4">
@@ -364,7 +388,7 @@ checkSession("user");
                 >Eliminar</button>
               </div>
             </div>
-          </div>
+          </form>
         <?php endwhile; ?>
         </div>
 
@@ -373,7 +397,7 @@ checkSession("user");
             type="button"
             name="button"
             class="btn btn-primary modified-middle-button"
-            onclick="incrementLinks()"
+            onclick="newLinks()"
           >Nuevo</button>
         </div>
       </div>
@@ -387,15 +411,23 @@ checkSession("user");
         <h1 class="popup-title">HABILIDADES</h1>
 
         <div id="all-skills">
-        <?php while($row = mysqli_fetch_assoc($skills)):?>
-          <div class="">
+        <?php while($row = mysqli_fetch_assoc($skillsPopup)):?>
+          <!-- ID del skill -->
+          <form class="form-skills" id="<?php echo $row['idHabilidades_Usuario']?>">
             <div class="row mb-2">
               <div class="col-8">
-                <input type="text" class="form-control modified-middle-input ml-3 input-skill" placeholder="Habilidad">
+                <!-- Habilidad -->
+                <input
+                  type="text"
+                  class="form-control modified-middle-input ml-3 input-skill"
+                  placeholder="Habilidad"
+                  name="skill"
+                  value="<?php echo $row['Texto']; ?>">
               </div>
+              <!-- Boton de guardado -->
               <div class="col-4">
                 <button
-                  type="button"
+                  type="submit"
                   name="button"
                   class="btn btn-primary modified-middle-button"
                 >Guardar</button>
@@ -412,7 +444,7 @@ checkSession("user");
                 >Eliminar</button>
               </div>
             </div>
-          </div>
+          </form>
         <?php endwhile; ?>
         </div>
 
@@ -421,11 +453,12 @@ checkSession("user");
             type="button"
             name="button"
             class="btn btn-primary modified-middle-button"
-            onclick="incrementSkills()"
+            onclick="newSkills()"
           >Nuevo</button>
         </div>
       </div>
     </div>
     <script src="../js/popup.js"></script>
+    <script src="../js/profile.js"></script>
   </body>
 </html>

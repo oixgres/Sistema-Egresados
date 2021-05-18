@@ -1,4 +1,5 @@
 DELIMITER !!
+DROP TRIGGER IF EXISTS activateUser;
 CREATE TRIGGER activateUser
 BEFORE DELETE ON Claves_Confirmacion
 FOR EACH ROW

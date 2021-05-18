@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="../css/profile.css">
     <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css"> <!-- Nuevos estilos de boostrap -->
     <link rel="stylesheet" href="../css/boostrap/bootstrap_pulse.min.css"> <!-- Nuevos estilos de boostrap -->
+    <link rel="stylesheet" href="../css/userFinder.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <style>
         tr:hover{
@@ -160,14 +162,37 @@
     </div>
     <div class="container">
         <!-- Ofcanvas del perfil -->
+
         <div class="row">
             <div class="col-12">
 
                 <div class="offcanvas offcanvas-start w-75" tabindex="-1" id="UserProfile" style="background: -webkit-linear-gradient(left, #3931af, #00c6ff); overflow: scroll">
+
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title text-white">Perfil de usuario</h5>
                     </div>
-                    <div class="container emp-profile">
+
+
+                    <div class="h-100" id="AnimationLoadingContainer">
+                        <div class="row align-content-center h-100">
+                            <div class="col-12">
+                                <div class="loadingScreen h-100 align-content-center">
+                                    <div class="bounceItem blue"></div>
+                                    <div class="bounceItem yellow"></div>
+                                    <div class="bounceItem red"></div>
+                                    <div class="bounceItem violet"></div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <h2 class="text-white text-center">Cargando...</h2>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="container emp-profile"  id="userProfileContainer">
                         <form>
                             <div class="row">
                                 <div class="col-md-4">
@@ -178,10 +203,10 @@
                                 <div class="col-md-6">
                                     <div class="profile-head">
                                         <h5 id="userName">
-                                            Omar Valdivia
+
                                         </h5>
                                         <h6 id="department">
-                                            Sistemas
+
                                         </h6>
                                         <ul class="mt-5 nav nav-tabs" id="myTab" role="tablist">
                                             <li class="nav-item">
@@ -221,7 +246,7 @@
                                                     <label>Nombre:</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <p id="userName_info">Omar Valdivia</p>
+                                                    <p id="userName_info"></p>
                                                 </div>
                                             </div>
 
@@ -230,8 +255,8 @@
                                                 <div class="col-md-4">
                                                     <label>Correo Personal:</label>
                                                 </div>
-                                                <div class="col-md-8" id="userEmail_info">
-                                                    <p>omar5antonio@gmail.com?></p>
+                                                <div class="col-md-8 textInfoLink" id="userEmail_info">
+                                                    <p>></p>
                                                 </div>
                                             </div>
 
@@ -241,7 +266,7 @@
                                                     <label>Telefono:</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <p id="userPhone_number">6641787612?></p>
+                                                    <p id="userPhone_number"></p>
                                                 </div>
                                             </div>
 
@@ -251,7 +276,7 @@
                                                     <label>Ubicacion:</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <p id="userLocation_info">Baja California, Tijuana</p>
+                                                    <p id="userLocation_info"></p>
                                                 </div>
                                             </div>
 
@@ -260,7 +285,7 @@
                                                     <label>Empleo:</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <p id="userWork_info">Desarrolador de firmware</p>
+                                                    <p id="userWork_info"></p>
                                                 </div>
                                             </div>
 
@@ -269,7 +294,7 @@
                                                     <label>Empresa:</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <p id="userCompany_info">Microchip</p>
+                                                    <p id="userCompany_info"></p>
                                                 </div>
                                             </div>
 
@@ -278,7 +303,7 @@
                                                     <label>Puesto:</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <p id="userTypeWork_info"> Empleado</p>
+                                                    <p id="userTypeWork_info"> </p>
                                                 </div>
                                             </div>
 
@@ -287,7 +312,7 @@
                                                     <label>Departamento:</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <p id="userDepartment_info">Desarrollo</p>
+                                                    <p id="userDepartment_info"></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -298,9 +323,9 @@
                                                 <div class="col-md-8">
                                                     <label>Encuestas Pendientes</label>
                                                 </div>
-                                                <div class="col-md-4">
+                                              <!--  <div class="col-md-4">
                                                     <a href="../html/ShowSurvey.html" class="btn btn-primary modified-small-button">Ver</a>
-                                                </div>
+                                                </div>-->
                                             </div>
 
                                             <div class="row">
@@ -326,83 +351,34 @@
                                                 <div class="col-md-8 mt-1">
                                                     <p>Nomnbre</p>
                                                 </div>
-                                                <div class="col-md-4">
+                                               <!-- <div class="col-md-4">
                                                     <a href="#" class="btn btn-secondary modified-small-button">Modificar</a>
-                                                </div>
+                                                </div>-->
                                             </div>
                                         </div>
 
                                         <!-- Historial Laboral -->
                                         <div class="tab-pane fade show active" id="history" role="tabpanel" aria-labelledby="history-tab">
 
-                                            <div class="row">
-                                                <div class="col-md-8">
+
+                                            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                                                <div class="carousel-inner" id="HistorialLaboral">
 
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <p></p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <label>Empleo:</label>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <p>empleo</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <label>Empresa:</label>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <p>Empresa</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <label>Puesto:</label>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <p>Puesto</p>
+
+                                                <div class="row">
+                                                    <div class="col-12 w-100 d-flex justify-content-between">
+                                                        <button class="btn btn-secondary" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                                            <i class="fas fa-chevron-circle-left fa-2x"></i>
+                                                        </button>
+                                                        <button class="btn btn-secondary" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                                            <i class="fas fa-chevron-circle-right fa-2x"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
 
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <label>Departamento:</label>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <p>Departamento</p>
-                                                </div>
-                                            </div>
 
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <label>Actividades:</label>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <p>Actividades</p>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <label>Tecnologias:</label>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <p>Tecnologias</p>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <label>Correo Laboral:</label>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <p>Correo laboral</p>
-                                                </div>
-                                            </div>
 
                                         </div>
                                         <script src="../js/showHide.js" charset="utf-8"></script>

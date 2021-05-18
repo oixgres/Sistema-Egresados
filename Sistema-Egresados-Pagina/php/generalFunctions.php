@@ -97,4 +97,11 @@
     setcookie("userType", $userType, time()+(60*60*24*30),"/");
   }
 
+  function allowedImageTypes($imageFileType){
+    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"&& $imageFileType != "gif" )
+      return false;
+    else
+      return true; 
+  }
+
 ?>
