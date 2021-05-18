@@ -40,7 +40,7 @@ if ($res->num_rows == 0) {
     exit();
 }
 
-$sql = "INSERT INTO datos_personales(Usuario_idUsuario, Fecha_Nacimiento, Estado_idEstado, Ciudad_idCiudad, Domicilio, Telefono)
+$sql = "INSERT INTO Datos_Personales(Usuario_idUsuario, Fecha_Nacimiento, Estado_idEstado, Ciudad_idCiudad, Domicilio, Telefono)
         VALUES (${idUsuario}, '${fechaNacimiento}', ${idEstado}, ${idCiudad}, '${domicilio}', '${telefono}')";
 
 if (mysqli_query($conn, $sql)) {

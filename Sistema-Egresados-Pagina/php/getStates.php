@@ -11,7 +11,7 @@ require_once "dbh.php";
 */
 
 $json = array();
-$sql = "SELECT idEstado, Nombre as nombre FROM estado";
+$sql = "SELECT idEstado, Nombre as nombre FROM Estado";
 $res = mysqli_query($conn, $sql);
 
 if(gettype($res) != "boolean") {

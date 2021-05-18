@@ -49,10 +49,10 @@ if ($res->num_rows == 0) {
 }
 
 if ($laborando == 1) {
-    $sql = "INSERT INTO datos_laborales(Usuario_idUsuario, Labora, Empleo, Empresa, Puesto, Categoria, Correo_Emp, Departamento, Tecnologias, Actividades)
+    $sql = "INSERT INTO Datos_Laborales(Usuario_idUsuario, Labora, Empleo, Empresa, Puesto, Categoria, Correo_Emp, Departamento, Tecnologias, Actividades)
             VALUES (${idUsuario}, 1, '${empleo}', '${empresa}', '${puesto}', '${categoria}', '${correo}', '${departamento}', '${tecnologias}', '${actividades}')";
 } else {
-    $sql = "INSERT INTO datos_laborales(Usuario_idUsuario, Labora)
+    $sql = "INSERT INTO Datos_Laborales(Usuario_idUsuario, Labora)
             VALUES (${idUsuario}, 0)";
 }
 

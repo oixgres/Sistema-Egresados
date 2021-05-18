@@ -153,7 +153,12 @@ $(document).ready(function (e) {
         async: false,
         data: {},
         success: function (response) {
+            console.log(response)
+          
             try{
+
+
+
                 let estados = JSON.parse(response); //obtener los estados
                 let estados_dictionary = {}; //crear diccionario
                 let dataListParent = $('#Estados');

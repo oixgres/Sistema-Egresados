@@ -24,12 +24,12 @@ if(isset($_POST['idFacultad'])) {
 }
 
 $json = array();
-$sql = "SELECT idFacultad FROM facultad
+$sql = "SELECT idFacultad FROM Facultad
         WHERE idFacultad = ${idFacultad}";
 $res = mysqli_query($conn, $sql);
 
 if(gettype($res) != "boolean" and $res->num_rows != 0) {
-    $sql = "SELECT idPlan_Estudio, Nombre as nombre FROM plan_estudio
+    $sql = "SELECT idPlan_Estudio, Nombre as nombre FROM Plan_Estudio
             WHERE Facultad_idFacultad = ${idFacultad}";
     $res = mysqli_query($conn, $sql);
 

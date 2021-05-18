@@ -50,7 +50,7 @@ if ($res->num_rows == 0) {
     exit();
 }
 
-$sql = "INSERT INTO datos_escolares(Usuario_idUsuario, Universidad_idUniversidad, Campus_idCampus, Facultad_idFacultad, Plan_Estudio_idPlan_Estudio, Ingreso, Egreso, Semestre_Grad, Generacion, Titulacion, Correo_Inst)
+$sql = "INSERT INTO Datos_Escolares(Usuario_idUsuario, Universidad_idUniversidad, Campus_idCampus, Facultad_idFacultad, Plan_Estudio_idPlan_Estudio, Ingreso, Egreso, Semestre_Grad, Generacion, Titulacion, Correo_Inst)
         VALUES (${idUsuario}, ${idUniversidad}, ${idCampus}, ${idFacultad}, ${idPlanEstudio}, '${fechaIngreso}', '${fechaEgreso}', ${semestreGrad}, '${generacion}', '${fechaTitulacion}', '${correo}')";
 
 if (mysqli_query($conn, $sql)) {
