@@ -25,6 +25,7 @@ checkSession("user");
     $linksPopup = mysqli_query($conn, "SELECT * FROM Enlaces_Usuario WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
 
     $skills = mysqli_query($conn, "SELECT * FROM Habilidades_Usuario WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
+    $skillsPopup = mysqli_query($conn, "SELECT * FROM Habilidades_Usuario WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
 
     /* Obtenemos el historial laboral*/
     $historial_laboral = mysqli_query($conn, "SELECT * FROM Historial_Laboral WHERE Usuario_idUsuario='".$_COOKIE["id"]."' ORDER BY Inicio DESC");
@@ -67,7 +68,7 @@ checkSession("user");
     </nav>
 
     <div class="container emp-profile">
-        <form method="post" action="uploadPicture.php" enctype="multipart/form-data">
+        <form id="profile-picture" method="post" action="uploadPicture.php" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
@@ -76,7 +77,6 @@ checkSession("user");
                             Cambiar Foto
                             <input type="file" name="file"/>
                         </div>
-                        <button type="submit" name="submit">Subir</button>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -112,7 +112,7 @@ checkSession("user");
                           <a 
                             name="<?php echo $row['idEnlaces_Usuario']; ?>"
                             href="<?php echo $row['Link']; ?>"
-                            class="link-name-profile"
+                            class="profile-link"
                           ><?php echo $row['Nombre']; ?></a>
                           <br/>
                         <?php endwhile; ?>
@@ -122,7 +122,8 @@ checkSession("user");
                         <?php while ($row = mysqli_fetch_assoc($skills)): ?>
                           <a
                             href=""
-                            class="link-url-profile"
+                            name = "<?php echo $row['idHabilidades_Usuario']?>"
+                            class="profile-skill"
                           ><?php echo $row['Texto']; ?></a>
                           <br/>
                         <?php endwhile; ?>
@@ -382,7 +383,6 @@ checkSession("user");
               <div class="col-4">
                 <button
                   type="button"
-                  value="<?php echo $row['idEnlaces_Usuario']?>"
                   name="button"
                   class="btn btn-danger modified-middle-button delete-links"
                 >Eliminar</button>
@@ -411,12 +411,20 @@ checkSession("user");
         <h1 class="popup-title">HABILIDADES</h1>
 
         <div id="all-skills">
-        <?php while($row = mysqli_fetch_assoc($skills)):?>
-          <form class="form-skills">
+        <?php while($row = mysqli_fetch_assoc($skillsPopup)):?>
+          <!-- ID del skill -->
+          <form class="form-skills" id="<?php echo $row['idHabilidades_Usuario']?>">
             <div class="row mb-2">
               <div class="col-8">
-                <input type="text" class="form-control modified-middle-input ml-3 input-skill" placeholder="Habilidad" value="<?php echo 'a';?>">
+                <!-- Habilidad -->
+                <input
+                  type="text"
+                  class="form-control modified-middle-input ml-3 input-skill"
+                  placeholder="Habilidad"
+                  name="skill"
+                  value="<?php echo $row['Texto']; ?>">
               </div>
+              <!-- Boton de guardado -->
               <div class="col-4">
                 <button
                   type="submit"
@@ -445,11 +453,12 @@ checkSession("user");
             type="button"
             name="button"
             class="btn btn-primary modified-middle-button"
-            onclick="incrementSkills()"
+            onclick="newSkills()"
           >Nuevo</button>
         </div>
       </div>
     </div>
     <script src="../js/popup.js"></script>
+    <script src="../js/profile.js"></script>
   </body>
 </html>

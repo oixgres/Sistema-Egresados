@@ -112,7 +112,7 @@ checkSession("user");
                           <a 
                             name="<?php echo $row['idEnlaces_Usuario']; ?>"
                             href="<?php echo $row['Link']; ?>"
-                            class="link-name-profile"
+                            class="profile-link"
                           ><?php echo $row['Nombre']; ?></a>
                           <br/>
                         <?php endwhile; ?>
@@ -445,7 +445,7 @@ checkSession("user");
             type="button"
             name="button"
             class="btn btn-primary modified-middle-button"
-            onclick="incrementSkills()"
+            onclick="newSkills()"
           >Nuevo</button>
         </div>
       </div>
