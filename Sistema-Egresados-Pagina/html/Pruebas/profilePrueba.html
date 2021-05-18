@@ -25,6 +25,7 @@ checkSession("user");
     $linksPopup = mysqli_query($conn, "SELECT * FROM Enlaces_Usuario WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
 
     $skills = mysqli_query($conn, "SELECT * FROM Habilidades_Usuario WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
+    $skillsPopup = mysqli_query($conn, "SELECT * FROM Habilidades_Usuario WHERE Usuario_idUsuario='".$_COOKIE['id']."'");
 
     /* Obtenemos el historial laboral*/
     $historial_laboral = mysqli_query($conn, "SELECT * FROM Historial_Laboral WHERE Usuario_idUsuario='".$_COOKIE["id"]."' ORDER BY Inicio DESC");
@@ -36,7 +37,7 @@ checkSession("user");
 
     $datos_personales = mysqli_fetch_assoc($datos_personales);
     $datos_laborales = mysqli_fetch_assoc($datos_laborales);
-    $profilePicture = mysqli_fetch_all($profilePicture);
+    $profilePicture = mysqli_fetch_assoc($profilePicture);
 
     /* Obtenemos ciudad y estado */
     $city = getFirstQueryElement($conn, "Ciudad", "Nombre", "idCiudad", $datos_personales["Ciudad_idCiudad"]);
@@ -49,9 +50,15 @@ checkSession("user");
 
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    
+    <!-- masonry -->
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
+    <!-- originales -->
     <link rel="stylesheet" href="../../css/index.css">
     <link rel="stylesheet" href="../../css/generalcss.css">
     <link rel="stylesheet" href="../../css/profile.css">
+    <link rel="stylesheet" href="../../css/masonry.css">
   </head>
   <body class="profile-body">
 
@@ -66,21 +73,20 @@ checkSession("user");
       </div>
     </nav>
 
-    <div class="container emp-profile">
-        <form method="post" action="uploadPicture.php">
+    <div class="container emp-profile grid">
+        <form id="profile-picture" method="post" action="uploadPicture.php" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
-                        <img src= alt="<?php echo $profilePicture['Direccion'] ?>"/>
+                        <img src="../../img/12.1.jpg"/>
                         <div class="file btn btn-lg btn-primary">
                             Cambiar Foto
                             <input type="file" name="file"/>
                         </div>
-                        <button type="submit">Subir</button>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="profile-head">
+                    <div class="profile-head grid-item">
                         <h5>
                             <?php echo $_COOKIE["name"]." ".$_COOKIE["lastname"] ?>
                         </h5>
@@ -122,7 +128,8 @@ checkSession("user");
                         <?php while ($row = mysqli_fetch_assoc($skills)): ?>
                           <a
                             href=""
-                            class="link-url-profile"
+                            name = "<?php echo $row['idHabilidades_Usuario']?>"
+                            class="profile-skill"
                           ><?php echo $row['Texto']; ?></a>
                           <br/>
                         <?php endwhile; ?>
@@ -382,7 +389,6 @@ checkSession("user");
               <div class="col-4">
                 <button
                   type="button"
-                  value="<?php echo $row['idEnlaces_Usuario']?>"
                   name="button"
                   class="btn btn-danger modified-middle-button delete-links"
                 >Eliminar</button>
@@ -411,12 +417,20 @@ checkSession("user");
         <h1 class="popup-title">HABILIDADES</h1>
 
         <div id="all-skills">
-        <?php while($row = mysqli_fetch_assoc($skills)):?>
-          <form class="form-skills">
+        <?php while($row = mysqli_fetch_assoc($skillsPopup)):?>
+          <!-- ID del skill -->
+          <form class="form-skills" id="<?php echo $row['idHabilidades_Usuario']?>">
             <div class="row mb-2">
               <div class="col-8">
-                <input type="text" class="form-control modified-middle-input ml-3 input-skill" placeholder="Habilidad" value="<?php echo 'a';?>">
+                <!-- Habilidad -->
+                <input
+                  type="text"
+                  class="form-control modified-middle-input ml-3 input-skill"
+                  placeholder="Habilidad"
+                  name="skill"
+                  value="<?php echo $row['Texto']; ?>">
               </div>
+              <!-- Boton de guardado -->
               <div class="col-4">
                 <button
                   type="submit"
@@ -451,5 +465,6 @@ checkSession("user");
       </div>
     </div>
     <script src="../../js/popup.js"></script>
+    <script src="../../js/profile.js"></script>
   </body>
 </html>
