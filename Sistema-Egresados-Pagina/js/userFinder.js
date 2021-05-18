@@ -1,5 +1,68 @@
 $(document).ready(function (e) {
     checkSession('admin');
+    function createCarouselItemUserHistory(Empleo, Empresa, Puesto, Departamento, Actividades, Tecnologias, CorreoLaboral, active) {
+
+        return $(`
+        <div class="carousel-item ${active}">
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Empleo:</label>
+                </div>
+                <div class="col-md-8">
+                    <p>${Empleo}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Empresa:</label>
+                </div>
+                <div class="col-md-8">
+                    <p>${Empresa}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Puesto:</label>
+                </div>
+                <div class="col-md-8">
+                    <p>${Puesto}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Departamento:</label>
+                </div>
+                <div class="col-md-8">
+                    <p>${Departamento}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Actividades:</label>
+                </div>
+                <div class="col-md-8">
+                    <p>${Actividades}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Tecnologias:</label>
+                </div>
+                <div class="col-md-8">
+                    <p>${Tecnologias}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Correo Laboral:</label>
+                </div>
+                <div class="col-md-8">
+                    <p>${CorreoLaboral}</p>
+                </div>
+            </div>
+        </div>
+        `)
+    }
 
     function UserRow(Matricula, Nombres, Apellidos, Campus, Facultad, Programa, Empresa, Puesto, Ciudad, Correo, id) {
         let node =  $(`
@@ -32,6 +95,93 @@ $(document).ready(function (e) {
 
         node.find('.showProfileBtn').on('click', function (e) {
             e.stopPropagation();
+            let userId = $(this).parent().parent().parent().attr('id');
+            let regex = RegExp('[0-9]+')
+            let idUsuario = regex.exec(userId).pop();
+
+            //AnimationLoadingContainer
+            $('#AnimationLoadingContainer').show();
+            $('#userProfileContainer').hide();
+
+
+            $.ajax({
+                url: '../php/getUserData.php',
+                data: {idUsuario},
+                type: 'POST',
+                success: function (response) {
+                    try{
+                        $('#AnimationLoadingContainer').hide(600, function () {
+                            $('#userProfileContainer').show(600);
+                        });
+
+
+                        let datosUsuario = JSON.parse(response);
+
+                        $('#userName').text(datosUsuario.nombres + " " + datosUsuario.apellidos)
+                        $('#department').text(datosUsuario.departamento);
+                        $('#userName_info').text(datosUsuario.nombres + " " + datosUsuario.apellidos)
+                        $('#userEmail_info').text(datosUsuario.correo);
+                        $('#userPhone_number').text(datosUsuario.telefono)
+                        $('#userLocation_info').text(datosUsuario.estado + ", " + datosUsuario.ciudad)
+                        $('#userWork_info').text(datosUsuario.empleo)
+                        $('#userCompany_info').text(datosUsuario.empresa)
+                        $('#userTypeWork_info').text(datosUsuario.puesto)
+                        $('#userDepartment_info').text(datosUsuario.departamento)
+
+                    }catch (e){
+                        console.log(e)
+                    }
+                },
+                error: function () {
+                    alert("Error al consultar usuario")
+                }
+
+            })
+            $.ajax({
+                url: '../php/getUserEmploymentHistory.php',
+                data: {idUsuario},
+                type: 'POST',
+                success: function (response) {
+                    try {
+                        let historial = JSON.parse(response)
+                        $('#HistorialLaboral').empty();
+
+                        for(let i = 0; i < historial.length; i++){
+
+                            if(i === 0){
+                                $('#HistorialLaboral').append(createCarouselItemUserHistory(
+                                    historial[i].empleo,
+                                    historial[i].empresa,
+                                    historial[i].puesto,
+                                    historial[i].departamento ,
+                                    historial[i].actividades,
+                                    historial[i].tecnologias,
+                                    historial[i].correo,
+                                    "active",
+                                ))
+                            }else{
+                                $('#HistorialLaboral').append(createCarouselItemUserHistory(
+                                    historial[i].empleo,
+                                    historial[i].empresa,
+                                    historial[i].puesto,
+                                    historial[i].departamento ,
+                                    historial[i].actividades,
+                                    historial[i].tecnologias,
+                                    historial[i].correo,
+                                    "",
+                                ))
+                            }
+
+                        }
+
+
+                    }catch (e){
+                        console.log(e)
+                    }
+                }
+                
+            })
+
             UserProfile.toggle();
         })
 

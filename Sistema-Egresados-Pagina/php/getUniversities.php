@@ -3,31 +3,32 @@ require_once "dbh.php";
 /*
  * Devuelve:
  * 	(JSON)
- *  idEstado : INT
- *  nombre   : VARCHAR(45)
+ *  idUniversidad : INT
+ *  nombre        : VARCHAR(45)
  *
  *  Códigos de error:
  *  -1 : Error consultando estados
 */
 
 $json = array();
-$sql = "SELECT idEstado, Nombre as nombre FROM estado";
+$sql = "SELECT idUniversidad, Nombre as nombre FROM universidad";
 $res = mysqli_query($conn, $sql);
 
 if(gettype($res) != "boolean") {
     while($fila = mysqli_fetch_array($res)) {
         $json [] = array(
-            'idEstado' => $fila['idEstado'],
+            'idUniversidad' => $fila['idUniversidad'],
             'nombre' => $fila['nombre']
         );
     }
 
     /*
      *	JSON Ejemplo:
-     *	   string(137) "[{"idEstado":"1","nombre":"BC"},
-     *                   {"idEstado":"2","nombre":"Sinaloa"},
-     *                   {"idEstado":"3","nombre":"Ags"},
-     *                   {"idEstado":"4","nombre":"Campeche"}]"
+     *	   string(187) "[{"idUniversidad":"1","nombre":"UABC"},
+     *                   {"idUniversidad":"2","nombre":"TEC"},
+     *                   {"idUniversidad":"3","nombre":"ITT"},
+     *                   {"idUniversidad":"4","nombre":"CUT"},
+     *                   {"idUniversidad":"5","nombre":"UTT"}]"
     */
     $jsonString = json_encode($json); 	//convertir el json a cadena
     echo $jsonString; 					//retornar el json al frontend
