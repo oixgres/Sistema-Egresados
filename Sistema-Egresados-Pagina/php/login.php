@@ -1,4 +1,4 @@
- <?php
+<?php
 session_start();
 
 require_once 'dbh.php';
@@ -28,8 +28,14 @@ if($typeLogin == "asUser")
     {
       setcookie("verification", $idUser,time()+(60*60*24*30),"/");
       setcookie("userType", "new",time()+(60*60*24*30),"/");
+      
+      echo json_encode(Array(
+        'location'=>'../html/verificationPage.html'
+      ));
+      /*
       header("Location: ../html/verificationPage.html");
       exit();
+      */
     }
     else
     {
@@ -40,9 +46,14 @@ if($typeLogin == "asUser")
       $_SESSION['token'] = $token;
 
       setUserCookies($token, $idUser, $name, $lastname, $mail, "user");
-
+      
+      echo json_encode(Array(
+        'location'=>'profile.php'
+      ));
+      /*
       header("Location: profile.php");
       exit();
+      */
     }
   }
   /* Si no existe el admin */
@@ -52,7 +63,7 @@ if($typeLogin == "asUser")
 else
   if($typeLogin == "asAdmin")
   {
-    /* checamos que exista un administrador */
+    /* Checamos que exista un administrador */
     $res = mysqli_query($conn, "SELECT * FROM Admin WHERE Correo='".$mail."' AND Password='".$pass."'");
     $nr = mysqli_num_rows($res);
 
@@ -72,16 +83,21 @@ else
 
       setUserCookies($token, $idUser, $name, $lastname, $mail, "admin");
 
+      echo json_encode(Array(
+        'location'=>'menu.php'
+      ));
+      /*
       header("Location: menu.php");
       exit();
+      */
 
     }
-    /* Si no existe terminamos */
+    /* Si la contraseña es invalida */
     else
     {
-      echo "Usuario o Contraseña incorrectos";
+      echo -1;
     }
   }
   else
-    echo "Ha ocurrido un error, contacte con el administrador"; //si no existe
+    echo -1; /* Si no existe el usuario */
 ?>
