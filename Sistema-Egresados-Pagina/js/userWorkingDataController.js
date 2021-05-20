@@ -120,7 +120,7 @@ $(document).ready(function (e) {
         let tecnologias = $('#Tecnologias').val();
         let actividades = $('#Actividades').val();
 
-        if($("#isWorkingYes").prop('checked')){ //si se clickeo "trabajando"
+        if(laborando === 1){ //si se clickeo "trabajando"
 
             if(validateFields()){
                 $.ajax({
@@ -146,7 +146,22 @@ $(document).ready(function (e) {
             }
 
         }else{
+            $.ajax({
+                url: '../php/registerEmploymentData.php',
+                data: {idUsuario, laborando,empleo, empresa, puesto, categoria, correo, departamento, tecnologias, actividades},
+                type: 'POST',
+                success: function (response) {
 
+                    if(parseInt(response, 10) === 0){
+                        //header
+                        alert("Datos Registrados con exito")
+                        window.location = '../html/verificationPage.html'
+                    }
+                },
+                error: function () {
+                    alert("error al registrar los datos")
+                }
+            })
         }
 
     })
