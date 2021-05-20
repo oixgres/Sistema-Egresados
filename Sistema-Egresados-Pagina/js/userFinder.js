@@ -221,6 +221,45 @@ $(document).ready(function (e) {
             })
 
 
+            $.ajax({
+                url: '../php/getUserAbilities.php',
+                type: 'POST',
+                data: {idUsuario},
+                success: function (response){
+                    console.log(response)
+                    $('#userAbilities').empty();
+                    try{
+                        let links = JSON.parse(response);
+                        let userAbilities = $('#userAbilities');
+
+                        links.forEach(link => {
+
+                            /*
+                             <a href="">Github</a><br/>
+                             */
+
+                            userAbilities.append(`<a href="#">${link.Nombre}</a>`);
+
+                        })
+
+
+                    }catch (e){
+                        switch (parseInt(response, 10)){
+                            case -1: break;
+
+                            case -2: $('#userAbilities').append('No hay habilidades registradas')
+                                break;
+
+
+                        }
+                    }
+                },
+                error : function (){
+
+                }
+            })
+
+
             UserProfile.toggle();
         })
 
