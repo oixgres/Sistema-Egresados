@@ -182,6 +182,45 @@ $(document).ready(function (e) {
                 
             })
 
+            $.ajax({
+                url: '../php/getUserLinks.php',
+                type: 'POST',
+                data: {idUsuario},
+                success: function (response){
+                    console.log(response)
+                    $('#userLinks').empty();
+                    try{
+                        let links = JSON.parse(response);
+                        let userLinks = $('#userLinks');
+
+                        links.forEach(link => {
+
+                                /*
+                                 <a href="">Github</a><br/>
+                                 */
+
+                            userLinks.append(`<a href="${link.Link}" target="_blank">${link.Nombre}</a>`);
+
+                        })
+
+
+                    }catch (e){
+                       switch (parseInt(response, 10)){
+                           case -1: break;
+
+                           case -2: $('#userLinks').append('No tiene links')
+                                    break;
+
+
+                       }
+                    }
+                },
+                error : function (){
+
+                }
+            })
+
+
             UserProfile.toggle();
         })
 
