@@ -8,7 +8,7 @@ require_once "dbh.php";
  * 	Todas las encuestas disponibles para ese usuario en el siguiente orden:
  * 
  *  (JSON)
- *  IdEncuesta : INT
+ *  idEncuesta : INT
  *	Nombre : VARCHAR(45)
  *  Nombre del alcance : VARCHAR(45)
  *  Alcance : INT 
@@ -31,7 +31,7 @@ if(isset($_POST['idUsuario'])) {
     exit();
 }
 
-$sql = "SELECT idUsuario FROM Usuario WHERE idUsuario = '$idUsuario'";
+$sql = "SELECT idUsuario FROM Usuario WHERE idUsuario = ${idUsuario}";
 $res = mysqli_query($conn, $sql);
 
 if($res->num_rows == 0) {
@@ -44,11 +44,12 @@ $alcances = array("Universidad", "Campus", "Facultad", "Plan_Estudio");
 $json = array();
 
 for($i = 0; $i < 4; $i++) {
-    $sql = "SELECT idEncuesta, Encuesta.Nombre AS encuesta, ${alcances[$i]}.Nombre AS alcance FROM Encuesta
+    $sql = "SELECT Encuestas_Pendientes.Encuesta_idEncuesta AS idEncuesta, Encuestas_Pendientes.Nombre AS encuesta, ${alcances[$i]}.Nombre AS alcance FROM Encuestas_Pendientes
+            INNER JOIN Encuesta ON Encuestas_Pendientes.Encuesta_idEncuesta = Encuesta.idEncuesta
             INNER JOIN ${alcances[$i]} ON Encuesta.${alcances[$i]}_id${alcances[$i]} = ${alcances[$i]}.id${alcances[$i]}
             INNER JOIN Datos_Escolares ON ${alcances[$i]}.id${alcances[$i]} = Datos_Escolares.${alcances[$i]}_id${alcances[$i]}
             INNER JOIN Usuario ON Datos_Escolares.Usuario_idUsuario = Usuario.idUsuario
-            WHERE Usuario.idUsuario = '$idUsuario'";
+            WHERE Usuario.idUsuario = ${idUsuario}";
 
     $res = mysqli_query($conn, $sql);
 
