@@ -8,7 +8,7 @@ require_once "dbh.php";
  *	Todas las habilidades del usuario
  *
  *	(JSON)
- *	Texto : VARCHAR(45)
+ *	Nombre : VARCHAR(45)
  *
  *	Codigos de error:
  *  -1 : Alguno de los datos no se envio correctamente
@@ -26,7 +26,7 @@ if(isset($_POST['idUsuario'])) {
 
 //Se obtiene las habilidades del usuario...
 
-$sql = "SELECT Texto FROM habilidades_usuario
+$sql = "SELECT Nombre FROM habilidades_usuario
 		WHERE Usuario_idUsuario = ${idUsuario}
 		ORDER BY idHabilidades_Usuario";
 $res = mysqli_query($conn,$sql);
