@@ -30,12 +30,8 @@ if($typeLogin == "asUser")
       setcookie("userType", "new",time()+(60*60*24*30),"/");
       
       echo json_encode(Array(
-        'location'=>'../html/verificationPage.html'
+        'location'=>'/html/verificationPage.html'
       ));
-      /*
-      header("Location: ../html/verificationPage.html");
-      exit();
-      */
     }
     else
     {
@@ -48,17 +44,15 @@ if($typeLogin == "asUser")
       setUserCookies($token, $idUser, $name, $lastname, $mail, "user");
       
       echo json_encode(Array(
-        'location'=>'profile.php'
+        'location'=>'php/profile.php'
       ));
-      /*
-      header("Location: profile.php");
-      exit();
-      */
     }
   }
-  /* Si no existe el admin */
+  /* Si no existe el usuario */
   else
-    echo "Usuario o Contraseña incorrectos";
+    echo json_encode(Array(
+      'errorMessage'=>'Usuario o contraseña incorrectos'
+    ));
 }
 else
   if($typeLogin == "asAdmin")
@@ -84,20 +78,20 @@ else
       setUserCookies($token, $idUser, $name, $lastname, $mail, "admin");
 
       echo json_encode(Array(
-        'location'=>'menu.php'
+        'location'=>'php/menu.php'
       ));
-      /*
-      header("Location: menu.php");
-      exit();
-      */
 
     }
     /* Si la contraseña es invalida */
     else
     {
-      echo -1;
+      echo json_encode(Array(
+        'errorMessage'=>'Usuario o contraseña incorrectos'
+      ));
     }
   }
   else
-    echo -1; /* Si no existe el usuario */
+    echo json_encode(Array(
+      'errorMessage'=>'Usuario o contraseña incorrectos'
+    ));
 ?>
