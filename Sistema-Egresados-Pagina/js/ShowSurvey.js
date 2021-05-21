@@ -383,6 +383,8 @@ $(document).ready(function (e) {
                 let AvailableSurveysMenu = $('#AvailableSurveysMenu');
                 let surveys = JSON.parse(response); //si la respuesta es un json pasarlo a arreglo
 
+
+                console.log(surveys)
                 console.log(surveys)
                 surveys.forEach(survey => { //para cada encuesta encontrada
                     //<a class="dropdown-item">Action</a>

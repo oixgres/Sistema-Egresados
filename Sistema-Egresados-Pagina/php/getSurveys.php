@@ -49,7 +49,7 @@ for($i = 0; $i < 4; $i++) {
             INNER JOIN ${alcances[$i]} ON Encuesta.${alcances[$i]}_id${alcances[$i]} = ${alcances[$i]}.id${alcances[$i]}
             INNER JOIN Datos_Escolares ON ${alcances[$i]}.id${alcances[$i]} = Datos_Escolares.${alcances[$i]}_id${alcances[$i]}
             INNER JOIN Usuario ON Datos_Escolares.Usuario_idUsuario = Usuario.idUsuario
-            WHERE Usuario.idUsuario = ${idUsuario}";
+            WHERE Usuario.idUsuario = ${idUsuario}  group by Encuesta.idEncuesta";
 
     $res = mysqli_query($conn, $sql);
 
