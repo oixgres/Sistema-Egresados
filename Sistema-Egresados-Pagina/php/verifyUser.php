@@ -49,7 +49,8 @@ else
     }
     else
     {
-        echo "Las claves no coinciden";
+        header("Location: ../html/verificationPage.html");
+        exit();
     }
   }
 ?>

@@ -1,3 +1,33 @@
-﻿idEstado,Nombre
-1,Baja California
-69,Zona Roja
+﻿idEstado,Numero,Nombre
+1,1,Aguascalientes
+2,2,Baja California
+3,3,Baja California Sur
+4,4,Campeche
+5,5,Chiapas
+6,6,Chihuahua
+7,7,Coahuila
+8,8,Colima
+9,9,Ciudad de México
+10,10,Durango
+11,11,Guanajuato
+12,12,Guerrero
+13,13,Hidalgo
+14,14,Jalisco
+15,15,Estado de México
+16,16,Michoacán
+17,17,Morelos
+18,18,Nayarit
+19,19,Nuevo León
+20,20,Oaxaca
+21,21,Puebla
+22,22,Querétaro
+23,23,Quintana Roo
+24,24,San Luis Potosí
+25,25,Sinaloa
+26,26,Sonora
+27,27,Tabasco
+28,28,Tamaulipas
+29,29,Tlaxcala
+30,30,Veracruz
+31,31,Yucatán
+32,32,Zacatecas

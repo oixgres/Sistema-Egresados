@@ -30,7 +30,7 @@ if($typeLogin == "asUser")
       setcookie("userType", "new",time()+(60*60*24*30),"/");
       
       echo json_encode(Array(
-        'location'=>'/html/verificationPage.html'
+        'location'=>'html/verificationPage.html'
       ));
     }
     else
