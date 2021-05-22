@@ -501,6 +501,7 @@ $(document).ready(function (e) {
             type: 'POST',
             data: {correoUsuario, asunto, mensaje},
             success: function (response) {
+                console.log("RESPUESTA CORREO " + response);
                if(parseInt(response, 10) === 0){
                    alert("Mensaje enviado con exito")
                }
