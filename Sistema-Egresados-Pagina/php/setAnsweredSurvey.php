@@ -38,7 +38,7 @@ if ($resUsuario->num_rows == 0 || $resEncuesta->num_rows == 0) {
 $nombre = mysqli_fetch_array($resEncuesta)['Nombre'];
 $sqlInsert = "INSERT INTO Encuestas_Contestadas(Encuesta_idEncuesta, Nombre, Usuario_idUsuario)
               VALUES(${idEncuesta}, '${nombre}', ${idUsuario})";
-$sqlDelete = "DELETE FROM Encuestas_Pendientes WHERE Encuesta_idEncuesta = ${idEncuesta}";
+$sqlDelete = "DELETE FROM Encuestas_Pendientes WHERE Encuesta_idEncuesta = ${idEncuesta} AND Usuario_idUsuario = ${idUsuario}";
 
 if (!mysqli_query($conn, $sqlInsert) || !mysqli_query($conn, $sqlDelete)) {
     echo -3;
