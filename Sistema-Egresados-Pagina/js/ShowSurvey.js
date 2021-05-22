@@ -109,6 +109,9 @@ class AnswersToDatabase{
             })
 
 
+
+
+
         }
 
         this.SaveAnswersToDatabase = function (idUsuario) {
@@ -117,7 +120,30 @@ class AnswersToDatabase{
             this.SaveInputAnswersToDatabase(idUsuario);
             this.SaveCheckBoxAnswersToDatabase(idUsuario);
             this.saveTextAreaAnswersToDatabase(idUsuario);
-            $('#ModalDatabaseSuccess').modal('show');
+
+
+            let idEncuesta = sessionStorage.getItem('survey_selected_id');
+
+            $.ajax({
+                url: '../php/setAnsweredSurvey.php',
+                type: 'POST',
+                data: {idUsuario, idEncuesta},
+                success: function (response) {
+
+                    if(parseInt(response, 10) === 0){
+                        $('#ModalDatabaseSuccess').modal('show');
+                    }
+                    else{
+                        alert("ha ocurrido un error")
+                    }
+
+                },
+                error: function () {
+                    alert("Ha ocurrido un error");
+                }
+
+            })
+
 
         }
         this.SaveInputAnswersToDatabase = function(idUsuario){
