@@ -2,10 +2,13 @@
 require_once "dbh.php";
 /*
  * Recibe:
- * 	idUsuario : INT 
- * 
+ * 	idUsuario    : INT
+ * 	estado       : INT
+ *      0 - pendientes
+ *      1 - contestadas
+ *
  * Devuelve:
- * 	Todas las encuestas disponibles para ese usuario en el siguiente orden:
+ * 	Todas las encuestas correspondientes a ese usuario en el siguiente orden:
  * 
  *  (JSON)
  *  idEncuesta : INT
@@ -18,17 +21,18 @@ require_once "dbh.php";
  *    	[3 - Plan academico ]
  *     
  *  Códigos de error:
- *  -1 : No se mandó el idUsuario
+ *  -1 : No se mandó el idUsuario o estado
  *  -2 : No existe el idUsuario en la base de datos
  *	-3 : No existen encuestas para este idUsuario
 */
 
-if(isset($_POST['idUsuario'])) {
-    $idUsuario = $_POST['idUsuario'];
-} else {
+if(!isset($_POST['idUsuario']) || !isset($_POST['estado'])) {
     echo -1;
     $conn->close();
     exit();
+} else {
+    $idUsuario = $_POST['idUsuario'];
+    $estado = $_POST['estado'];
 }
 
 $sql = "SELECT idUsuario FROM Usuario WHERE idUsuario = ${idUsuario}";
@@ -40,21 +44,24 @@ if($res->num_rows == 0) {
     exit();
 }
 
+$estadoEncuestas = array("Pendientes", "Contestadas");
 $alcances = array("Universidad", "Campus", "Facultad", "Plan_Estudio");
 $json = array();
 
 for($i = 0; $i < 4; $i++) {
-    $sql = "SELECT Encuestas_Pendientes.Encuesta_idEncuesta AS idEncuesta, Encuestas_Pendientes.Nombre AS encuesta, ${alcances[$i]}.Nombre AS alcance FROM Encuestas_Pendientes
-            INNER JOIN Encuesta ON Encuestas_Pendientes.Encuesta_idEncuesta = Encuesta.idEncuesta
-            INNER JOIN ${alcances[$i]} ON Encuesta.${alcances[$i]}_id${alcances[$i]} = ${alcances[$i]}.id${alcances[$i]}
-            INNER JOIN Datos_Escolares ON ${alcances[$i]}.id${alcances[$i]} = Datos_Escolares.${alcances[$i]}_id${alcances[$i]}
-            INNER JOIN Usuario ON Datos_Escolares.Usuario_idUsuario = Usuario.idUsuario
-            WHERE Usuario.idUsuario = ${idUsuario}  group by Encuesta.idEncuesta";
+    $sql = "SELECT Encuestas_${estadoEncuestas[$estado]}.Encuesta_idEncuesta AS idEncuesta, Encuestas_${estadoEncuestas[$estado]}.Nombre AS encuesta, ${alcances[$i]}.Nombre AS alcance
+            FROM Encuestas_${estadoEncuestas[$estado]}
+            INNER JOIN Encuesta         ON Encuestas_${estadoEncuestas[$estado]}.Encuesta_idEncuesta = Encuesta.idEncuesta
+            INNER JOIN ${alcances[$i]}  ON Encuesta.${alcances[$i]}_id${alcances[$i]} = ${alcances[$i]}.id${alcances[$i]}
+            INNER JOIN Datos_Escolares  ON ${alcances[$i]}.id${alcances[$i]} = Datos_Escolares.${alcances[$i]}_id${alcances[$i]}
+            INNER JOIN Usuario          ON Datos_Escolares.Usuario_idUsuario = Usuario.idUsuario
+            WHERE  Encuestas_${estadoEncuestas[$estado]}.Usuario_idUsuario = ${idUsuario}
+            GROUP BY Encuestas_${estadoEncuestas[$estado]}.Encuesta_idEncuesta";
 
     $res = mysqli_query($conn, $sql);
 
     if(gettype($res) != "boolean") {
-        while($fila = mysqli_fetch_array($res)) {
+        while ($fila = mysqli_fetch_array($res)) {
             $json [] = array(
                 'idEncuesta' => $fila['idEncuesta'],
                 'encuesta' => $fila['encuesta'],
