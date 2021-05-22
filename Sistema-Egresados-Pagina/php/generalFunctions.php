@@ -33,7 +33,7 @@
     $header.= "X-Mailer: PHP/".phpversion();
 
     /*  Enviamos el Correo */
-    @mail($email, $issue, $mailMessage, $header);
+    mail($email, $issue, $mailMessage, $header);
   }
 
   /* Funcion para obtener el primer elemento de una busqueda */
