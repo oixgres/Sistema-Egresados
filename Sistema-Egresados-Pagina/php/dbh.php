@@ -1,3 +1,4 @@
+
 <?php
 /*
 $dbServername = "localhost";
@@ -32,5 +33,4 @@ $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
 
 // Habilita caracteres con acento para busquedas.
 $conn->set_charset("utf8");
-
 ?>
