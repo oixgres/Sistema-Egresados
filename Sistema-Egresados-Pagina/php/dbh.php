@@ -1,3 +1,4 @@
+
 <?php
 /*
 $dbServername = "localhost";
@@ -7,21 +8,19 @@ $dbName = "sistemaegresados";
 */
 
 
-
+/*
 $dbServername = "localhost";
 $dbUsername = "root";
 $dbPassword = "harry6627";
 $dbName = "sistemaegresados";
-
+*/
 
 /* Servidor Actual */
-
-/*
 $dbServername = "localhost";
 $dbUsername = "omdprofx_guerra-c";
 $dbPassword = "Gue1870";
 $dbName = "omdprofx_guerra-c-ordinario";
-*/
+
 
 /*
 $dbServername = "localhost";
@@ -33,7 +32,5 @@ $dbName = "omdprofx_omarmontoya-proyecto";
 $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
 
 // Habilita caracteres con acento para busquedas.
-
-//$conn->set_charset("utf8");
-
+$conn->set_charset("utf8");
 ?>

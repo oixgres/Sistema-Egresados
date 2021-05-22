@@ -1,4 +1,4 @@
-
+var debug; 
 $(document).ready(function (e) {
     function getCookie(cname) {
         const name = cname + "=";
@@ -154,7 +154,7 @@ $(document).ready(function (e) {
         data: {},
         success: function (response) {
             console.log(response)
-          
+            debug = response;
             try{
 
 
