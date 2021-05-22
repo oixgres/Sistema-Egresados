@@ -124,7 +124,7 @@ checkSession("user");
                             href=""
                             name = "<?php echo $row['idHabilidades_Usuario']?>"
                             class="profile-skill"
-                          ><?php echo $row['Texto']; ?></a>
+                          ><?php echo $row['Nombre']; ?></a>
                           <br/>
                         <?php endwhile; ?>
                         <a class="cursor-on" onclick="skillPopup()">+</a><br/>
@@ -422,7 +422,7 @@ checkSession("user");
                   class="form-control modified-middle-input ml-3 input-skill"
                   placeholder="Habilidad"
                   name="skill"
-                  value="<?php echo $row['Texto']; ?>">
+                  value="<?php echo $row['Nombre']; ?>">
               </div>
               <!-- Boton de guardado -->
               <div class="col-4">
