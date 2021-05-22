@@ -124,6 +124,9 @@ class AnswersToDatabase{
 
             let idEncuesta = sessionStorage.getItem('survey_selected_id');
 
+            console.log("ID encuesta = " + idEncuesta);
+            console.log("ID usuario = " + idUsuario);
+
             $.ajax({
                 url: '../php/setAnsweredSurvey.php',
                 type: 'POST',
@@ -399,16 +402,20 @@ $(document).ready(function (e) {
 
     });
     //peticion para obtener las encuestas
+    let estado = 0;
     $.ajax({
         url: '../php/getSurveys.php', //obtener las encuestas
-        data:   {idUsuario}, //mandar el idUsuario
+        data:   {idUsuario, estado}, //mandar el idUsuario
         type:   'POST',
         success: function (response) {
+
             try{
                 let node = null;
                 let AvailableSurveysMenu = $('#AvailableSurveysMenu');
                 let surveys = JSON.parse(response); //si la respuesta es un json pasarlo a arreglo
 
+
+                console.log(surveys)
 
                 console.log(surveys)
                 console.log(surveys)

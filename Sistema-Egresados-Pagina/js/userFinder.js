@@ -259,7 +259,34 @@ $(document).ready(function (e) {
                 }
             })
 
+            let estado = 0;
+            $.ajax({
+                url: '../php/getSurveys.php',
+                type: 'POST',
+                data: {idUsuario, estado},
+                success: function (response) {
+                    console.log(response)
+                    try{
+                        let surveys = JSON.parse(response);
+                        $('#SurveyPendingsContainer').empty();
+                        surveys.forEach(survey => {
+                            $('#SurveyPendingsContainer').append(`
+                                <p>${survey.encuesta}</p>
+                            `)
+                        })
 
+
+                    }catch (e){
+                        $('#SurveyPendingsContainer').append(`
+                                <p>No tiene encuestas pendientes</p>
+                        `)
+                    }
+
+                },
+                error: function () {
+
+                }
+            })
             UserProfile.toggle();
         })
 
