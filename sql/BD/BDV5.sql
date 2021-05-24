@@ -13,7 +13,7 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 -- -----------------------------------------------------
 -- TableUsuario
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Usuario ;
+DROP TABLE IF EXISTS Usuario;
 
 CREATE TABLE IF NOT EXISTS Usuario (
   idUsuario INT NOT NULL AUTO_INCREMENT,
@@ -25,25 +25,25 @@ CREATE TABLE IF NOT EXISTS Usuario (
   Estatus VARCHAR(45) NOT NULL DEFAULT 'INACTIVO',
   PRIMARY KEY (idUsuario),
   UNIQUE INDEX ind(idUsuario, Correo))
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- -----------------------------------------------------
 -- TableEstado
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Estado ;
+DROP TABLE IF EXISTS Estado;
 
 CREATE TABLE IF NOT EXISTS Estado (
   idEstado INT NOT NULL AUTO_INCREMENT,
   Numero INT NOT NULL,
   Nombre VARCHAR(45) NOT NULL,
   PRIMARY KEY (idEstado))
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 
 -- -----------------------------------------------------
 -- TableCiudad
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Ciudad ;
+DROP TABLE IF EXISTS Ciudad;
 
 CREATE TABLE IF NOT EXISTS Ciudad (
   idCiudad INT NOT NULL AUTO_INCREMENT,
@@ -54,13 +54,13 @@ CREATE TABLE IF NOT EXISTS Ciudad (
   FOREIGN KEY (Estado_idEstado)
   REFERENCES Estado (idEstado)
   ON DELETE CASCADE)
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 
 -- -----------------------------------------------------
 -- TableDatos_Personales
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Datos_Personales ;
+DROP TABLE IF EXISTS Datos_Personales;
 
 CREATE TABLE IF NOT EXISTS Datos_Personales (
   idPersonal INT NOT NULL AUTO_INCREMENT,
@@ -80,25 +80,25 @@ CREATE TABLE IF NOT EXISTS Datos_Personales (
   REFERENCES Estado (idEstado),
   FOREIGN KEY (Ciudad_idCiudad)
   REFERENCES Ciudad (idCiudad))
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 
 -- -----------------------------------------------------
 -- TableUniversidad
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Universidad ;
+DROP TABLE IF EXISTS Universidad;
 
 CREATE TABLE IF NOT EXISTS Universidad (
   idUniversidad INT NOT NULL AUTO_INCREMENT,
   Nombre VARCHAR(45) NOT NULL,
   PRIMARY KEY (idUniversidad))
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 
 -- -----------------------------------------------------
 -- TableCampus
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Campus ;
+DROP TABLE IF EXISTS Campus;
 
 CREATE TABLE IF NOT EXISTS Campus (
   idCampus INT NOT NULL AUTO_INCREMENT,
@@ -108,13 +108,13 @@ CREATE TABLE IF NOT EXISTS Campus (
   FOREIGN KEY (Universidad_idUniversidad)
   REFERENCES Universidad (idUniversidad)
   ON DELETE CASCADE)
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 
 -- -----------------------------------------------------
 -- TableFacultad
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Facultad ;
+DROP TABLE IF EXISTS Facultad;
 
 CREATE TABLE IF NOT EXISTS Facultad (
   idFacultad INT NOT NULL AUTO_INCREMENT,
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS Facultad (
   FOREIGN KEY (Campus_idCampus)
   REFERENCES Campus (idCampus)
   ON DELETE CASCADE)
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 
 -- -----------------------------------------------------
@@ -140,12 +140,12 @@ CREATE TABLE IF NOT EXISTS Plan_Estudio (
   FOREIGN KEY (Facultad_idFacultad)
   REFERENCES Facultad (idFacultad)
   ON DELETE CASCADE)
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- -----------------------------------------------------
 -- TableDatos_Escolares
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Datos_Escolares ;
+DROP TABLE IF EXISTS Datos_Escolares;
 
 CREATE TABLE IF NOT EXISTS Datos_Escolares (
   idEscolar INT NOT NULL AUTO_INCREMENT,
@@ -173,13 +173,13 @@ CREATE TABLE IF NOT EXISTS Datos_Escolares (
   REFERENCES Facultad (idFacultad),
   FOREIGN KEY (Plan_Estudio_idPlan_Estudio)
   REFERENCES Plan_Estudio (idPlan_Estudio))
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 
 -- -----------------------------------------------------
 -- TableDatos_Laborales
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Datos_Laborales ;
+DROP TABLE IF EXISTS Datos_Laborales;
 
 CREATE TABLE IF NOT EXISTS Datos_Laborales (
   idDatos_Laborales INT NOT NULL AUTO_INCREMENT,
@@ -198,12 +198,12 @@ CREATE TABLE IF NOT EXISTS Datos_Laborales (
   FOREIGN KEY (Usuario_idUsuario)
   REFERENCES Usuario (idUsuario)
   ON DELETE CASCADE)
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- -----------------------------------------------------
 -- TableEncuesta
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Encuesta ;
+DROP TABLE IF EXISTS Encuesta;
 
 CREATE TABLE IF NOT EXISTS Encuesta (
   idEncuesta INT NOT NULL AUTO_INCREMENT,
@@ -222,12 +222,12 @@ CREATE TABLE IF NOT EXISTS Encuesta (
   REFERENCES Facultad (idFacultad),
   FOREIGN KEY (Plan_Estudio_idPlan_Estudio)
   REFERENCES Plan_Estudio (idPlan_Estudio))
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- -----------------------------------------------------
 -- TablePregunta
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Pregunta ;
+DROP TABLE IF EXISTS Pregunta;
 
 CREATE TABLE IF NOT EXISTS Pregunta (
   idPregunta INT NOT NULL AUTO_INCREMENT,
@@ -239,13 +239,13 @@ CREATE TABLE IF NOT EXISTS Pregunta (
   FOREIGN KEY (Encuesta_idEncuesta)
   REFERENCES Encuesta (idEncuesta)
   ON DELETE CASCADE)
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 
 -- -----------------------------------------------------
 -- TableRespuesta_Usuario
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Respuesta_Usuario ;
+DROP TABLE IF EXISTS Respuesta_Usuario;
 
 CREATE TABLE IF NOT EXISTS Respuesta_Usuario (
   idRespuesta_Usuario INT NOT NULL AUTO_INCREMENT,
@@ -259,13 +259,13 @@ CREATE TABLE IF NOT EXISTS Respuesta_Usuario (
   FOREIGN KEY (Usuario_idUsuario)
   REFERENCES Usuario (idUsuario)
   ON DELETE CASCADE)
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 
 -- -----------------------------------------------------
 -- TableHistorial_Laboral
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Historial_Laboral ;
+DROP TABLE IF EXISTS Historial_Laboral;
 
 CREATE TABLE IF NOT EXISTS Historial_Laboral (
   idHistorial_Laboral INT NOT NULL AUTO_INCREMENT,
@@ -284,13 +284,13 @@ CREATE TABLE IF NOT EXISTS Historial_Laboral (
   FOREIGN KEY (Usuario_idUsuario)
   REFERENCES Usuario (idUsuario)
   ON DELETE CASCADE)
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 
 -- -----------------------------------------------------
 -- TableAdmin
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Admin ;
+DROP TABLE IF EXISTS Admin;
 
 CREATE TABLE IF NOT EXISTS Admin (
   idAdmin INT NOT NULL AUTO_INCREMENT,
@@ -303,13 +303,13 @@ CREATE TABLE IF NOT EXISTS Admin (
   UNIQUE INDEX (Correo),
   FOREIGN KEY (Universidad_idUniversidad)
   REFERENCES Universidad (idUniversidad))
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 
 -- -----------------------------------------------------
 -- TableRespuesta
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Respuesta ;
+DROP TABLE IF EXISTS Respuesta;
 
 CREATE TABLE IF NOT EXISTS Respuesta (
   idRespuesta INT NOT NULL AUTO_INCREMENT,
@@ -319,13 +319,13 @@ CREATE TABLE IF NOT EXISTS Respuesta (
   FOREIGN KEY (Pregunta_idPregunta)
   REFERENCES Pregunta (idPregunta)
   ON DELETE CASCADE)
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 
 -- -----------------------------------------------------
 -- TableClaves_Confirmacion
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Claves_Confirmacion ;
+DROP TABLE IF EXISTS Claves_Confirmacion;
 
 CREATE TABLE IF NOT EXISTS Claves_Confirmacion (
   Usuario_idUsuario INT NOT NULL,
@@ -334,7 +334,7 @@ CREATE TABLE IF NOT EXISTS Claves_Confirmacion (
   FOREIGN KEY (Usuario_idUsuario)
   REFERENCES Usuario (idUsuario)
   ON DELETE CASCADE)
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- -----------------------------------------------------
 -- Table Admin_Master
@@ -346,7 +346,7 @@ CREATE TABLE IF NOT EXISTS Admin_Master (
   Correo VARCHAR(45) NOT NULL,
   Password VARCHAR(45) NOT NULL,
   PRIMARY KEY (Admin_Masterid))
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- -----------------------------------------------------
 -- Table Encuestas_Pendientes
@@ -365,7 +365,7 @@ CREATE TABLE IF NOT EXISTS Encuestas_Pendientes (
   FOREIGN KEY (Usuario_idUsuario)
   REFERENCES Usuario (idUsuario)
   ON DELETE CASCADE)
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- -----------------------------------------------------
 -- Table Encuestas_Contestadas
@@ -384,7 +384,7 @@ CREATE TABLE IF NOT EXISTS Encuestas_Contestadas (
   FOREIGN KEY (Usuario_idUsuario)
   REFERENCES Usuario (idUsuario)
   ON DELETE CASCADE)
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- -----------------------------------------------------
 -- Table Enlaces_Usuario
@@ -400,7 +400,7 @@ CREATE TABLE IF NOT EXISTS Enlaces_Usuario (
   FOREIGN KEY (Usuario_idUsuario)
   REFERENCES Usuario (idUsuario)
   ON DELETE CASCADE)
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- -----------------------------------------------------
 -- Table Habilidades_Usuario
@@ -415,7 +415,7 @@ CREATE TABLE IF NOT EXISTS Habilidades_Usuario (
   FOREIGN KEY (Usuario_idUsuario)
   REFERENCES Usuario (idUsuario)
   ON DELETE CASCADE)
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- -----------------------------------------------------
 -- Table Foto_Perfil
@@ -430,7 +430,7 @@ CREATE TABLE IF NOT EXISTS Foto_Perfil (
   FOREIGN KEY (Usuario_idUsuario)
   REFERENCES Usuario (idUsuario)
   ON DELETE CASCADE)
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
