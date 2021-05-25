@@ -50,9 +50,11 @@ if($typeLogin == "asUser")
   }
   /* Si no existe el usuario */
   else
+  {
     echo json_encode(Array(
       'errorMessage'=>'Usuario o contraseña incorrectos'
     ));
+  }
 }
 else
   if($typeLogin == "asAdmin")
