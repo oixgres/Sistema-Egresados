@@ -109,6 +109,9 @@ class AnswersToDatabase{
             })
 
 
+
+
+
         }
 
         this.SaveAnswersToDatabase = function (idUsuario) {
@@ -117,7 +120,33 @@ class AnswersToDatabase{
             this.SaveInputAnswersToDatabase(idUsuario);
             this.SaveCheckBoxAnswersToDatabase(idUsuario);
             this.saveTextAreaAnswersToDatabase(idUsuario);
-            $('#ModalDatabaseSuccess').modal('show');
+
+
+            let idEncuesta = sessionStorage.getItem('survey_selected_id');
+
+            console.log("ID encuesta = " + idEncuesta);
+            console.log("ID usuario = " + idUsuario);
+
+            $.ajax({
+                url: '../php/setAnsweredSurvey.php',
+                type: 'POST',
+                data: {idUsuario, idEncuesta},
+                success: function (response) {
+
+                    if(parseInt(response, 10) === 0){
+                        $('#ModalDatabaseSuccess').modal('show');
+                    }
+                    else{
+                        alert("ha ocurrido un error")
+                    }
+
+                },
+                error: function () {
+                    alert("Ha ocurrido un error");
+                }
+
+            })
+
 
         }
         this.SaveInputAnswersToDatabase = function(idUsuario){
@@ -373,16 +402,22 @@ $(document).ready(function (e) {
 
     });
     //peticion para obtener las encuestas
+    let estado = 0;
     $.ajax({
         url: '../php/getSurveys.php', //obtener las encuestas
-        data:   {idUsuario}, //mandar el idUsuario
+        data:   {idUsuario, estado}, //mandar el idUsuario
         type:   'POST',
         success: function (response) {
+
             try{
                 let node = null;
                 let AvailableSurveysMenu = $('#AvailableSurveysMenu');
                 let surveys = JSON.parse(response); //si la respuesta es un json pasarlo a arreglo
 
+
+                console.log(surveys)
+
+                console.log(surveys)
                 console.log(surveys)
                 surveys.forEach(survey => { //para cada encuesta encontrada
                     //<a class="dropdown-item">Action</a>

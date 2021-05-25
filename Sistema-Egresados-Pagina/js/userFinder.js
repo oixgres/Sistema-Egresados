@@ -182,6 +182,111 @@ $(document).ready(function (e) {
                 
             })
 
+            $.ajax({
+                url: '../php/getUserLinks.php',
+                type: 'POST',
+                data: {idUsuario},
+                success: function (response){
+                    console.log(response)
+                    $('#userLinks').empty();
+                    try{
+                        let links = JSON.parse(response);
+                        let userLinks = $('#userLinks');
+
+                        links.forEach(link => {
+
+                                /*
+                                 <a href="">Github</a><br/>
+                                 */
+
+                            userLinks.append(`<a href="${link.Link}" target="_blank">${link.Nombre}</a>`);
+
+                        })
+
+
+                    }catch (e){
+                       switch (parseInt(response, 10)){
+                           case -1: break;
+
+                           case -2: $('#userLinks').append('No tiene links')
+                                    break;
+
+
+                       }
+                    }
+                },
+                error : function (){
+
+                }
+            })
+
+
+            $.ajax({
+                url: '../php/getUserAbilities.php',
+                type: 'POST',
+                data: {idUsuario},
+                success: function (response){
+                    console.log(response)
+                    $('#userAbilities').empty();
+                    try{
+                        let links = JSON.parse(response);
+                        let userAbilities = $('#userAbilities');
+
+                        links.forEach(link => {
+
+                            /*
+                             <a href="">Github</a><br/>
+                             */
+
+                            userAbilities.append(`<a href="#">${link.Nombre}</a>`);
+
+                        })
+
+
+                    }catch (e){
+                        switch (parseInt(response, 10)){
+                            case -1: break;
+
+                            case -2: $('#userAbilities').append('No hay habilidades registradas')
+                                break;
+
+
+                        }
+                    }
+                },
+                error : function (){
+
+                }
+            })
+
+            let estado = 0;
+            $.ajax({
+                url: '../php/getSurveys.php',
+                type: 'POST',
+                data: {idUsuario, estado},
+                success: function (response) {
+                    console.log(response)
+                    try{
+                        let surveys = JSON.parse(response);
+                        $('#SurveyPendingsContainer').empty();
+                        surveys.forEach(survey => {
+                            $('#SurveyPendingsContainer').append(`
+                                <p>${survey.encuesta}</p>
+                            `)
+                        })
+
+
+                    }catch (e){
+                        $('#SurveyPendingsContainer').append(`
+                                <p>No tiene encuestas pendientes</p>
+                        `)
+                    }
+
+                },
+                error: function () {
+
+                }
+            })
             UserProfile.toggle();
         })
 
@@ -396,6 +501,7 @@ $(document).ready(function (e) {
             type: 'POST',
             data: {correoUsuario, asunto, mensaje},
             success: function (response) {
+                console.log("RESPUESTA CORREO " + response);
                if(parseInt(response, 10) === 0){
                    alert("Mensaje enviado con exito")
                }

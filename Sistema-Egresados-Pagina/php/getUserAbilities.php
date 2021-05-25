@@ -8,7 +8,7 @@ require_once "dbh.php";
  *	Todas las habilidades del usuario
  *
  *	(JSON)
- *	Texto : VARCHAR(45)
+ *	Nombre : VARCHAR(45)
  *
  *	Codigos de error:
  *  -1 : Alguno de los datos no se envio correctamente
