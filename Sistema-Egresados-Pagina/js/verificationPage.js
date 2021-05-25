@@ -42,7 +42,7 @@ form.addEventListener('submit', (e)=>{
       e.preventDefault()
     }
     else{
-    sessionStorage.setItem('code-error', '<strong> Codigo Invalido </strong> Favor de ingresar el codigo nuevamente o solicitar uno nuevo.<button id="alert-button" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
+      sessionStorage.setItem('code-error', '<strong> Codigo Invalido </strong> Favor de ingresar el codigo nuevamente o solicitar uno nuevo.<button id="alert-button" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
     }
   }
 })

@@ -1,5 +1,12 @@
 ﻿idCampus,Nombre,Universidad_idUniversidad
+1,Ensenada,1
+2,Mexicali,1
+3,Tijuana,1
+4,Mexicali,3
+5,Tijuana,4
+6,Ensenada,5
+7,Tijuana,6
+8,Ensenada,6
+9,San Quintin,6
 1000,Tijuana,1000
 1001,Rosarito,1000
-1002,BangGang,1001
-1003,Loli,1002

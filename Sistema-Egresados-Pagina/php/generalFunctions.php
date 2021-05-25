@@ -22,14 +22,19 @@
   function sendCode($conn, $email, $issue, $key)
   {
     /* Mensaje para el correo */
-    $mailMessage = "Este es el ultmo paso para crear tu cuenta!"."\r\n";
-    $mailMessage.= "Por favor ingresa la siguiente clave en la pagina para activar tu cuenta"."\r\n";
+    $mailMessage = "Saludos desde el Sistema de Seguimiento de Egresados!."."\r\n";
+    $mailMessage.= "Te hemos enviado una clave de seguridad para que verifiques tu cuenta una vez que ya hayas contestado las encuestas de registro. La clave es la siguiente: "."\r\n";
     $mailMessage.= $key."\r\n\n";
-    $mailMessage.= "NOTA: Si usted no creado una cuenta solo ignore el mensaje";
+    $mailMessage.= "NOTA: Si usted no creado una cuenta solo ignore el mensaje"."\r\n\n";
+    $mailMessage.= "Muchas gracias. Le deseamos un excelente día.";
 
     /* Preparamos el correo */
-    $header = "FROM: noreply@SistemaEgresados.com"."\r\n";
-    $header.= "Reply-To: noreply@SistemaEgresados.com"."\r\n";
+    $header = "FROM: noreply@sistema-egresados.conisoft.org"."\r\n";
+    $header.= "Return-Path: noreply@sistema-egresados.conisoft.org"."\r\n";
+    $header.= "Reply-To: noreply@sistema-egresados.conisoft.org"."\r\n";
+    $header.= "Organization: Sistema de Seguimiento de Egresados"."\r\n";
+    $header.= "Content-type: text/plain; charset=iso-8859-1\r\n";
+    $header.= "X-Priority: 3\r\n";
     $header.= "X-Mailer: PHP/".phpversion();
 
     /*  Enviamos el Correo */

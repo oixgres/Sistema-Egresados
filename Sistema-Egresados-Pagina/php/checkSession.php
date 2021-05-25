@@ -7,7 +7,7 @@
     if($_COOKIE["token"] != $_SESSION["token"] || (!isset($_SESSION['token']) && !isset($_COOKIE['verification'])))
     {
         echo json_encode(Array(
-            'location' => '../index.html'
+            'location' => '../aqui.html'
         ));
 
     }
@@ -18,7 +18,7 @@
             if($userType=='new')
             {
                 echo json_encode(Array(
-                    'location' => '../index.html'
+                    'location' => '../aca.html'
                 ));
             }
             else
