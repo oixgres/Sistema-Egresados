@@ -10,8 +10,8 @@ require_once "dbh.php";
  *	usuario por cada pregunta.
  *
  *	(JSON)
- *	Pregunta : VARCHAR(200)
- *	Respuesta : VARCHAR(45)
+ *	pregunta   : VARCHAR(200)
+ *	respuestas : VARCHAR(200)
  *
  *	Codigos de error:
  *	-1 : Alguno de los datos no se envio correctamente
@@ -79,7 +79,7 @@ if($res->num_rows == 0) {
 
 //Obtenemos todas las respuestas del usuario...
 
-$sql = "SELECT Pregunta.Pregunta, Respuesta_Usuario.Respuesta FROM Respuesta_Usuario
+$sql = "SELECT Pregunta.idPregunta, Pregunta.Pregunta, Respuesta_Usuario.Respuesta FROM Respuesta_Usuario
 		INNER JOIN Pregunta ON Pregunta.idPregunta = Respuesta_Usuario.Pregunta_idPregunta
 		INNER JOIN Encuesta ON Encuesta.idEncuesta = Pregunta.Encuesta_idEncuesta
 		WHERE Encuesta.idEncuesta = ${idEncuesta}
@@ -97,11 +97,22 @@ if($respuestas_usuario->num_rows == 0) {
 $json = array();
 
 while($fila = mysqli_fetch_array($respuestas_usuario)) {
-  $json [] = $fila;
+    if (!array_key_exists($fila['idPregunta'], $json)) {
+        $preguntas = array(
+            'pregunta' => $fila['Pregunta'],
+            'respuestas' => $fila['Respuesta']."<br>"
+        );
+        $json[$fila['idPregunta']] = $preguntas;
+    } else {
+        $json[$fila['idPregunta']]['respuestas'] .= $fila['Respuesta']."<br>";
+    }
 }
-
-//Se envia el JSON si no está vacio.
-
+/*  JSON Ejemplo:
+ *  string(250) "{"1":{"pregunta":"Cuanto tiempo tardaste en encontrar trabajo?","respuestas":"6 meses<br>"},
+ *                "2":{"pregunta":"En que area se especializa tu empresa?","respuestas":"Sistemas<br>Electronica<br>"},
+ *                "3":{"pregunta":"Cuanto ganas?","respuestas":"6000<br>"}}"
+ *  Se envia el JSON si no está vacio.
+*/
 if(!empty($json)) 
 {
 	$jsonString = json_encode($json); 	//convertir el json a cadena
