@@ -448,14 +448,14 @@ $(document).ready(function () {
         let nodeParent = $(`
                     <div class="question_edit" id="item_${question_id}">
                         <div class="form-group w-75">
-                            <label for="QuestionTheme_${question_id}" class="THEME_MARK">Tema</label>
-                            <input type="text" class="form-control" id="QuestionTheme_${question_id}" value="${topic}">
+                            <label for="QuestionTheme_${question_id}">Tema</label>
+                            <input type="text" class="form-control THEME_MARK" id="QuestionTheme_${question_id}" value="${topic}">
 
                         </div>
                         <div class="form-group w-75">
                             Titulo:
-                            <label for="QuestionTitle_${question_id}" class="TITLE_MARK"></label>
-                            <input type="text" class="form-control" id="QuestionTitle_${question_id}" value="${title}">
+                            <label for="QuestionTitle_${question_id}" class=""></label>
+                            <input type="text" class="form-control TITLE_MARK" id="QuestionTitle_${question_id}" value="${title}">
                         </div>
                         <!--
                         <div class="dropdown w-75">
@@ -560,9 +560,41 @@ $(document).ready(function () {
         });
 
     $('#SaveChanges').on('click', function (e) {
-        let changesFields = $('.change');
+        let changeTitles = $('.change.TITLE_MARK');
+        let changeAnswers = $('.change.ANSWER_MARK');
+        let changeThemes = $('.change.THEME_MARK')
+        let changeScope = $('.change#New_Scope_name');
+
+        //actualizar preguntas
+        changeTitles.each(pregunta =>{
+            console.log("ACTUALIZAR PREGUNTA!!!");
+        })
+
+        //actualizar respuestas
+        changeAnswers.each(respuesta => {
+            console.log("ACTUALIZAR RESPUESTA!!!");
+        })
+
+        changeThemes.each(tema => {
+            console.log("ACTUALIZAR TEMA!!!");
+        })
+
+        changeScope.each(alcance => {
+
+            console.log("actulizar alcance :3")
+
+        })
 
 
+
+        //guardar las preguntas
+
+    })
+
+
+    $('#New_Scope_name').on('change', function (e) {
+        e.stopPropagation();
+        $(this).addClass('alert alert-warning change');
     })
 
     refreshTable();
