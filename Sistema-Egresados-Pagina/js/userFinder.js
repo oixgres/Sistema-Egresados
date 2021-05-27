@@ -298,6 +298,7 @@ $(document).ready(function (e) {
                     try{
                         let surveys = JSON.parse(response);
                         $('#SurverAnsweredContainer').empty();
+
                         surveys.forEach(survey => {
                             console.log(survey.encuesta)
                             let node = $(`
@@ -333,15 +334,16 @@ $(document).ready(function (e) {
                                         type: 'POST',
                                         data: {idUsuario, idEncuesta},
                                         success: function (response) {
-                                            console.log(response)
                                             try{
                                                 let questions = JSON.parse(response);
+
+                                                console.log(questions['14']);
 
                                                 questions.forEach(question => {
                                                     container.append(`
                                                         <p>
-                                                            Pregunta: ${question.Pregunta}:<br>
-                                                            Respuesta: ${question.Respuesta}<br>
+                                                            Pregunta: ${question.pregunta}:<br>
+                                                            Respuesta: ${question.respuestas}<br>
                                                         
                                                         </p>
                                                     `)
