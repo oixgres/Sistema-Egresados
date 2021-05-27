@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS insertSurvey; 
 
-DELIMITER //
+DELIMITER $$
 
 
 CREATE PROCEDURE `insertSurvey`(survey_name VARCHAR(45), scope_name VARCHAR(45), scope VARCHAR(45))
@@ -15,10 +15,12 @@ BEGIN
                    3 SI ES PARA PROGRAMA ACADEMICO
     
     */
+
 	DECLARE id_scope INT;		-- VARIABLE PARA GUARDAR EL idUniversidad
     DECLARE survey_exists INT; 	-- VARIABLE QUE INDICA SI LA ENCUESTA EXISTE
     DECLARE current_id INT; 	-- VALOR A RETORNAR
     
+
     CASE (scope)
     WHEN '0' THEN -- si es para universidad
 		SELECT idUniversidad INTO id_scope from Universidad
@@ -114,5 +116,5 @@ BEGIN
         END IF;
         
 	END CASE;
-END //
+END $$
 DELIMITER ;
