@@ -58,6 +58,9 @@ $(document).ready(function () {
                     let spinner = $(this).children().last();
 
 
+                    localStorage.setItem("SURVEY_SELECTED", idEncuesta);
+
+
                     searchIcon.addClass('d-none');
                     spinner.removeClass('d-none');
 
@@ -587,7 +590,7 @@ $(document).ready(function () {
                     }
                     else{
                         node.removeClass('alert alert-warning alert-success change')
-                        node.addClass('alert alert-warning')
+                        node.addClass('alert alert-danger')
                     }
                 },
                 error: function () {
@@ -614,7 +617,7 @@ $(document).ready(function () {
                     }
                     else{
                         node.removeClass('alert alert-warning alert-success change')
-                        node.addClass('alert alert-warning')
+                        node.addClass('alert alert-danger')
                     }
                 },
                 error: function () {
@@ -641,7 +644,7 @@ $(document).ready(function () {
                     }
                     else{
                         node.removeClass('alert alert-warning alert-success change')
-                        node.addClass('alert alert-warning')
+                        node.addClass('alert alert-danger')
                     }
                 },
                 error: function () {
@@ -651,9 +654,34 @@ $(document).ready(function () {
             })
         })
 
-        changeScope.each(alcance => {
+        changeScope.each(function () {
+            // localStorage.setItem("SURVEY_SELECTED", idEncuesta);
+            let idEncuesta = localStorage.getItem("SURVEY_SELECTED");
+            let nombreAlcanceTop = $('#Scope_name').val();
+            let nombreAlcance = $(this).val();
+            let node  = $(this);
 
-            console.log("actulizar alcance :3")
+            $.ajax({
+                url: '../php/updateScopeName.php',
+                type: 'POST',
+                data: {idEncuesta, nombreAlcance, nombreAlcanceTop},
+                success: function (response) {
+                    console.log("scope = " + response)
+                    if(parseInt(response, 10) === 0){
+                        node.removeClass('alert alert-warning change')
+                        node.addClass('alert alert-success')
+                    }
+                    else{
+                        node.removeClass('alert alert-warning alert-success change')
+                        node.addClass('alert alert-danger')
+                    }
+                },
+                error: function () {
+
+                }
+
+
+            })
 
         })
 
