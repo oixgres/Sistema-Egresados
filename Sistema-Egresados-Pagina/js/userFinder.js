@@ -302,11 +302,17 @@ $(document).ready(function (e) {
                             console.log(survey.encuesta)
                             let node = $(`
                                 <div class="">
-                                    <p>${survey.encuesta}</p>
+                                    <div class="row mt-3">
+                                        <div class="col-12 d-flex justify-content-start">
+                                            <p>${survey.encuesta}</p>
+                                            <button type="button" class="btn btn-info btn-sm  toggle_survey ml-3 mb-3 rounded-pill p-1" id="survey_${survey.idEncuesta}">Mostrar</button>
+                                 
+                                        </div>
+                                    </div>
+                                    
                                      <div class="answeredContainer"> 
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-sm rounded-pill toggle_survey" id="survey_${survey.idEncuesta}">Mostrar</button>
-                                 
+                                    
                                
                                 </div>
                               
