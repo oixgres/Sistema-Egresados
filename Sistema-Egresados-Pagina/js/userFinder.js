@@ -259,7 +259,7 @@ $(document).ready(function (e) {
                 }
             })
 
-            let estado = 0;
+            let estado = 0; //traer encuestas pendientes
             $.ajax({
                 url: '../php/getSurveys.php',
                 type: 'POST',
@@ -287,6 +287,39 @@ $(document).ready(function (e) {
 
                 }
             })
+
+            estado = 1
+            $.ajax({
+                url: '../php/getSurveys.php',
+                type: 'POST',
+                data: {idUsuario, estado},
+                success: function (response) {
+                    console.log(response)
+                    try{
+                        let surveys = JSON.parse(response);
+                        $('#SurverAnsweredContainer').empty();
+                        surveys.forEach(survey => {
+                            $('#SurverAnsweredContainer').append(`
+                                
+                                <p>${survey.encuesta}
+                                    <button class="btn btn-primary btn-sm rounded-pill ml-3" id="survey_${survey.idEncuesta}">Ver</button>
+                                </p>
+                            `)
+                        })
+
+
+                    }catch (e){
+                        $('#SurverAnsweredContainer').append(`
+                            <p>No tiene encuestas pendientes</p>
+                        `)
+                    }
+
+                },
+                error: function () {
+
+                }
+            })
+
             UserProfile.toggle();
         })
 
