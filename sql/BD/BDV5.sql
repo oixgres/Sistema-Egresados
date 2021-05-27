@@ -432,5 +432,60 @@ CREATE TABLE IF NOT EXISTS Foto_Perfil (
   ON DELETE CASCADE)
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
+-- -----------------------------------------------------
+-- Table Empleo
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS Empleo;
+
+CREATE TABLE IF NOT EXISTS Empleo(
+    idEmpleo INT NOT NULL AUTO_INCREMENT,
+    Nombre   VARCHAR(200) NOT NULL,
+    PRIMARY KEY (idEmpleo)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- -----------------------------------------------------
+-- Table Empresa
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS Empresa;
+
+CREATE TABLE IF NOT EXISTS Empresa(
+    idEmpresa INT NOT NULL AUTO_INCREMENT,
+    Nombre   VARCHAR(200) NOT NULL,
+    PRIMARY KEY (idEmpresa)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- -----------------------------------------------------
+-- Table Puesto
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS Puesto;
+
+CREATE TABLE IF NOT EXISTS Puesto(
+    idPuesto INT NOT NULL AUTO_INCREMENT,
+    Nombre   VARCHAR(200) NOT NULL,
+    PRIMARY KEY (idPuesto)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- -----------------------------------------------------
+-- Table Categoria
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS Categoria;
+
+CREATE TABLE IF NOT EXISTS Categoria(
+    idCategoria INT NOT NULL AUTO_INCREMENT,
+    Nombre   VARCHAR(200) NOT NULL,
+    PRIMARY KEY (idCategoria)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- -----------------------------------------------------
+-- Table Departamento
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS Departamento;
+
+CREATE TABLE IF NOT EXISTS Departamento(
+    idDepartamento INT NOT NULL AUTO_INCREMENT,
+    Nombre   VARCHAR(200) NOT NULL,
+    PRIMARY KEY (idDepartamento)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
