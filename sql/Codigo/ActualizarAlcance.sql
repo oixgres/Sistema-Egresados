@@ -1,5 +1,5 @@
 DROP PROCEDURE IF EXISTS updateScope;
-DELIMITER //
+DELIMITER $$
 
 CREATE PROCEDURE `updateScope`(idSurvey INT, scopeType INT, idScope INT)
 BEGIN
@@ -80,5 +80,5 @@ BEGIN
     ELSE
         SELECT -1 AS RESULT;    -- no se mando el idEncuesta o tipoAlcance
     END IF;
-END //
+END $$
 DELIMITER ;
