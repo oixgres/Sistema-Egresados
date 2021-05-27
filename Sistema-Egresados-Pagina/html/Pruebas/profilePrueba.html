@@ -101,7 +101,7 @@ checkSession("user");
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Editar"/>
+                    <input type="button" class="profile-edit-btn cursor-on" onclick="editPopup()" value="Editar"></input>
                 </div>
             </div>
             <div class="row">
@@ -455,6 +455,54 @@ checkSession("user");
             class="btn btn-primary modified-middle-button"
             onclick="newSkills()"
           >Nuevo</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup" id="popup-edit">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="close-button" onclick="editPopup()">&times;</div>
+        <h1 class="popup-title">EDITAR</h1>
+
+        <div class="d-flex justify-content-center">
+          <button
+            type="button"
+            name="button"
+            class="profile-edit-btn btn-primary btn-lg"
+            style="color:aliceblue;"
+            onclick=""
+          >Editar datos laborales</button>
+        </div>
+
+        <div class="d-flex justify-content-center mt-4">
+          <button
+            type="button"
+            name="button"
+            class="profile-edit-btn btn-primary btn-lg"
+            style="color:aliceblue;"
+            onclick=""
+          >Añadir historial</button>
+        </div>
+
+        <div class="d-flex justify-content-center mt-4 mb-4">
+          <button
+            type="button"
+            name="button"
+            class="profile-edit-btn btn-primary btn-lg"
+            style="color:aliceblue;"
+            onclick=""
+          >Editar historial</button>
+        </div>
+
+        <div class="d-flex justify-content-center mt-4 mb-4">
+          <button
+            type="button"
+            name="button"
+            class="profile-edit-btn btn-danger btn-lg"
+            style="color:aliceblue;"
+            onclick=""
+          >Eliminar Perfil</button>
         </div>
       </div>
     </div>

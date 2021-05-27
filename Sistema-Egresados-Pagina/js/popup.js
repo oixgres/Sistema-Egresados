@@ -124,6 +124,10 @@ $(document).ready(function (e){
   setDeleteSkillButtons();
 })
 
+function editPopup(){
+  document.getElementById('popup-edit').classList.toggle('active');
+}
+
 function linkPopup(){
   document.getElementById("popup-link").classList.toggle("active");
 }
