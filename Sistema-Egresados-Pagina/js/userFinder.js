@@ -299,12 +299,64 @@ $(document).ready(function (e) {
                         let surveys = JSON.parse(response);
                         $('#SurverAnsweredContainer').empty();
                         surveys.forEach(survey => {
-                            $('#SurverAnsweredContainer').append(`
+                            console.log(survey.encuesta)
+                            let node = $(`
+                                <div class="">
+                                    <p>${survey.encuesta}</p>
+                                     <div class="answeredContainer">
+                                            
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-sm rounded-pill toggle_survey" id="survey_${survey.idEncuesta}">Mostrar</button>
+                                 
                                 
-                                <p>${survey.encuesta}
-                                    <button class="btn btn-primary btn-sm rounded-pill ml-3 toggle_survey" id="survey_${survey.idEncuesta}">Ver</button>
-                                </p>
+                                </div>
+                              
                             `)
+                            let container = node.find('.answeredContainer');
+                            node.find(`.toggle_survey`).on('click', function (e){
+                                let regex = new RegExp("[0-9]+");
+
+
+                                if($(this).text() === "Mostrar")
+                                {
+                                    let idEncuesta = regex.exec($(this).attr('id')).pop();
+                                    $(this).text("Ocultar")
+
+                                    container.empty();
+                                    $.ajax({
+                                        url: '../php/getuserAnswers.php',
+                                        type: 'POST',
+                                        data: {idUsuario, idEncuesta},
+                                        success: function (response) {
+                                            console.log(response)
+                                            try{
+                                                let questions = JSON.parse(response);
+
+                                                questions.forEach(question => {
+                                                    container.append(`
+                                                        <p>
+                                                            ${question.Pregunta} : ${question.Respuesta}
+                                                        
+                                                        </p>
+                                                    `)
+                                                })
+
+
+                                            }catch (e){
+
+                                            }
+                                        }
+
+                                    })
+                                }
+                                else{
+                                    $(this).text("Mostrar")
+                                    container.empty();
+                                }
+                            })
+
+
+                            $('#SurverAnsweredContainer').append(node);
                         })
 
 

@@ -41,8 +41,9 @@ if(isset($_POST['idUsuario'])) {
 
 //Si la encuesta existe...
 
-$sql = "SELECT * FROM Encuesta WHERE idEncuesta = ${idEncuesta}";
+$sql = "SELECT * FROM Encuesta WHERE idEncuesta = '$idEncuesta'";
 $res = mysqli_query($conn, $sql);
+
 
 if($res->num_rows == 0) {
   	echo -2;
@@ -53,8 +54,8 @@ if($res->num_rows == 0) {
 //Si la encuesta está contestada...
 
 $sql = "SELECT * FROM Encuestas_Contestadas 
-		WHERE Encuesta_idEncuesta = ${idEncuesta} 
-		AND Usuario_idUsuario = ${idUsuario}";
+		WHERE Encuesta_idEncuesta = '$idEncuesta' 
+		AND Usuario_idUsuario = '$idUsuario'";
 $res = mysqli_query($conn, $sql);
 
 if($res->num_rows == 0) {
