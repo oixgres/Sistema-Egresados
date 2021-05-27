@@ -565,14 +565,41 @@ $(document).ready(function () {
         let changeThemes = $('.change.THEME_MARK')
         let changeScope = $('.change#New_Scope_name');
 
+        let regex = new RegExp('[0-9]+')
+
         //actualizar preguntas
-        changeTitles.each(pregunta =>{
-            console.log("ACTUALIZAR PREGUNTA!!!");
+        changeTitles.each(function () {
+
+            let idPregunta = regex.exec($(this).attr('id')).pop()
+            let pregunta = $(this).val();
+            let node  = $(this);
+
+            
+            $.ajax({
+                url: '../php/updateQuestionTitle.php',
+                data: {idPregunta, pregunta},
+                type: 'POST',
+                success: function (response) {
+                    if(parseInt(response, 10) === 0){
+                        console.log("sucess questions")
+                        node.removeClass('alert alert-warning change')
+                        node.addClass('alert alert-success')
+                    }
+                    else{
+                        node.removeClass('alert alert-warning alert-success change')
+                        node.addClass('alert alert-warning')
+                    }
+                },
+                error: function () {
+
+                }
+
+            })
         })
 
         //actualizar respuestas
-        changeAnswers.each(respuesta => {
-            console.log("ACTUALIZAR RESPUESTA!!!");
+        changeAnswers.each(function () {
+
         })
 
         changeThemes.each(tema => {
