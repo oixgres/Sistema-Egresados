@@ -404,7 +404,10 @@ $(document).ready(function (e) {
                 }
             },
             error:  function (jqXHR, textStatus, errorThrown) {
-                alert(errorThrown)
+                alert("Error #1 = " + jqXHR)
+                alert("Error #2 = " + textStatus)
+                alert("Error #3 = " + errorThrown)
+
             }
         })
 
