@@ -1,5 +1,5 @@
-DELIMITER !!
 DROP TRIGGER IF EXISTS registerAvailableSurvey;
+DELIMITER $$
 
 CREATE TRIGGER registerAvailableSurvey
     AFTER INSERT ON Encuesta
@@ -12,6 +12,4 @@ BEGIN
         OR Datos_Escolares.Campus_idCampus = NEW.Campus_idCampus
         OR Datos_Escolares.Facultad_idFacultad = NEW.Facultad_idFacultad
         OR Datos_Escolares.Plan_Estudio_idPlan_Estudio = NEW.Plan_Estudio_idPlan_Estudio);
-END;!!
-
-DELIMITER ;
+END $$

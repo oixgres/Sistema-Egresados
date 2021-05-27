@@ -1,1 +1,5 @@
-Vincular boton de ver encuestas en el perfil de usuario
+26/05/2021
+- Limitar el tamaño de la foto de perfil
+- Corregir el php de la foto de perfil por que se borra la foto default al ingresar una foto nueva
+- Falta actualizar(Insertar/Eliminar) links y habilidades en tiempo real
+- Crear trigger para insertar datos de ingreso directo al historial laboral
