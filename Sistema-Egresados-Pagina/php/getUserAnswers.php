@@ -97,16 +97,17 @@ if($respuestas_usuario->num_rows == 0) {
 
 $json = array();
 $lastId = 0;
+$cont = 0;
 while($fila = mysqli_fetch_array($respuestas_usuario)) {
     if ($fila['idPregunta'] != $lastId) {
-        $json [] = array(
+        $json[$cont++] = array(
             'idPregunta' => $fila['idPregunta'],
             'pregunta' => $fila['Pregunta'],
             'respuestas' => $fila['Respuesta']."<br>"
         );
         $lastId = $fila['idPregunta'];
     } else {
-        $json[$fila['idPregunta']-1]['respuestas'] .= $fila['Respuesta']."<br>";
+        $json[$cont-1]['respuestas'] .= $fila['Respuesta']."<br>";
     }
 }
 /*  JSON Ejemplo:
