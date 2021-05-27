@@ -302,7 +302,7 @@ $(document).ready(function (e) {
                             $('#SurverAnsweredContainer').append(`
                                 
                                 <p>${survey.encuesta}
-                                    <button class="btn btn-primary btn-sm rounded-pill ml-3" id="survey_${survey.idEncuesta}">Ver</button>
+                                    <button class="btn btn-primary btn-sm rounded-pill ml-3 toggle_survey" id="survey_${survey.idEncuesta}">Ver</button>
                                 </p>
                             `)
                         })
