@@ -448,15 +448,16 @@ $(document).ready(function () {
         let nodeParent = $(`
                     <div class="question_edit" id="item_${question_id}">
                         <div class="form-group w-75">
-                            <label for="QuestionTheme_${question_id}">Tema</label>
+                            <label for="QuestionTheme_${question_id}" class="THEME_MARK">Tema</label>
                             <input type="text" class="form-control" id="QuestionTheme_${question_id}" value="${topic}">
 
                         </div>
                         <div class="form-group w-75">
                             Titulo:
-                            <label for="QuestionTitle_${question_id}"></label>
+                            <label for="QuestionTitle_${question_id}" class="TITLE_MARK"></label>
                             <input type="text" class="form-control" id="QuestionTitle_${question_id}" value="${title}">
                         </div>
+                        <!--
                         <div class="dropdown w-75">
                             <button type="button" class="btn btn-block btn-info dropdown-toggle rounded-pill" data-bs-toggle="dropdown">${typeAnswers[type]}</button>
                             <ul class="dropdown-menu w-100">
@@ -466,6 +467,7 @@ $(document).ready(function () {
                                 <li class="dropdown-item">Input</li>
                             </ul>
                         </div>
+                        -->
                         
                         <div class="AnswerContainer">
                             <!-- Anwers container -->
@@ -486,7 +488,7 @@ $(document).ready(function () {
             let node = $(`
                          <div class="form-group w-75 mt-3">
                             <div class="input-group">
-                                <input type="text" class="form-control Answer" placeholder="Texto de la Respuesta" value="${answers[i]}" id="${answers_id[i]}">
+                                <input type="text" class="form-control Answer ANSWER_MARK" placeholder="Texto de la Respuesta" value="${answers[i]}" id="${answers_id[i]}">
                                 <span class="input-group-append">
                                     <button class="btn btn-secondary deleteAnswer" type="button">
                                         <img class="img-fluid" src="../img/Icons/eliminar-simbolo.png" alt="Eliminar"/>
@@ -557,6 +559,11 @@ $(document).ready(function () {
         }
         });
 
+    $('#SaveChanges').on('click', function (e) {
+        let changesFields = $('.change');
+
+
+    })
 
     refreshTable();
 })
