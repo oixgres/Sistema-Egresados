@@ -85,7 +85,7 @@ $(document).ready(function () {
                     let spinner = $(this).children().last();
 
 
-                    let scopeName = $(this).parent().parent().siblings('td:eq(2)').text()
+                    let scopeName = $(this).parent().parent().siblings('td:eq(1)').text()
                     let scopeType = scopeMap[$(this).parent().parent().siblings('td:eq(1)').text()]
 
                     console.log(scopeName)
