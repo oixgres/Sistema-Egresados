@@ -10,8 +10,9 @@ require_once "dbh.php";
  *	usuario por cada pregunta.
  *
  *	(JSON)
+ *	idPregunta : INT
  *	pregunta   : VARCHAR(200)
- *	respuestas : VARCHAR(200)
+ *	respuestas : VARCHAR(200) * n
  *
  *	Codigos de error:
  *	-1 : Alguno de los datos no se envio correctamente
@@ -95,22 +96,23 @@ if($respuestas_usuario->num_rows == 0) {
 //Se hace el JSON
 
 $json = array();
-
+$lastId = 0;
 while($fila = mysqli_fetch_array($respuestas_usuario)) {
-    if (!array_key_exists($fila['idPregunta'], $json)) {
-        $preguntas = array(
+    if ($fila['idPregunta'] != $lastId) {
+        $json [] = array(
+            'idPregunta' => $fila['idPregunta'],
             'pregunta' => $fila['Pregunta'],
             'respuestas' => $fila['Respuesta']."<br>"
         );
-        $json[$fila['idPregunta']] = $preguntas;
+        $lastId = $fila['idPregunta'];
     } else {
-        $json[$fila['idPregunta']]['respuestas'] .= $fila['Respuesta']."<br>";
+        $json[$fila['idPregunta']-1]['respuestas'] .= $fila['Respuesta']."<br>";
     }
 }
 /*  JSON Ejemplo:
- *  string(250) "{"1":{"pregunta":"Cuanto tiempo tardaste en encontrar trabajo?","respuestas":"6 meses<br>"},
- *                "2":{"pregunta":"En que area se especializa tu empresa?","respuestas":"Sistemas<br>Electronica<br>"},
- *                "3":{"pregunta":"Cuanto ganas?","respuestas":"6000<br>"}}"
+ *  string(289) "[{"idPregunta":"1","pregunta":"Cuanto tiempo tardaste en encontrar trabajo?","respuestas":"6 meses<br>"},
+ *                {"idPregunta":"2","pregunta":"En que area se especializa tu empresa?","respuestas":"Sistemas<br>Electronica<br>"},
+ *                {"idPregunta":"3","pregunta":"Cuanto ganas?","respuestas":"6000<br>"}]"
  *  Se envia el JSON si no está vacio.
 */
 if(!empty($json)) 
