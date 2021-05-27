@@ -564,8 +564,8 @@ $(document).ready(function () {
         let changeAnswers = $('.change.ANSWER_MARK');
         let changeThemes = $('.change.THEME_MARK')
         let changeScope = $('.change#New_Scope_name');
-
         let regex = new RegExp('[0-9]+')
+
 
         //actualizar preguntas
         changeTitles.each(function () {
@@ -574,7 +574,7 @@ $(document).ready(function () {
             let pregunta = $(this).val();
             let node  = $(this);
 
-            
+
             $.ajax({
                 url: '../php/updateQuestionTitle.php',
                 data: {idPregunta, pregunta},
@@ -599,11 +599,56 @@ $(document).ready(function () {
 
         //actualizar respuestas
         changeAnswers.each(function () {
+            let idRespuesta = regex.exec($(this).attr('id')).pop();
+            let respuesta = $(this).val();
+            let node  = $(this);
+            $.ajax({
+                url: '../php/updateAnswerTitle.php',
+                data: {idRespuesta, respuesta},
+                type: 'POST',
+                success: function (response) {
+                    if(parseInt(response, 10) === 0){
+                        console.log("sucess Answer")
+                        node.removeClass('alert alert-warning change')
+                        node.addClass('alert alert-success')
+                    }
+                    else{
+                        node.removeClass('alert alert-warning alert-success change')
+                        node.addClass('alert alert-warning')
+                    }
+                },
+                error: function () {
 
+                }
+
+            })
         })
 
-        changeThemes.each(tema => {
-            console.log("ACTUALIZAR TEMA!!!");
+        changeThemes.each(function () {
+            let idPregunta = regex.exec($(this).attr('id')).pop();
+            let tema = $(this).val();
+            let node  = $(this);
+
+            $.ajax({
+                url: '../php/updateQuestionTheme.php',
+                data: {idPregunta, tema},
+                type: 'POST',
+                success: function (response) {
+                    if(parseInt(response, 10) === 0){
+                        console.log("sucess Theme")
+                        node.removeClass('alert alert-warning change')
+                        node.addClass('alert alert-success')
+                    }
+                    else{
+                        node.removeClass('alert alert-warning alert-success change')
+                        node.addClass('alert alert-warning')
+                    }
+                },
+                error: function () {
+
+                }
+
+            })
         })
 
         changeScope.each(alcance => {
