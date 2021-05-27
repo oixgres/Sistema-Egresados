@@ -303,12 +303,11 @@ $(document).ready(function (e) {
                             let node = $(`
                                 <div class="">
                                     <p>${survey.encuesta}</p>
-                                     <div class="answeredContainer">
-                                            
+                                     <div class="answeredContainer"> 
                                     </div>
                                     <button type="button" class="btn btn-primary btn-sm rounded-pill toggle_survey" id="survey_${survey.idEncuesta}">Mostrar</button>
                                  
-                                
+                               
                                 </div>
                               
                             `)
@@ -335,7 +334,8 @@ $(document).ready(function (e) {
                                                 questions.forEach(question => {
                                                     container.append(`
                                                         <p>
-                                                            ${question.Pregunta} : ${question.Respuesta}
+                                                            Pregunta: ${question.Pregunta}:<br>
+                                                            Respuesta: ${question.Respuesta}<br>
                                                         
                                                         </p>
                                                     `)
