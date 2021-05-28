@@ -332,7 +332,7 @@ $(document).ready(function (e) {
 
                                     container.empty();
                                     $.ajax({
-                                        url: '../php/getuserAnswers.php',
+                                        url: '../php/getUserAnswers.php',
                                         type: 'POST',
                                         data: {idUsuario, idEncuesta},
                                         success: function (response) {
