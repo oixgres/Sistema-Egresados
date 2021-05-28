@@ -23,7 +23,7 @@ checkSession("user");
 
     <title>Registro de datos</title>
 
-    <link rel="stylesheet" href="../../css/boostrap/bootstrap_pulse.min.css"> <!-- Nuevos estilos de boostrap -->
+    <link rel="stylesheet" href="../css/boostrap/bootstrap_pulse.min.css"> <!-- Nuevos estilos de boostrap -->
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
   </head>
@@ -148,7 +148,7 @@ checkSession("user");
                                                 placeholder="Tecnologias usadas"
                                                 class="form-control"
                                                 id="Tecnologias"
-                                              ><?php echo $datos_laborales['Actividades']; ?></textarea>
+                                              ><?php echo $datos_laborales['Tecnologias']; ?></textarea>
                                           </label>
                                       </div>
                                   </div>
@@ -192,12 +192,12 @@ checkSession("user");
 
   </div>
 
-  <script src="../../js/boostrap/jquery-3.6.0.min.js"></script>
-  <script src="../../js/boostrap/popper.min.js"></script>
-  <script src="../../js/boostrap/bootstrap.bundle.js"></script>
-  <script src="../../js/boostrap/bootstrap.js"></script>
+  <script src="../js/boostrap/jquery-3.6.0.min.js"></script>
+  <script src="../js/boostrap/popper.min.js"></script>
+  <script src="../js/boostrap/bootstrap.bundle.js"></script>
+  <script src="../js/boostrap/bootstrap.js"></script>
 
-  <script src="../../js/editWorkData.js"></script>
+  <script src="../js/editWorkData.js"></script>
 
 
 
