@@ -43,8 +43,8 @@ if ($res->num_rows == 0) {
 
 // consulta para obtener historial laboral
 $sql = "SELECT idHistorial_Laboral, Empleo, Empresa, Puesto, Categoria, Correo_Emp, Departamento, Tecnologias, Actividades, Inicio, Fin
-        FROM historial_laboral
-        INNER JOIN usuario on historial_laboral.Usuario_idUsuario = usuario.idUsuario
+        FROM Historial_Laboral
+        INNER JOIN Usuario on Historial_Laboral.Usuario_idUsuario = Usuario.idUsuario
         WHERE idUsuario = ${idUsuario}";
 $res = mysqli_query($conn, $sql);
 
