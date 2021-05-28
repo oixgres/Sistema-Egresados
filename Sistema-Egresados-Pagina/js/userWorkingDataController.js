@@ -127,13 +127,14 @@ $(document).ready(function (e) {
         let departamento = $('#Departamento').val();
         let tecnologias = $('#Tecnologias').val();
         let actividades = $('#Actividades').val();
+        let inicio = $('#initWorkDate').val()//initWorkDate
 
         if(laborando === 1){ //si se clickeo "trabajando"
 
             if(validateFields()){
                 $.ajax({
                     url: '../php/registerEmploymentData.php',
-                    data: {idUsuario, laborando,empleo, empresa, puesto, categoria, correo, departamento, tecnologias, actividades},
+                    data: {idUsuario, inicio, laborando,empleo, empresa, puesto, categoria, correo, departamento, tecnologias, actividades},
                     type: 'POST',
                     success: function (response) {
 
