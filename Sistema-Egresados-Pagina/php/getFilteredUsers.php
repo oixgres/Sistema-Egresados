@@ -288,8 +288,7 @@ while($stmt->fetch())
 {
 							//Llaves/indices   , datos
 	$json [] = array_combine($indices_resultado, $fila);
-	var_dump($fila);
-	
+	//var_dump($fila);
 }
 
 /*
