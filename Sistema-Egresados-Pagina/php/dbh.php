@@ -8,12 +8,12 @@ $dbName = "sistemaegresados";
 */
 
 
-/*
+
 $dbServername = "localhost";
 $dbUsername = "root";
 $dbPassword = "harry6627";
 $dbName = "sistemaegresados";
-*/
+
 
 /* Servidor Actual */
 /*
@@ -30,11 +30,14 @@ $dbPassword = "Oma46012";
 $dbName = "omdprofx_omarmontoya-proyecto";
 */
 
+
 /* Servidor de Reyes */
+/*
 $dbServername = 'localhost';
 $dbUsername = 'conisoft_SE';
 $dbPassword = 'Portal071198';
 $dbName = 'conisoft_Sistema-Egresados';
+*/
 
 $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
 

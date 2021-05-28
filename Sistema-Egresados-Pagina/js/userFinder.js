@@ -1,4 +1,6 @@
 $(document).ready(function (e) {
+    const JSON_FOR_CSV = "STUDENTS"
+
     checkSession('admin');
     function createCarouselItemUserHistory(Empleo, Empresa, Puesto, Departamento, Actividades, Tecnologias, CorreoLaboral, active) {
 
@@ -259,7 +261,7 @@ $(document).ready(function (e) {
                 }
             })
 
-            let estado = 0;
+            let estado = 0; //traer encuestas pendientes
             $.ajax({
                 url: '../php/getSurveys.php',
                 type: 'POST',
@@ -287,6 +289,100 @@ $(document).ready(function (e) {
 
                 }
             })
+
+            estado = 1
+            $.ajax({
+                url: '../php/getSurveys.php',
+                type: 'POST',
+                data: {idUsuario, estado},
+                success: function (response) {
+                    console.log(response)
+                    try{
+                        let surveys = JSON.parse(response);
+                        $('#SurverAnsweredContainer').empty();
+
+                        surveys.forEach(survey => {
+
+                            let node = $(`
+                                <div class="">
+                                    <div class="row mt-3">
+                                        <div class="col-12 d-flex justify-content-start">
+                                            <p>${survey.encuesta}</p>
+                                            <button type="button" class="btn btn-info btn-sm  toggle_survey ml-3 mb-3 rounded-pill p-1" id="survey_${survey.idEncuesta}">Mostrar</button>
+                                 
+                                        </div>
+                                    </div>
+                                    
+                                     <div class="answeredContainer"> 
+                                    </div>
+                                    
+                               
+                                </div>
+                              
+                            `)
+                            let container = node.find('.answeredContainer');
+                            node.find(`.toggle_survey`).on('click', function (e){
+                                let regex = new RegExp("[0-9]+");
+
+
+                                if($(this).text() === "Mostrar")
+                                {
+                                    let idEncuesta = regex.exec($(this).attr('id')).pop();
+                                    $(this).text("Ocultar")
+
+                                    container.empty();
+                                    $.ajax({
+                                        url: '../php/getuserAnswers.php',
+                                        type: 'POST',
+                                        data: {idUsuario, idEncuesta},
+                                        success: function (response) {
+                                            console.log("response = " + response)
+                                            try{
+                                                let questions = JSON.parse(response);
+
+                                                console.log(questions)
+
+                                                questions.forEach(question => {
+                                                    container.append(`
+                                                        <p>
+                                                            Pregunta: ${question.pregunta}:<br>
+                                                            Respuesta: <br>${question.respuestas}<br>
+                                                        
+                                                        </p>
+                                                    `)
+                                                })
+
+
+                                            }catch (e){
+
+                                            }
+                                        }
+
+                                    })
+                                }
+                                else{
+                                    $(this).text("Mostrar")
+                                    container.empty();
+                                }
+                            })
+
+
+                            $('#SurverAnsweredContainer').append(node);
+                        })
+
+
+                    }catch (e){
+                        $('#SurverAnsweredContainer').append(`
+                            <p>No tiene encuestas pendientes</p>
+                        `)
+                    }
+
+                },
+                error: function () {
+
+                }
+            })
+
             UserProfile.toggle();
         })
 
@@ -389,6 +485,7 @@ $(document).ready(function (e) {
             success: function (response){
                 try{
                         let users = JSON.parse(response);
+                        localStorage.setItem(JSON_FOR_CSV, response);
                         $('#UsersContainer').children().remove('tr');
                         users.forEach(user => {
                             $('#UsersContainer').append(UserRow(user.Matricula, user.Nombres, user.Apellidos,
@@ -519,5 +616,45 @@ $(document).ready(function (e) {
 
     })
 
+    $('#generateCSV').on('click', function (e) {
+        e.stopPropagation();
+        
+        let nombreArchivo = "Usuarios"
+        let datos = localStorage.getItem(JSON_FOR_CSV);
+        
+        
+        $.ajax({
+            url: '../php/downloadAsCSV.php',
+            data: {nombreArchivo, datos},
+            type: 'POST',
+            success:  function (data) {
+
+                const downloadLink = document.createElement("a");
+                const fileData = ['\ufeff' + data];
+
+                const blobObject = new Blob(fileData, {
+                    type: "text/csv;charset=utf-8;"
+                });
+
+                const url = URL.createObjectURL(blobObject);
+                downloadLink.href = url;
+                downloadLink.download = nombreArchivo;
+
+                /*
+                 * Actually download CSV
+                 */
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+
+            },
+            error: function () {
+                
+            }
+            
+            
+        })
+        
+    })
     refreshTable();
 })

@@ -11,6 +11,9 @@
     <title>Registro de datos</title>
 </head>
 <body>
+
+    <button type="button" class="btn btn-success" id="special">Boton</button>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -260,19 +263,35 @@
                                             </div>
 
                                             <div class="mt-3 d-none" id="questionContainerForIsWorking">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <label>
+                                                            Fecha en que inició a trabajar
+                                                            <input type="date" class="form-control" id="initWorkDate">
+                                                        </label>
 
+                                                    </div>
+                                                </div>
+                                                
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <label class="w-100">
                                                             Empleo:
-                                                            <input type="text" placeholder="Empleo Actual" class="form-control" id="Empleo">
+                                                            <input type="text" placeholder="Empleo Actual" class="form-control" list="Empleos_list" id="Empleo">
+                                                            <datalist id="Empleos_list">
+
+                                                            </datalist>
+
                                                         </label>
                                                     </div>
 
                                                     <div class="col-6">
                                                         <label class="w-100">
                                                             Empresa:
-                                                            <input type="text" placeholder="Empresa Actual" class="form-control" id="Empresa">
+                                                            <input type="text" placeholder="Empresa Actual" class="form-control" id="Empresa" list="Empresa_list">
+                                                            <datalist id="Empresa_list">
+
+                                                            </datalist>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -281,14 +300,20 @@
                                                     <div class="col-6">
                                                         <label class="w-100">
                                                             Puesto:
-                                                            <input type="text" placeholder="Puesto Actual" class="form-control" id="Puesto">
+                                                            <input type="text" placeholder="Puesto Actual" class="form-control" id="Puesto" list="Puesto_list">
+                                                            <datalist id="Puesto_list">
+
+                                                            </datalist>
                                                         </label>
                                                     </div>
 
                                                     <div class="col-6">
                                                         <label class="w-100">
                                                             Categoria:
-                                                            <input type="text" placeholder="Categoria del puesto" class="form-control" id="Categoria">
+                                                            <datalist id="Categoria_list">
+
+                                                            </datalist>
+                                                            <input type="text" placeholder="Categoria del puesto" class="form-control" id="Categoria" list="Categoria_list">
                                                         </label>
                                                     </div>
                                                 </div>
@@ -298,6 +323,7 @@
                                                         <label class="w-100">
                                                             Correo Empresarial:
                                                             <input type="text" placeholder="Correo electronico" class="form-control" id="CorreoEmpresa">
+
                                                         </label>
                                                     </div>
 
@@ -305,7 +331,10 @@
                                                     <div class="col-6">
                                                         <label class="w-100">
                                                             Departamento:
-                                                            <input type="text" placeholder="Departamento" class="form-control" id="Departamento">
+                                                            <input type="text" placeholder="Departamento" class="form-control" id="Departamento" list="Departamento_list">
+                                                            <datalist id="Departamento_list">
+
+                                                            </datalist>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -365,7 +394,7 @@
     <script src="../js/userPersonalDataController.js"></script>
     <script src="../js/userAcademicDataController.js"></script>
     <script src="../js/userWorkingDataController.js"></script>
-
+    <script src="../js/comboBoxLogic.js"></script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>

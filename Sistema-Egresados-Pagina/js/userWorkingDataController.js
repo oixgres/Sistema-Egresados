@@ -9,6 +9,14 @@ $(document).ready(function (e) {
 
         $('*').removeClass('alert alert-danger is-invalid alert-success is-valid')
 
+        if($('#initWorkDate').val() === ""){
+            flag = false;
+            $('#initWorkDate').addClass('alert alert-danger is-invalid');
+        }
+        else{
+            $('#initWorkDate').addClass('alert alert-success is-valid');
+        }
+
         if($('#Empleo').val() === ""){
             flag = false;
             $('#Empleo').addClass('alert alert-danger is-invalid');

@@ -10,8 +10,9 @@ require_once "dbh.php";
  *	usuario por cada pregunta.
  *
  *	(JSON)
- *	Pregunta : VARCHAR(200)
- *	Respuesta : VARCHAR(45)
+ *	idPregunta : INT
+ *	pregunta   : VARCHAR(200)
+ *	respuestas : VARCHAR(200) * n
  *
  *	Codigos de error:
  *	-1 : Alguno de los datos no se envio correctamente
@@ -41,8 +42,9 @@ if(isset($_POST['idUsuario'])) {
 
 //Si la encuesta existe...
 
-$sql = "SELECT * FROM Encuesta WHERE idEncuesta = ${idEncuesta}";
-$res = mysqli_query($conn, $sql);
+$sql = "SELECT * FROM Encuesta WHERE idEncuesta = '$idEncuesta'";
+
+
 
 if($res->num_rows == 0) {
   	echo -2;
@@ -52,9 +54,9 @@ if($res->num_rows == 0) {
 
 //Si la encuesta está contestada...
 
-$sql = "SELECT * FROM encuestas_contestadas 
-		WHERE Encuesta_idEncuesta = ${idEncuesta} 
-		AND Usuario_idUsuario = ${idUsuario}";
+$sql = "SELECT * FROM Encuestas_Contestadas 
+		WHERE Encuesta_idEncuesta = '$idEncuesta' 
+		AND Usuario_idUsuario = '$idUsuario'";
 $res = mysqli_query($conn, $sql);
 
 if($res->num_rows == 0) {
@@ -65,7 +67,7 @@ if($res->num_rows == 0) {
 
 //Verificamos que haya preguntas en la encuesta...
 
-$sql = "SELECT Pregunta FROM pregunta
+$sql = "SELECT Pregunta FROM Pregunta
 		WHERE Encuesta_idEncuesta = ${idEncuesta}
 		ORDER BY idPregunta";
 $res = mysqli_query($conn, $sql);
@@ -78,11 +80,12 @@ if($res->num_rows == 0) {
 
 //Obtenemos todas las respuestas del usuario...
 
-$sql = "SELECT pregunta.Pregunta, respuesta_usuario.Respuesta FROM respuesta_usuario
-		INNER JOIN pregunta ON pregunta.idPregunta = respuesta_usuario.Pregunta_idPregunta
-		INNER JOIN encuesta ON encuesta.idEncuesta = pregunta.Encuesta_idEncuesta
-		WHERE encuesta.idEncuesta = ${idEncuesta}
-		ORDER BY pregunta.idPregunta";
+$sql = "SELECT Pregunta.idPregunta, Pregunta.Pregunta, Respuesta_Usuario.Respuesta FROM Respuesta_Usuario
+		INNER JOIN Pregunta ON Pregunta.idPregunta = Respuesta_Usuario.Pregunta_idPregunta
+		INNER JOIN Encuesta ON Encuesta.idEncuesta = Pregunta.Encuesta_idEncuesta
+		WHERE Encuesta.idEncuesta = ${idEncuesta}
+		ORDER BY Pregunta.idPregunta";
+
 $respuestas_usuario = mysqli_query($conn, $sql);
 
 if($respuestas_usuario->num_rows == 0) {
@@ -94,13 +97,26 @@ if($respuestas_usuario->num_rows == 0) {
 //Se hace el JSON
 
 $json = array();
-
+$lastId = 0;
+$cont = 0;
 while($fila = mysqli_fetch_array($respuestas_usuario)) {
-  $json [] = $fila;
+    if ($fila['idPregunta'] != $lastId) {
+        $json[$cont++] = array(
+            'idPregunta' => $fila['idPregunta'],
+            'pregunta' => $fila['Pregunta'],
+            'respuestas' => $fila['Respuesta']."<br>"
+        );
+        $lastId = $fila['idPregunta'];
+    } else {
+        $json[$cont-1]['respuestas'] .= $fila['Respuesta']."<br>";
+    }
 }
-
-//Se envia el JSON si no está vacio.
-
+/*  JSON Ejemplo:
+ *  string(289) "[{"idPregunta":"1","pregunta":"Cuanto tiempo tardaste en encontrar trabajo?","respuestas":"6 meses<br>"},
+ *                {"idPregunta":"2","pregunta":"En que area se especializa tu empresa?","respuestas":"Sistemas<br>Electronica<br>"},
+ *                {"idPregunta":"3","pregunta":"Cuanto ganas?","respuestas":"6000<br>"}]"
+ *  Se envia el JSON si no está vacio.
+*/
 if(!empty($json)) 
 {
 	$jsonString = json_encode($json); 	//convertir el json a cadena
@@ -110,4 +126,3 @@ if(!empty($json))
 }
 
 $conn->close();
-?>

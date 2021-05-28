@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Crear usuario</title>
+    <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css"> <!-- Nuevos estilos de boostrap -->
+    <link rel="stylesheet" href="../css/boostrap/bootstrap_pulse.min.css"> <!-- Nuevos estilos de boostrap -->
+</head>
+<body>
+
+    <div class="container">
+        <div class="p-5 h-100">
+            <div class="row d-flex align-content-center h-100">
+                <div class="col-12">
+                    <h1 class="text-center text-primary">Registrar nuevo usuario</h1>
+                    <hr>
+                </div>
+                <br>
+                <div class="col-12">
+                    <div class="row"> <!-- Primera Fila -->
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="idName">Nombre(s)</label> <!-- Campo Izquierda -->
+                                <input type="text" class="form-control" id="idName" name="idName" placeholder="Introduzca Nombre(s)" required>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="idLastName">Apellido(s)</label> <!-- Campo Izquierda -->
+                                <input type="text" class="form-control" id="idLastName" name="idLastName" placeholder="Introduzca Apellido(s)" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row"><!--Segunda Fila -->
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="idMat">Matricula:</label> <!--Campo derecha -->
+                                <input type="text" class="form-control" id="idMat" name="idMat" placeholder="Introduzca Matricula Escolar" required>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="idMail">Correo Electronico:</label>
+                                <input type="text" class="form-control" id="idMail" name="idMail" placeholder="Introduzca Correo Electronico" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="idPass">Contraseña:</label>
+                                <input type="password" class="form-control" id="idPass" name="idPass" placeholder="Introduzca Contraseña" required>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="idPass2">Contraseña:</label>
+                                <input type="password" class="form-control" name="idPass2" id="idPass2" placeholder="Confirme Contraseña" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row"><!--Segunda Fila -->
+                        <div class="col-6">
+
+                        </div>
+                        <div class="col-6">
+                            <button type="button" name="submit" class="btn btn-success col-6 float-right button_send" id="registerUser">Registrar</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <script src="../js/boostrap/jquery-3.6.0.min.js"></script>
+    <script src="../js/boostrap/popper.min.js"></script>
+    <script src="../js/boostrap/bootstrap.bundle.js"></script>
+    <script src="../js/boostrap/bootstrap.js"></script>
+    <script src="../js/userPreCreator.js"></script>
+    <script src="https://kit.fontawesome.com/5d2293cbbc.js" crossorigin="anonymous"></script>
+
+</body>
+</html>

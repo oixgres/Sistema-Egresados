@@ -58,6 +58,9 @@ $(document).ready(function () {
                     let spinner = $(this).children().last();
 
 
+                    localStorage.setItem("SURVEY_SELECTED", idEncuesta);
+
+
                     searchIcon.addClass('d-none');
                     spinner.removeClass('d-none');
 
@@ -82,7 +85,7 @@ $(document).ready(function () {
                     let spinner = $(this).children().last();
 
 
-                    let scopeName = $(this).parent().parent().siblings('td:eq(2)').text()
+                    let scopeName = $(this).parent().parent().siblings('td:eq(1)').text()
                     let scopeType = scopeMap[$(this).parent().parent().siblings('td:eq(1)').text()]
 
                     console.log(scopeName)
@@ -449,14 +452,15 @@ $(document).ready(function () {
                     <div class="question_edit" id="item_${question_id}">
                         <div class="form-group w-75">
                             <label for="QuestionTheme_${question_id}">Tema</label>
-                            <input type="text" class="form-control" id="QuestionTheme_${question_id}" value="${topic}">
+                            <input type="text" class="form-control THEME_MARK" id="QuestionTheme_${question_id}" value="${topic}">
 
                         </div>
                         <div class="form-group w-75">
                             Titulo:
-                            <label for="QuestionTitle_${question_id}"></label>
-                            <input type="text" class="form-control" id="QuestionTitle_${question_id}" value="${title}">
+                            <label for="QuestionTitle_${question_id}" class=""></label>
+                            <input type="text" class="form-control TITLE_MARK" id="QuestionTitle_${question_id}" value="${title}">
                         </div>
+                        <!--
                         <div class="dropdown w-75">
                             <button type="button" class="btn btn-block btn-info dropdown-toggle rounded-pill" data-bs-toggle="dropdown">${typeAnswers[type]}</button>
                             <ul class="dropdown-menu w-100">
@@ -466,6 +470,7 @@ $(document).ready(function () {
                                 <li class="dropdown-item">Input</li>
                             </ul>
                         </div>
+                        -->
                         
                         <div class="AnswerContainer">
                             <!-- Anwers container -->
@@ -486,7 +491,7 @@ $(document).ready(function () {
             let node = $(`
                          <div class="form-group w-75 mt-3">
                             <div class="input-group">
-                                <input type="text" class="form-control Answer" placeholder="Texto de la Respuesta" value="${answers[i]}" id="${answers_id[i]}">
+                                <input type="text" class="form-control Answer ANSWER_MARK" placeholder="Texto de la Respuesta" value="${answers[i]}" id="${answers_id[i]}">
                                 <span class="input-group-append">
                                     <button class="btn btn-secondary deleteAnswer" type="button">
                                         <img class="img-fluid" src="../img/Icons/eliminar-simbolo.png" alt="Eliminar"/>
@@ -557,6 +562,140 @@ $(document).ready(function () {
         }
         });
 
+    $('#SaveChanges').on('click', function (e) {
+        let changeTitles = $('.change.TITLE_MARK');
+        let changeAnswers = $('.change.ANSWER_MARK');
+        let changeThemes = $('.change.THEME_MARK')
+        let changeScope = $('.change#New_Scope_name');
+        let regex = new RegExp('[0-9]+')
+
+
+        //actualizar preguntas
+        changeTitles.each(function () {
+
+            let idPregunta = regex.exec($(this).attr('id')).pop()
+            let pregunta = $(this).val();
+            let node  = $(this);
+
+
+            $.ajax({
+                url: '../php/updateQuestionTitle.php',
+                data: {idPregunta, pregunta},
+                type: 'POST',
+                success: function (response) {
+                    if(parseInt(response, 10) === 0){
+                        console.log("sucess questions")
+                        node.removeClass('alert alert-warning change')
+                        node.addClass('alert alert-success')
+                    }
+                    else{
+                        node.removeClass('alert alert-warning alert-success change')
+                        node.addClass('alert alert-danger')
+                    }
+                },
+                error: function () {
+
+                }
+
+            })
+        })
+
+        //actualizar respuestas
+        changeAnswers.each(function () {
+            let idRespuesta = regex.exec($(this).attr('id')).pop();
+            let respuesta = $(this).val();
+            let node  = $(this);
+            $.ajax({
+                url: '../php/updateAnswerTitle.php',
+                data: {idRespuesta, respuesta},
+                type: 'POST',
+                success: function (response) {
+                    if(parseInt(response, 10) === 0){
+                        console.log("sucess Answer")
+                        node.removeClass('alert alert-warning change')
+                        node.addClass('alert alert-success')
+                    }
+                    else{
+                        node.removeClass('alert alert-warning alert-success change')
+                        node.addClass('alert alert-danger')
+                    }
+                },
+                error: function () {
+
+                }
+
+            })
+        })
+
+        changeThemes.each(function () {
+            let idPregunta = regex.exec($(this).attr('id')).pop();
+            let tema = $(this).val();
+            let node  = $(this);
+
+            $.ajax({
+                url: '../php/updateQuestionTheme.php',
+                data: {idPregunta, tema},
+                type: 'POST',
+                success: function (response) {
+                    if(parseInt(response, 10) === 0){
+                        console.log("sucess Theme")
+                        node.removeClass('alert alert-warning change')
+                        node.addClass('alert alert-success')
+                    }
+                    else{
+                        node.removeClass('alert alert-warning alert-success change')
+                        node.addClass('alert alert-danger')
+                    }
+                },
+                error: function () {
+
+                }
+
+            })
+        })
+
+        changeScope.each(function () {
+            // localStorage.setItem("SURVEY_SELECTED", idEncuesta);
+            let idEncuesta = localStorage.getItem("SURVEY_SELECTED");
+            let nombreAlcanceTop = $('#Scope_name').val();
+            let nombreAlcance = $(this).val();
+            let node  = $(this);
+
+            $.ajax({
+                url: '../php/updateScopeName.php',
+                type: 'POST',
+                data: {idEncuesta, nombreAlcance, nombreAlcanceTop},
+                success: function (response) {
+                    console.log("scope = " + response)
+                    if(parseInt(response, 10) === 0){
+                        node.removeClass('alert alert-warning change')
+                        node.addClass('alert alert-success')
+                    }
+                    else{
+                        node.removeClass('alert alert-warning alert-success change')
+                        node.addClass('alert alert-danger')
+                    }
+                },
+                error: function () {
+
+                }
+
+
+            })
+
+        })
+
+
+
+        //guardar las preguntas
+
+    })
+
+
+    $('#New_Scope_name').on('change', function (e) {
+        e.stopPropagation();
+        $(this).addClass('alert alert-warning change');
+    })
 
     refreshTable();
 })
