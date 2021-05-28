@@ -50,15 +50,9 @@ checkSession("user");
 
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    
-    <!-- masonry -->
-    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-
-    <!-- originales -->
     <link rel="stylesheet" href="../../css/index.css">
     <link rel="stylesheet" href="../../css/generalcss.css">
     <link rel="stylesheet" href="../../css/profile.css">
-    <link rel="stylesheet" href="../../css/masonry.css">
   </head>
   <body class="profile-body">
 
@@ -73,12 +67,12 @@ checkSession("user");
       </div>
     </nav>
 
-    <div class="container emp-profile grid">
+    <div class="container emp-profile">
         <form id="profile-picture" method="post" action="uploadPicture.php" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
-                        <img src="../../img/12.1.jpg"/>
+                        <img src="<?php echo $profilePicture['Direccion'] ?>"/>
                         <div class="file btn btn-lg btn-primary">
                             Cambiar Foto
                             <input type="file" name="file"/>
@@ -86,7 +80,7 @@ checkSession("user");
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="profile-head grid-item">
+                    <div class="profile-head">
                         <h5>
                             <?php echo $_COOKIE["name"]." ".$_COOKIE["lastname"] ?>
                         </h5>
@@ -107,7 +101,7 @@ checkSession("user");
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Editar"/>
+                    <input type="button" class="profile-edit-btn cursor-on" onclick="editPopup()" value="Editar"></input>
                 </div>
             </div>
             <div class="row">
@@ -461,6 +455,54 @@ checkSession("user");
             class="btn btn-primary modified-middle-button"
             onclick="newSkills()"
           >Nuevo</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup" id="popup-edit">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="close-button" onclick="editPopup()">&times;</div>
+        <h1 class="popup-title">EDITAR</h1>
+
+        <div class="d-flex justify-content-center">
+          <button
+            type="button"
+            name="button"
+            class="profile-edit-btn btn-primary btn-lg"
+            style="color:aliceblue;"
+            onclick=""
+          >Editar datos laborales</button>
+        </div>
+
+        <div class="d-flex justify-content-center mt-4">
+          <button
+            type="button"
+            name="button"
+            class="profile-edit-btn btn-primary btn-lg"
+            style="color:aliceblue;"
+            onclick=""
+          >Añadir historial</button>
+        </div>
+
+        <div class="d-flex justify-content-center mt-4 mb-4">
+          <button
+            type="button"
+            name="button"
+            class="profile-edit-btn btn-primary btn-lg"
+            style="color:aliceblue;"
+            onclick=""
+          >Editar historial</button>
+        </div>
+
+        <div class="d-flex justify-content-center mt-4 mb-4">
+          <button
+            type="button"
+            name="button"
+            class="profile-edit-btn btn-danger btn-lg"
+            style="color:aliceblue;"
+            onclick=""
+          >Eliminar Perfil</button>
         </div>
       </div>
     </div>
