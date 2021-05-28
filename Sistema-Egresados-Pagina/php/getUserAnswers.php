@@ -43,8 +43,7 @@ if(isset($_POST['idUsuario'])) {
 //Si la encuesta existe...
 
 $sql = "SELECT * FROM Encuesta WHERE idEncuesta = '$idEncuesta'";
-
-
+$res = mysqli_query($conn, $sql);
 
 if($res->num_rows == 0) {
   	echo -2;
