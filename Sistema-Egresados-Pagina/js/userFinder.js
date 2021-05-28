@@ -619,7 +619,7 @@ $(document).ready(function (e) {
     $('#generateCSV').on('click', function (e) {
         e.stopPropagation();
         
-        let nombreArchivo = "estadisticas"
+        let nombreArchivo = "Usuarios"
         let datos = localStorage.getItem(JSON_FOR_CSV);
         
         
@@ -628,7 +628,7 @@ $(document).ready(function (e) {
             data: {nombreArchivo, datos},
             type: 'POST',
             success:  function (data) {
-               
+
                 const downloadLink = document.createElement("a");
                 const fileData = ['\ufeff' + data];
 
