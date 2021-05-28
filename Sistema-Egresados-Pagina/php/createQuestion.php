@@ -16,11 +16,11 @@ $title = $_POST['title'];
 $type = $_POST['type'];
 $theme = $_POST['theme'];
 
-$sql = "INSERT INTO Pregunta(Encuesta_idEncuesta, Pregunta, Tipo, Tema) VALUES ('$surveyId', '$title', '$type', '$theme');";
+$sql = "INSERT INTO Pregunta (Encuesta_idEncuesta, Pregunta, Tipo, Tema) VALUES ('".$surveyId."', '".$title."', '".$type."', '".$theme."')";
 if(mysqli_query($conn, $sql)) {
     echo mysqli_insert_id($conn);
 } else {
-    echo "error: no se pudo crear pregunta";
+    echo "error: no se pudo crear pregunta ".$surveyId." ".$title." ".$type." ".$theme;
 }
 
 $conn->close();
