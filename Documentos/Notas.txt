@@ -3,3 +3,4 @@
 - Corregir el php de la foto de perfil por que se borra la foto default al ingresar una foto nueva
 - Falta actualizar(Insertar/Eliminar) links y habilidades en tiempo real
 - Crear trigger para insertar datos de ingreso directo al historial laboral
+- Eliminar cookies cuando se crean usuarios.

@@ -43,7 +43,7 @@ if(isset($_POST['idUsuario'])) {
 //Si la encuesta existe...
 
 $sql = "SELECT * FROM Encuesta WHERE idEncuesta = '$idEncuesta'";
-$res = mysqli_query($conn, $sql);
+
 
 
 if($res->num_rows == 0) {
@@ -85,6 +85,7 @@ $sql = "SELECT Pregunta.idPregunta, Pregunta.Pregunta, Respuesta_Usuario.Respues
 		INNER JOIN Encuesta ON Encuesta.idEncuesta = Pregunta.Encuesta_idEncuesta
 		WHERE Encuesta.idEncuesta = ${idEncuesta}
 		ORDER BY Pregunta.idPregunta";
+
 $respuestas_usuario = mysqli_query($conn, $sql);
 
 if($respuestas_usuario->num_rows == 0) {

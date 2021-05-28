@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS Usuario (
   Apellidos VARCHAR(45) NOT NULL,
   Matricula VARCHAR(45) NOT NULL,
   Estatus VARCHAR(45) NOT NULL DEFAULT 'INACTIVO',
+  Actualizaciones INT NOT NULL DEFAULT 3,
   PRIMARY KEY (idUsuario),
   UNIQUE INDEX ind(idUsuario, Correo))
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
@@ -193,6 +194,7 @@ CREATE TABLE IF NOT EXISTS Datos_Laborales (
   Departamento VARCHAR(45) NULL,
   Tecnologias VARCHAR(200) NULL,
   Actividades VARCHAR(200) NULL,
+  Inicio DATE NULL, 
   PRIMARY KEY (idDatos_Laborales),
   UNIQUE INDEX (Usuario_idUsuario),
   FOREIGN KEY (Usuario_idUsuario)
@@ -212,7 +214,7 @@ CREATE TABLE IF NOT EXISTS Encuesta (
   Campus_idCampus INT NULL,
   Facultad_idFacultad INT NULL,
   Plan_Estudio_idPlan_Estudio INT NULL,
-  Estatus VARCHAR(45) NOT NULL,
+  Estatus VARCHAR(45) NULL,
   PRIMARY KEY (idEncuesta),
   FOREIGN KEY (Universidad_idUniversidad)
   REFERENCES Universidad (idUniversidad),
@@ -270,15 +272,15 @@ DROP TABLE IF EXISTS Historial_Laboral;
 CREATE TABLE IF NOT EXISTS Historial_Laboral (
   idHistorial_Laboral INT NOT NULL AUTO_INCREMENT,
   Usuario_idUsuario INT NOT NULL,
-  Empleo VARCHAR(45) NOT NULL,
-  Empresa VARCHAR(45) NOT NULL,
-  Puesto VARCHAR(45) NOT NULL,
-  Categoria VARCHAR(45) NOT NULL,
-  Correo_Emp VARCHAR(45) NOT NULL,
-  Departamento VARCHAR(45) NOT NULL,
-  Tecnologias VARCHAR(45) NOT NULL,
-  Actividades VARCHAR(45) NOT NULL,
-  Inicio DATE NOT NULL,
+  Empleo VARCHAR(45) NULL,
+  Empresa VARCHAR(45) NULL,
+  Puesto VARCHAR(45) NULL,
+  Categoria VARCHAR(45) NULL,
+  Correo_Emp VARCHAR(45) NULL,
+  Departamento VARCHAR(45) NULL,
+  Tecnologias VARCHAR(45) NULL,
+  Actividades VARCHAR(45) NULL,
+  Inicio DATE NULL,
   Fin DATE NULL,
   PRIMARY KEY (idHistorial_Laboral),
   FOREIGN KEY (Usuario_idUsuario)
