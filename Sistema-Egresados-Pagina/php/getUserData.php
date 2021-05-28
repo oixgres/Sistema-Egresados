@@ -45,15 +45,15 @@ if ($res->num_rows == 0) {
 }
 
 // sql para obtener datos basicos del usuario
-$sql = "SELECT  Usuario.Nombres, Usuario.Apellidos, Usuario.Correo, datos_escolares.Correo_Inst, 
-                datos_personales.Telefono, ciudad.Nombre AS ciudad, estado.Nombre AS estado,
-                datos_laborales.Empleo, datos_laborales.Empresa, datos_laborales.Puesto, datos_laborales.Departamento
+$sql = "SELECT  Usuario.Nombres, Usuario.Apellidos, Usuario.Correo, Datos_Escolares.Correo_Inst, 
+                Datos_Personales.Telefono, Ciudad.Nombre AS Ciudad, Estado.Nombre AS Estado,
+                Datos_Laborales.Empleo, Datos_Laborales.Empresa, Datos_Laborales.Puesto, Datos_Laborales.Departamento
         FROM Usuario
-        INNER JOIN datos_escolares  ON usuario.idUsuario = datos_escolares.Usuario_idUsuario
-        INNER JOIN datos_personales ON usuario.idUsuario = datos_personales.Usuario_idUsuario
-        INNER JOIN ciudad           ON datos_personales.Ciudad_idCiudad = ciudad.idCiudad
-        INNER JOIN estado           ON datos_personales.Estado_idEstado = estado.idEstado
-        INNER JOIN datos_laborales  ON usuario.idUsuario = datos_laborales.Usuario_idUsuario
+        INNER JOIN Datos_Escolares  ON Usuario.idUsuario = Datos_Escolares.Usuario_idUsuario
+        INNER JOIN Datos_Personales ON Usuario.idUsuario = Datos_Personales.Usuario_idUsuario
+        INNER JOIN Ciudad           ON Datos_Personales.Ciudad_idCiudad = Ciudad.idCiudad
+        INNER JOIN Estado           ON Datos_Personales.Estado_idEstado = Estado.idEstado
+        INNER JOIN Datos_Laborales  ON Usuario.idUsuario = Datos_Laborales.Usuario_idUsuario
         WHERE idUsuario = ${idUsuario}";
 
 $resDatos = mysqli_query($conn, $sql);
@@ -65,8 +65,8 @@ if (gettype($resDatos) != "boolean") {
         'correo'                => $fila['Correo'],
         'correo_institucional'  => $fila['Correo_Inst'],
         'telefono'              => $fila['Telefono'],
-        'ciudad'                => $fila['ciudad'],
-        'estado'                => $fila['estado'],
+        'ciudad'                => $fila['Ciudad'],
+        'estado'                => $fila['Estado'],
         'empleo'                => $fila['Empleo'],
         'empresa'               => $fila['Empresa'],
         'puesto'                => $fila['Puesto'],
@@ -76,16 +76,16 @@ if (gettype($resDatos) != "boolean") {
 
     // iterar a traves de todos los alcances buscando encuestas
     for($i = 0; $i < 4; $i++) {
-        $sql = "SELECT encuestas_pendientes.Encuesta_idEncuesta FROM encuestas_pendientes
-                INNER JOIN encuesta ON encuestas_pendientes.Encuesta_idEncuesta = encuesta.idEncuesta
-                INNER JOIN ${alcances[$i]} ON encuesta.${alcances[$i]}_id${alcances[$i]} = ${alcances[$i]}.id${alcances[$i]}
+        $sql = "SELECT Encuestas_Pendientes.Encuesta_idEncuesta FROM Encuestas_Pendientes
+                INNER JOIN Encuesta ON Encuestas_Pendientes.Encuesta_idEncuesta = Encuesta.idEncuesta
+                INNER JOIN ${alcances[$i]} ON Encuesta.${alcances[$i]}_id${alcances[$i]} = ${alcances[$i]}.id${alcances[$i]}
                 INNER JOIN Datos_Escolares ON ${alcances[$i]}.id${alcances[$i]} = Datos_Escolares.${alcances[$i]}_id${alcances[$i]}
                 INNER JOIN Usuario ON Datos_Escolares.Usuario_idUsuario = Usuario.idUsuario
                 WHERE Usuario.idUsuario = ${idUsuario}";
         $resPendientes = mysqli_query($conn, $sql);
-        $sql = "SELECT  encuestas_contestadas.Encuesta_idEncuesta FROM encuestas_contestadas
-                INNER JOIN encuesta ON encuestas_contestadas.Encuesta_idEncuesta = encuesta.idEncuesta
-                INNER JOIN ${alcances[$i]} ON encuesta.${alcances[$i]}_id${alcances[$i]} = ${alcances[$i]}.id${alcances[$i]}
+        $sql = "SELECT  Encuestas_Contestadas.Encuesta_idEncuesta FROM Encuestas_Contestadas
+                INNER JOIN Encuesta ON Encuestas_Contestadas.Encuesta_idEncuesta = Encuesta.idEncuesta
+                INNER JOIN ${alcances[$i]} ON Encuesta.${alcances[$i]}_id${alcances[$i]} = ${alcances[$i]}.id${alcances[$i]}
                 INNER JOIN Datos_Escolares ON ${alcances[$i]}.id${alcances[$i]} = Datos_Escolares.${alcances[$i]}_id${alcances[$i]}
                 INNER JOIN Usuario ON Datos_Escolares.Usuario_idUsuario = Usuario.idUsuario
                 WHERE Usuario.idUsuario = ${idUsuario}";
