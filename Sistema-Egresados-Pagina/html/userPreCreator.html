@@ -20,66 +20,63 @@
                 </div>
                 <br>
                 <div class="col-12">
-                    <form class="" action="../php/createUser.php" method="POST">
-
-                        <div class="row"> <!-- Primera Fila -->
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="idName">Nombre(s)</label> <!-- Campo Izquierda -->
-                                    <input type="text" class="form-control" id="idName" name="idName" placeholder="Introduzca Nombre(s)" required>
-                                </div>
-                            </div>
-
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="idLastName">Apellido(s)</label> <!-- Campo Izquierda -->
-                                    <input type="text" class="form-control" id="idLastName" name="idLastName" placeholder="Introduzca Apellido(s)" required>
-                                </div>
+                    <div class="row"> <!-- Primera Fila -->
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="idName">Nombre(s)</label> <!-- Campo Izquierda -->
+                                <input type="text" class="form-control" id="idName" name="idName" placeholder="Introduzca Nombre(s)" required>
                             </div>
                         </div>
 
-                        <div class="row"><!--Segunda Fila -->
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="idMat">Matricula:</label> <!--Campo derecha -->
-                                    <input type="text" class="form-control" id="idMat" name="idMat" placeholder="Introduzca Matricula Escolar" required>
-                                </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="idLastName">Apellido(s)</label> <!-- Campo Izquierda -->
+                                <input type="text" class="form-control" id="idLastName" name="idLastName" placeholder="Introduzca Apellido(s)" required>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="idMail">Correo Electronico:</label>
-                                    <input type="text" class="form-control" id="idMail" name="idMail" placeholder="Introduzca Correo Electronico" required>
-                                </div>
+                    <div class="row"><!--Segunda Fila -->
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="idMat">Matricula:</label> <!--Campo derecha -->
+                                <input type="text" class="form-control" id="idMat" name="idMat" placeholder="Introduzca Matricula Escolar" required>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="idPass">Contraseña:</label>
-                                    <input type="password" class="form-control" id="idPass" name="idPass" placeholder="Introduzca Contraseña" required>
-                                </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="idMail">Correo Electronico:</label>
+                                <input type="text" class="form-control" id="idMail" name="idMail" placeholder="Introduzca Correo Electronico" required>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="idPass2">Contraseña:</label>
-                                    <input type="password" class="form-control" name="idPass2" id="idPass2" placeholder="Confirme Contraseña" required>
-                                </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="idPass">Contraseña:</label>
+                                <input type="password" class="form-control" id="idPass" name="idPass" placeholder="Introduzca Contraseña" required>
                             </div>
                         </div>
 
-                        <div class="row"><!--Segunda Fila -->
-                            <div class="col-6">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="idPass2">Contraseña:</label>
+                                <input type="password" class="form-control" name="idPass2" id="idPass2" placeholder="Confirme Contraseña" required>
+                            </div>
+                        </div>
+                    </div>
 
-                            </div>
-                            <div class="col-6">
-                                <button type="submit" name="submit" class="btn btn-success col-6 float-right button_send">Registrar</button>
-                            </div>
+                    <div class="row"><!--Segunda Fila -->
+                        <div class="col-6">
 
                         </div>
-                    </form>
+                        <div class="col-6">
+                            <button type="button" name="submit" class="btn btn-success col-6 float-right button_send" id="registerUser">Registrar</button>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
