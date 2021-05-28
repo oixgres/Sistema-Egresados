@@ -484,16 +484,22 @@ $(document).ready(function (e) {
             data: {Campus, Facultad, Plan_Estudio, Empresa, Puesto, Ciudad, Nombres, Apellidos, IdAdmin},
             success: function (response){
                 try{
+                  console.log('prueba')
                         let users = JSON.parse(response);
+                        console.log('prueba')
                         localStorage.setItem(JSON_FOR_CSV, response);
+                        console.log('prueba')
                         $('#UsersContainer').children().remove('tr');
+                        console.log('prueba')
                         users.forEach(user => {
                             $('#UsersContainer').append(UserRow(user.Matricula, user.Nombres, user.Apellidos,
                                                                 user.Campus, user.Facultad, user.Plan_Estudio,
                                                                 user.Empresa, user.Puesto, user.Ciudad, user.Correo, user.idUsuario));
                             })
+                            console.log('prueba')
 
                         initTooltips();
+                        console.log('prueba')
 
 
                 }catch (e){
