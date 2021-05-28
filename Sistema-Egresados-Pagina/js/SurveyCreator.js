@@ -112,7 +112,7 @@ $(document).ready(function (e) {
                     e.stopPropagation();
                     previewController.updatePreview();
                 })
-                
+
                 node.find(`.dropdown-item`).on('click', function (e) { //agregar listeners a los items
                     let button = $(this).parent().siblings();
                     button.text((this).text);
@@ -243,7 +243,7 @@ $(document).ready(function (e) {
 
                 for(let i = 0; i < QuestionTypes.length; i++)
                     typesArray.push(this.getNumericalType(QuestionTypes[i].textContent));
-                
+
                 return typesArray;
             }
             this.getAllQuestionTopics = function () {
@@ -353,24 +353,24 @@ $(document).ready(function (e) {
                     switch(type)
                     {
                         case 'Radio':   let R_node = this.createRadioAnswer(answers[i], 'preview');
-                                        this.AnswerParent.append(R_node);
-                                        R_node.show();
-                                        break;
+                            this.AnswerParent.append(R_node);
+                            R_node.show();
+                            break;
 
                         case 'Input':   let I_node = this.createInputAnswer(answers[i]);
-                                        this.AnswerParent.append(I_node);
-                                        I_node.show();
-                                        break;
+                            this.AnswerParent.append(I_node);
+                            I_node.show();
+                            break;
 
                         case 'Text Area':   let TA_node = this.createTextAreaAnswer(answers[i]);
-                                            this.AnswerParent.append(TA_node);
-                                            TA_node.show();
-                                            break;
+                            this.AnswerParent.append(TA_node);
+                            TA_node.show();
+                            break;
 
                         case 'Checkbox':    let CB_node = this.createCheckboxAnswer(answers[i]);
-                                            this.AnswerParent.append(CB_node);
-                                            CB_node.show();
-                                            break;
+                            this.AnswerParent.append(CB_node);
+                            CB_node.show();
+                            break;
                     }
 
                 }
@@ -447,9 +447,9 @@ $(document).ready(function (e) {
             let value = $(this).val();
 
             if(e.key === 'Enter'){
-               if(parseInt(value, 10)){
-                   QuestionCarousel.carousel(parseInt(value, 10));
-               }
+                if(parseInt(value, 10)){
+                    QuestionCarousel.carousel(parseInt(value, 10));
+                }
             }
         })
 
@@ -465,20 +465,20 @@ $(document).ready(function (e) {
 
                 switch(button.text()){
                     case 'Universidad': SurveyTopicLabel.text('Nombre de la Universidad')
-                                        SurveyTopic.attr('placeholder', 'Introduce el nombre de la Universidad');
-                                        break;
+                        SurveyTopic.attr('placeholder', 'Introduce el nombre de la Universidad');
+                        break;
 
                     case 'Campus' : SurveyTopicLabel.text('Nombre del Campus')
-                                    SurveyTopic.attr('placeholder', 'Introduce el nombre del campus');
-                                    break;
+                        SurveyTopic.attr('placeholder', 'Introduce el nombre del campus');
+                        break;
 
                     case 'Facultad':    SurveyTopicLabel.text('Nombre de la Facultad')
-                                        SurveyTopic.attr('placeholder', 'Introduce el nombre de la facultad');
-                                        break;
+                        SurveyTopic.attr('placeholder', 'Introduce el nombre de la facultad');
+                        break;
 
                     case 'Programa Académico':  SurveyTopicLabel.text('Nombre del Programa Academico')
-                                                SurveyTopic.attr('placeholder', 'Introduce el nombre del programa académico');
-                                                break;
+                        SurveyTopic.attr('placeholder', 'Introduce el nombre del programa académico');
+                        break;
                 }
             }
         })
@@ -520,16 +520,16 @@ $(document).ready(function (e) {
             switch ($('#SurveyScope').text())
             {
                 case 'Universidad': university = SurveyTopic;
-                                    break;
+                    break;
 
                 case 'Campus':      campus = SurveyTopic;
-                                    break;
+                    break;
 
                 case 'Facultad':    faculty = SurveyTopic;
-                                    break;
+                    break;
 
                 case 'Programa Académico': program = SurveyTopic;
-                                            break;
+                    break;
 
             }
 
@@ -559,9 +559,9 @@ $(document).ready(function (e) {
 
                         switch (parseInt(response, 10)){
                             case -1:    $('#SurveyName').addClass('alert alert-danger is-invalid');
-                                        break;
+                                break;
                             case -2:     $('#SurveyTopic').addClass('alert alert-danger is-invalid');
-                                        break;
+                                break;
                         }
 
                     }
@@ -585,7 +585,7 @@ $(document).ready(function (e) {
                 let ProgressBarIncrement = 100 / (questionController.getNumOfQuestions() + questionController.getAllAnswerCount());
                 let ModalDatabaseSuccess = $('#ModalDatabaseSuccess');
 
-                let surveyId = sessionStorage.getItem('surveyId'); //obtener la llave primaria de la encuesta creada
+                let surveyId = parseInt(sessionStorage.getItem('surveyId'), 10); //obtener la llave primaria de la encuesta creada
 
 
                 for(let i = 0; i < questionController.getNumOfQuestions(); i++){
@@ -595,42 +595,49 @@ $(document).ready(function (e) {
                     let type = questionTypes[i];
 
 
-                        $.ajax({ //insertar pregunta en la base de datos
-                            url:    '../php/createQuestion.php',
-                            async:  false,
-                            data:   {surveyId, title, theme, type},
-                            type:   'POST',
-                            success:    function (response) {
-                                console.log(`Pregunta creada #ID = ${response}`);
-                                let questionId = response;
-                                currentProgress += ProgressBarIncrement;
-                                progressBar.css('width',`${currentProgress}%`);
-                                progressBar.text(parseInt(currentProgress));
 
-                                for(let j = 0; j < questionAnswers[i].length; j++){
-                                    let answerText = questionAnswers[i][j];
-                                    $.ajax({ //instertar respuestas
-                                        url:    '../php/createAnswer.php',
-                                        async: false,
-                                        data:   {questionId, answerText},
-                                        type:   'POST',
-                                        success: function (response) {
-                                            console.log(currentProgress)
-                                            currentProgress += ProgressBarIncrement;
-                                            progressBar.css('width',`${currentProgress}%`);
-                                            progressBar.text(parseInt(currentProgress));
-                                            console.log('respuesta creada = ' + response)
-                                        }
-                                    })
-                                }
+                    console.log('ID DE ENCUESTA = ' + sessionStorage.getItem('surveyId'))
+                    console.log('TEMA = ' + theme)
+                    console.log('PREGUNTA = ' + title)
+                    console.log('TIPO = ' + sessionStorage.getItem('surveyId'))
+
+
+                    $.ajax({ //insertar pregunta en la base de datos
+                        url:    '../php/createQuestion.php',
+                        async:  false,
+                        data:   {surveyId, title, theme, type},
+                        type:   'POST',
+                        success:    function (response) {
+                            console.log(`Pregunta creada #ID = ${response}`);
+                            let questionId = parseInt(response, 10);
+                            currentProgress += ProgressBarIncrement;
+                            progressBar.css('width',`${currentProgress}%`);
+                            progressBar.text(parseInt(currentProgress));
+
+                            for(let j = 0; j < questionAnswers[i].length; j++){
+                                let answerText = questionAnswers[i][j];
+                                $.ajax({ //instertar respuestas
+                                    url:    '../php/createAnswer.php',
+                                    async: false,
+                                    data:   {questionId, answerText},
+                                    type:   'POST',
+                                    success: function (response) {
+                                        console.log(currentProgress)
+                                        currentProgress += ProgressBarIncrement;
+                                        progressBar.css('width',`${currentProgress}%`);
+                                        progressBar.text(parseInt(currentProgress));
+                                        console.log('respuesta creada = ' + response)
+                                    }
+                                })
                             }
-                        });
+                        }
+                    });
 
-                    }
-
-                    $(this).attr('disabled', true);
-                    ModalDatabaseSuccess.modal('show');
                 }
+
+                $(this).attr('disabled', true);
+                ModalDatabaseSuccess.modal('show');
+            }
 
 
             else{
