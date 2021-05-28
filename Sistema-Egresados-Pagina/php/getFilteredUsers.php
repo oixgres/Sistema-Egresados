@@ -154,13 +154,13 @@ Los joins deben ser manuales por que pueden involucrar tablas en la
 */
 				
 $sql_joins = "FROM Usuario 
-			  LEFT JOIN Datos_Escolares ON Usuario.idUsuario = Datos_Escolares.Usuario_idUsuario
-			  LEFT JOIN Campus ON Datos_Escolares.Campus_idCampus = Campus.idCampus
-			  LEFT JOIN Facultad ON Datos_Escolares.Facultad_idFacultad = Facultad.idFacultad
-			  LEFT JOIN Plan_Estudio ON Datos_Escolares.Plan_Estudio_idPlan_Estudio = Plan_Estudio.idPlan_Estudio
-			  LEFT JOIN Datos_Laborales ON Usuario.idUsuario = Datos_Laborales.Usuario_idUsuario
-			  LEFT JOIN Datos_Personales ON Usuario.idUsuario = Datos_Personales.Usuario_idUsuario
-			  LEFT JOIN Ciudad ON Datos_Personales.Ciudad_idCiudad = Ciudad.idCiudad ";
+			  LEFT OUTER JOIN Datos_Escolares ON Usuario.idUsuario = Datos_Escolares.Usuario_idUsuario
+			  LEFT OUTER JOIN Campus ON Datos_Escolares.Campus_idCampus = Campus.idCampus
+			  LEFT OUTER JOIN Facultad ON Datos_Escolares.Facultad_idFacultad = Facultad.idFacultad
+			  LEFT OUTER JOIN Plan_Estudio ON Datos_Escolares.Plan_Estudio_idPlan_Estudio = Plan_Estudio.idPlan_Estudio
+			  LEFT OUTER JOIN Datos_Laborales ON Usuario.idUsuario = Datos_Laborales.Usuario_idUsuario
+			  LEFT OUTER JOIN Datos_Personales ON Usuario.idUsuario = Datos_Personales.Usuario_idUsuario
+			  LEFT OUTER JOIN Ciudad ON Datos_Personales.Ciudad_idCiudad = Ciudad.idCiudad ";
 
 /*
 Estas son las tablas y las columnas para los campos que se recibieron
@@ -260,8 +260,11 @@ if($exe_status == false)
 	exit();
 }
 
-$resultados = $stmt->get_result();	//Devuelve un mysqli_result
+$fila = array_fill(0, 11, 0);
 
+//Vinculo cada posicion del array con una columna del resultado
+$stmt->bind_result(...$fila); 
+								
 //Aqui se guardan los datos en el JSON
 
 $json = array();
@@ -281,10 +284,11 @@ $indices_resultado = array(
 'Correo'
 );
 
-while($fila = $resultados->fetch_row())
+while($stmt->fetch())
 {
 							//Llaves/indices   , datos
 	$json [] = array_combine($indices_resultado, $fila);
+	var_dump($fila);
 	
 }
 
