@@ -27,7 +27,7 @@ if(isset($_POST['idUsuario'])) {
 
 //Se obtiene las habilidades del usuario...
 
-$sql = "SELECT Nombre, Link FROM enlaces_usuario
+$sql = "SELECT Nombre, Link FROM Enlaces_Usuario
 		WHERE Usuario_idUsuario = ${idUsuario}
 		ORDER BY idEnlaces_Usuario";
 $res = mysqli_query($conn,$sql);
