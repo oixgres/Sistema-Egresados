@@ -12,7 +12,7 @@ require_once "dbh.php";
 $questionId = $_POST['questionId'];
 $answerText = $_POST['answerText'];
 
-$sql = "INSERT INTO Respuesta(Pregunta_idPregunta, Respuesta) VALUES ('$questionId', '$answerText');";
+$sql = "INSERT INTO Respuesta(Pregunta_idPregunta, Respuesta) VALUES ('$questionId', '$answerText')";
 
 if(mysqli_query($conn, $sql)) {
     echo mysqli_insert_id($conn);
