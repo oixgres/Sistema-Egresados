@@ -45,91 +45,91 @@ require_once "dbh.php";
 
 //Nombres que nos da el front end para las variables _POST a excepcion
 // del admin, el cual se comprueba despues.
-				
+
 $indices_post = array(
-"Campus",
-"Facultad",
-"Plan_Estudio",
-"Empresa",
-"Puesto",
-"Ciudad",
-"Nombres",
-"Apellidos"
+    "Campus",
+    "Facultad",
+    "Plan_Estudio",
+    "Empresa",
+    "Puesto",
+    "Ciudad",
+    "Nombres",
+    "Apellidos"
 );
 
 $campos_recibidos = array();
 
-foreach($indices_post as $indice) 
+foreach($indices_post as $indice)
 {
-	if(!isset($_POST[$indice])) 
-	{
-		echo -1;		//No se mandó alguno de los campos el POST
-		$conn->close();
-		exit();
-	} 
-	else 
-	{
-		//Con estos campos se hace el WHERE de la consulta
-		$campos_recibidos [] = '%'.$_POST[$indice].'%';
-		//Se concatenan lso '%' por la naturaleza de la consulta.
-		// "...empiecen o << contengan >> valores iguales a los recibidos."
-	}
+    if(!isset($_POST[$indice]))
+    {
+        echo -1;		//No se mandó alguno de los campos el POST
+        $conn->close();
+        exit();
+    }
+    else
+    {
+        //Con estos campos se hace el WHERE de la consulta
+        $campos_recibidos [] = '%'.$_POST[$indice].'%';
+        //Se concatenan lso '%' por la naturaleza de la consulta.
+        // "...empiecen o << contengan >> valores iguales a los recibidos."
+    }
 }
 
- //Aqui verifico que el administrador este registrado en la tabla.
+//Aqui verifico que el administrador este registrado en la tabla.
 if(!isset($_POST['IdAdmin']))
 {
-	echo -1;		//No se mandó alguno de los datos en _POST
-	$conn->close();
-	exit();
+    echo -1;		//No se mandó alguno de los datos en _POST
+    $conn->close();
+    exit();
 }
 else
 {
-	$idAdmin = $_POST['IdAdmin'];
-	$sql = "SELECT idAdmin FROM Admin WHERE idAdmin = $idAdmin";
-	$admin_exists = $conn->query($sql);
-	
-	if($admin_exists->num_rows == 0)	//Si la busqueda no devuelve
-	{									// resultados...
-		echo -2;		//No es un id de administrador valido
-		$conn->close();
-		exit();
-	}
-}	
+    $idAdmin = $_POST['IdAdmin'];
+    $sql = "SELECT idAdmin FROM Admin WHERE idAdmin = $idAdmin";
+    $admin_exists = $conn->query($sql);
+
+    if($admin_exists->num_rows == 0)	//Si la busqueda no devuelve
+    {									// resultados...
+        echo -2;		//No es un id de administrador valido
+        $conn->close();
+        exit();
+    }
+}
 
 //Estas son las tablas y columnas para los resultados que voy a devolver
 $tablas = array(
-"Usuario",
-"Usuario",
-"Usuario",
-"Usuario",
-"Campus",
-"Facultad",
-"Plan_Estudio",
-"Datos_Laborales",
-"Datos_Laborales",
-"Ciudad",
-"Usuario"
+    "Usuario",
+    "Usuario",
+    "Usuario",
+    "Usuario",
+    "Campus",
+    "Facultad",
+    "Plan_Estudio",
+    "Datos_Laborales",
+    "Datos_Laborales",
+    "Ciudad",
+    "Usuario"
 );
-						
+
 $columnas = array(
-"idUsuario",
-"Matricula",
-"Nombres",
-"Apellidos",
-"Nombre",
-"Nombre",
-"Nombre",
-"Empresa",
-"Puesto",
-"Nombre",
-"Correo"
+    "idUsuario",
+    "Matricula",
+    "Nombres",
+    "Apellidos",
+    "Nombre",
+    "Nombre",
+    "Nombre",
+    "Empresa",
+    "Puesto",
+    "Nombre",
+    "Correo"
 );
-					
+
 /*
 Se iteran las tablas y columnas para formar la parte de la sentencia
 SQL del SELECT
-*/					
+*/
 
 $sql_select = "SELECT ";
 
@@ -137,14 +137,14 @@ $num_columnas = count($columnas);
 
 for($i = 0; $i < $num_columnas; $i++)
 {
-	$sql_select .= "${tablas[$i]}.${columnas[$i]}";
-	
-	if($i < $num_columnas - 1)
-	{
-		$sql_select .= ", ";
-	} else {
-		$sql_select .= " ";
-	}
+    $sql_select .= "${tablas[$i]}.${columnas[$i]}";
+
+    if($i < $num_columnas - 1)
+    {
+        $sql_select .= ", ";
+    } else {
+        $sql_select .= " ";
+    }
 }
 
 /*
@@ -152,15 +152,15 @@ Los joins deben ser manuales por que pueden involucrar tablas en la
  base de datos que no esten relacionadas directamente con los campos 
  que se piden.
 */
-				
+
 $sql_joins = "FROM Usuario 
-			  LEFT OUTER JOIN Datos_Escolares ON Usuario.idUsuario = Datos_Escolares.Usuario_idUsuario
-			  LEFT OUTER JOIN Campus ON Datos_Escolares.Campus_idCampus = Campus.idCampus
-			  LEFT OUTER JOIN Facultad ON Datos_Escolares.Facultad_idFacultad = Facultad.idFacultad
-			  LEFT OUTER JOIN Plan_Estudio ON Datos_Escolares.Plan_Estudio_idPlan_Estudio = Plan_Estudio.idPlan_Estudio
-			  LEFT OUTER JOIN Datos_Laborales ON Usuario.idUsuario = Datos_Laborales.Usuario_idUsuario
-			  LEFT OUTER JOIN Datos_Personales ON Usuario.idUsuario = Datos_Personales.Usuario_idUsuario
-			  LEFT OUTER JOIN Ciudad ON Datos_Personales.Ciudad_idCiudad = Ciudad.idCiudad ";
+			  LEFT JOIN Datos_Escolares ON Usuario.idUsuario = Datos_Escolares.Usuario_idUsuario
+			  LEFT JOIN Campus ON Datos_Escolares.Campus_idCampus = Campus.idCampus
+			  LEFT JOIN Facultad ON Datos_Escolares.Facultad_idFacultad = Facultad.idFacultad
+			  LEFT JOIN Plan_Estudio ON Datos_Escolares.Plan_Estudio_idPlan_Estudio = Plan_Estudio.idPlan_Estudio
+			  LEFT JOIN Datos_Laborales ON Usuario.idUsuario = Datos_Laborales.Usuario_idUsuario
+			  LEFT JOIN Datos_Personales ON Usuario.idUsuario = Datos_Personales.Usuario_idUsuario
+			  LEFT JOIN Ciudad ON Datos_Personales.Ciudad_idCiudad = Ciudad.idCiudad ";
 
 /*
 Estas son las tablas y las columnas para los campos que se recibieron
@@ -168,30 +168,30 @@ por medio del _POST
 */
 
 $tablas_where = array(
-"Campus",
-"Facultad",
-"Plan_Estudio",
-"Datos_Laborales",
-"Datos_Laborales",
-"Ciudad",
-"Usuario",
-"Usuario"
+    "Campus",
+    "Facultad",
+    "Plan_Estudio",
+    "Datos_Laborales",
+    "Datos_Laborales",
+    "Ciudad",
+    "Usuario",
+    "Usuario"
 );
-						
+
 $columnas_where = array(
-"Nombre",
-"Nombre",
-"Nombre",
-"Empresa",
-"Puesto",
-"Nombre",
-"Nombres",
-"Apellidos"
+    "Nombre",
+    "Nombre",
+    "Nombre",
+    "Empresa",
+    "Puesto",
+    "Nombre",
+    "Nombres",
+    "Apellidos"
 );
 
 //Aqui se crea la parte de la consulta para el WHERE
 
-$sql_where = ''; 
+$sql_where = '';
 
 $condiciones = array();
 
@@ -200,34 +200,34 @@ $num_campos = count($campos_recibidos);
 //Esto se usa para que las consultas preparadas sepan el tipo de datos
 // que va a manejar. Idealmente se enviarian los tipos de datos junto
 // con el nombre de los campos desde el front end, pero por el momento,
-// todos los que se envian actualmente son string, asi que solo se 
+// todos los que se envian actualmente son string, asi que solo se
 // concatenan 's' por cada condicion que se vaya a aplicar.
 $tipo_campo = '';
 
 for($i = 0; $i < $num_campos; $i++)
 {
-	//Si el campo recibido es igual a N_A, entonces se omite en el WHERE
-	if(strcasecmp($campos_recibidos[$i],'%N_A%') != 0)
-	{
-		if(empty($sql_where))
-		{
-			//Si es la primera vez que encuentra una condicion valida
-			// se agrega el where. Si nunca se encuentra una condicion
-			// valida, la consulta se realiza directamente sin WHERE.
-			$sql_where = 'WHERE ';
-		}
-		
-		if(count($condiciones) > 0 )		//Si ya hay condiciones en el array...
-		{
-			$sql_where .= ' AND ';	//Se concatena un AND para la siguiente condicion
-		}
-		
-		$sql_where .= "${tablas_where[$i]}.${columnas_where[$i]} LIKE ?" ;
-		
-		$condiciones[] = $campos_recibidos[$i];
-		
-		$tipo_campo .= 's';
-	}
+    //Si el campo recibido es igual a N_A, entonces se omite en el WHERE
+    if(strcasecmp($campos_recibidos[$i],'%N_A%') != 0)
+    {
+        if(empty($sql_where))
+        {
+            //Si es la primera vez que encuentra una condicion valida
+            // se agrega el where. Si nunca se encuentra una condicion
+            // valida, la consulta se realiza directamente sin WHERE.
+            $sql_where = 'WHERE ';
+        }
+
+        if(count($condiciones) > 0 )		//Si ya hay condiciones en el array...
+        {
+            $sql_where .= ' AND ';	//Se concatena un AND para la siguiente condicion
+        }
+
+        $sql_where .= "${tablas_where[$i]}.${columnas_where[$i]} LIKE ?" ;
+
+        $condiciones[] = $campos_recibidos[$i];
+
+        $tipo_campo .= 's';
+    }
 }
 
 //Se juntan todas las partes para preparar la query
@@ -239,57 +239,73 @@ $stmt = $conn->prepare($sql);
 
 if(gettype($stmt) == false)
 {
-	echo -3; //Hubo un error preparando la consulta/la consulta contiene un error.
-	$conn->close();
-	exit();
+    echo -3; //Hubo un error preparando la consulta/la consulta contiene un error.
+    $conn->close();
+    exit();
 }
 
 //Aqui se remplazan los ? en la consulta con los datos correspondientes.
 // Si no hubo condiciones en la consulta, esto se omite.
 if(!empty($condiciones))
 {
-	$stmt->bind_param($tipo_campo, ...$condiciones);
-}	
+    $stmt->bind_param($tipo_campo, ...$condiciones);
+}
 
 $exe_status = $stmt->execute();
 
 if($exe_status == false)
 {
-	echo -4; //Hubo un error ejecutando la consulta.
-	$conn->close();
-	exit();
+    echo -4; //Hubo un error ejecutando la consulta.
+    $conn->close();
+    exit();
 }
 
 $fila = array_fill(0, 11, 0);
 
 //Vinculo cada posicion del array con una columna del resultado
-$stmt->bind_result(...$fila); 
-								
+$stmt->bind_result(...$fila);
+
 //Aqui se guardan los datos en el JSON
 
 $json = array();
 
 //El nombre que se les va a dar a los resultados y devuelto en el JSON
 $indices_resultado = array(
-'idUsuario',
-'Matricula',
-'Nombres',
-'Apellidos',
-'Campus',
-'Facultad',
-'Plan_Estudio',
-'Empresa',
-'Puesto',
-'Ciudad',
-'Correo'
+    'idUsuario',
+    'Matricula',
+    'Nombres',
+    'Apellidos',
+    'Campus',
+    'Facultad',
+    'Plan_Estudio',
+    'Empresa',
+    'Puesto',
+    'Ciudad',
+    'Correo'
 );
 
-while($stmt->fetch())
-{
-							//Llaves/indices   , datos
-	$json [] = array_combine($indices_resultado, $fila);
-	//var_dump($fila);
+$i = 0;
+
+while($stmt->fetch()){
+
+    $json [] = array(
+        'idUsuario' => $fila[0],
+        'Matricula' => $fila[1],
+        'Nombres' => $fila[2],
+        'Apellidos' => $fila[3],
+        'Campus' => $fila[4],
+        'Facultad' => $fila[5],
+        'Plan_Estudio' => $fila[6],
+        'Empresa' => $fila[7],
+        'Puesto' => $fila[8],
+        'Ciudad' => $fila[9],
+        'Correo' => $fila[10]
+    );
+
 }
+
+
+echo json_encode($json);
 
 /*
  *	JSON final:
@@ -307,13 +323,17 @@ while($stmt->fetch())
  *  Correo : VARCHAR(45)
 */
 
-if(!empty($json)) 
+/*
+
+if(!empty($json))
 {
-	$jsonString = json_encode($json); 	//convertir el json a cadena
-	echo $jsonString; 					//retornar el json al frontend
+	echo json_encode($json); 	//convertir el json a cadena
+						//retornar el json al frontend
 } else {
  	echo -5; 		//El json está vacio
 }
+
+*/
 
 $conn->close();
 ?>
