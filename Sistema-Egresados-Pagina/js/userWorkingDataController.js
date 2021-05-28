@@ -137,7 +137,7 @@ $(document).ready(function (e) {
                     data: {idUsuario, inicio, laborando,empleo, empresa, puesto, categoria, correo, departamento, tecnologias, actividades},
                     type: 'POST',
                     success: function (response) {
-
+                        console.log('RESPUESTA == ' + response)
                         if(parseInt(response, 10) === 0){
                             //header
                             alert("Datos Registrados con exito")
@@ -160,7 +160,7 @@ $(document).ready(function (e) {
                 data: {idUsuario, laborando,empleo, empresa, puesto, categoria, correo, departamento, tecnologias, actividades},
                 type: 'POST',
                 success: function (response) {
-
+                    console.log('RESPUESTA == ' + response)
                     if(parseInt(response, 10) === 0){
                         //header
                         alert("Datos Registrados con exito")
