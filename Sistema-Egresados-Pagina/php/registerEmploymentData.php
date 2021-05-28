@@ -12,6 +12,7 @@ require_once "dbh.php";
  *	departamento    : VARCHAR(45)
  *	tecnologias     : VARCHAR(200)
  *	actividades     : VARCHAR(200)
+ *	inicio          : DATE
  *
  * Devuelve:
  * 	0 : Operacion correcta
@@ -38,6 +39,7 @@ $correo       = $_POST['correo'];
 $departamento = $_POST['departamento'];
 $tecnologias  = $_POST['tecnologias'];
 $actividades  = $_POST['actividades'];
+$inicio       = $_POST['inicio'];
 
 $sql = "SELECT idUsuario FROM Usuario WHERE idUsuario = ${idUsuario}";  // confirmar que existe idUsuario
 $res = mysqli_query($conn, $sql);
@@ -49,8 +51,8 @@ if ($res->num_rows == 0) {
 }
 
 if ($laborando == 1) {
-    $sql = "INSERT INTO Datos_Laborales(Usuario_idUsuario, Labora, Empleo, Empresa, Puesto, Categoria, Correo_Emp, Departamento, Tecnologias, Actividades)
-            VALUES (${idUsuario}, 1, '${empleo}', '${empresa}', '${puesto}', '${categoria}', '${correo}', '${departamento}', '${tecnologias}', '${actividades}')";
+    $sql = "INSERT INTO Datos_Laborales(Usuario_idUsuario, Labora, Empleo, Empresa, Puesto, Categoria, Correo_Emp, Departamento, Tecnologias, Actividades, Inicio)
+            VALUES (${idUsuario}, 1, '${empleo}', '${empresa}', '${puesto}', '${categoria}', '${correo}', '${departamento}', '${tecnologias}', '${actividades}', '${inicio}')";
 } else {
     $sql = "INSERT INTO Datos_Laborales(Usuario_idUsuario, Labora)
             VALUES (${idUsuario}, 0)";
