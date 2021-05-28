@@ -1,4 +1,6 @@
 $(document).ready(function (e) {
+    const JSON_FOR_CSV = "STUDENTS"
+
     checkSession('admin');
     function createCarouselItemUserHistory(Empleo, Empresa, Puesto, Departamento, Actividades, Tecnologias, CorreoLaboral, active) {
 
@@ -483,6 +485,7 @@ $(document).ready(function (e) {
             success: function (response){
                 try{
                         let users = JSON.parse(response);
+                        localStorage.setItem(JSON_FOR_CSV, response);
                         $('#UsersContainer').children().remove('tr');
                         users.forEach(user => {
                             $('#UsersContainer').append(UserRow(user.Matricula, user.Nombres, user.Apellidos,
@@ -613,5 +616,45 @@ $(document).ready(function (e) {
 
     })
 
+    $('#generateCSV').on('click', function (e) {
+        e.stopPropagation();
+        
+        let nombreArchivo = "estadisticas"
+        let datos = localStorage.getItem(JSON_FOR_CSV);
+        
+        
+        $.ajax({
+            url: '../php/downloadAsCSV.php',
+            data: {nombreArchivo, datos},
+            type: 'POST',
+            success:  function (data) {
+               
+                const downloadLink = document.createElement("a");
+                const fileData = ['\ufeff' + data];
+
+                const blobObject = new Blob(fileData, {
+                    type: "text/csv;charset=utf-8;"
+                });
+
+                const url = URL.createObjectURL(blobObject);
+                downloadLink.href = url;
+                downloadLink.download = nombreArchivo;
+
+                /*
+                 * Actually download CSV
+                 */
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+
+            },
+            error: function () {
+                
+            }
+            
+            
+        })
+        
+    })
     refreshTable();
 })
