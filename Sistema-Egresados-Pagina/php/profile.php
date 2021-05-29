@@ -143,6 +143,17 @@ checkSession("user");
                                     <p><?php echo $_COOKIE["name"]." ".$_COOKIE["lastname"] ?></p>
                                 </div>
                             </div>
+                            
+                            <!-- Contraseña -->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Contraseña</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>*************</p>
+                                </div>
+                            </div>
+                            
 
                             <!-- Correo -->
                             <div class="row">
@@ -225,7 +236,7 @@ checkSession("user");
                             <?php while ($row = mysqli_fetch_assoc($unansweredSurveys)): ?>
                             <div class="row">
                                 <div class="col-md-8 mt-1">
-                                  <p><?php $row["Nombre"]; ?></p>
+                                  <p><?php echo $row["Nombre"]; ?></p>
                                 </div>
                                 <div class="col-md-4">
                                 </div>
@@ -245,7 +256,7 @@ checkSession("user");
                             <?php while($row = mysqli_fetch_assoc($answeredSurveys)): ?>
                             <div class="row">
                                 <div class="col-md-8 mt-1">
-                                  <p><?php $row["Nombre"]; ?></p>
+                                  <p><?php echo $row["Nombre"]; ?></p>
                                 </div>
                                 <div class="col-md-4">
                                   <a href="#" class="btn btn-secondary modified-small-button">Modificar</a>
@@ -464,46 +475,49 @@ checkSession("user");
       <div class="content">
         <div class="close-button" onclick="editPopup()">&times;</div>
         <h1 class="popup-title">EDITAR</h1>
-
-        <div class="d-flex justify-content-center">
-          <a
+        
+        <!-- Editar datos laborales -->
+        <form action="">
+          <div class="d-flex justify-content-center">
+            <button
             type="button"
             name="button"
             class="profile-edit-btn btn-primary btn-lg"
             style="color:aliceblue;"
             href="editWorkingData.php"
-          >Editar datos laborales</a>
-        </div>
-
-        <div class="d-flex justify-content-center mt-4">
-          <button
+            >Editar datos laborales</button>
+          </div>
+          
+          <div class="d-flex justify-content-center mt-4">
+            <button
             type="button"
             name="button"
             class="profile-edit-btn btn-primary btn-lg"
             style="color:aliceblue;"
             onclick=""
-          >Añadir historial</button>
-        </div>
-
-        <div class="d-flex justify-content-center mt-4 mb-4">
-          <button
+            >Añadir historial</button>
+          </div>
+          
+          <div class="d-flex justify-content-center mt-4 mb-4">
+            <button
             type="button"
             name="button"
             class="profile-edit-btn btn-primary btn-lg"
             style="color:aliceblue;"
             onclick=""
-          >Editar historial</button>
-        </div>
-
-        <div class="d-flex justify-content-center mt-4 mb-4">
-          <button
+            >Editar historial</button>
+          </div>
+          
+          <div class="d-flex justify-content-center mt-4 mb-4">
+            <button
             type="button"
             name="button"
             class="profile-edit-btn btn-danger btn-lg"
             style="color:aliceblue;"
             onclick=""
-          >Eliminar Perfil</button>
-        </div>
+            >Eliminar Perfil</button>
+          </div>
+        </form>
       </div>
     </div>
     <script src="../js/popup.js"></script>

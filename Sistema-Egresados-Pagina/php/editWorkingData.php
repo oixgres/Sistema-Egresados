@@ -14,10 +14,6 @@ checkSession("user");
 
     <?php
     require_once 'dbh.php';
-
-    $query = "SELECT * FROM Datos_Laborales WHERE Usuario_idUsuario='".$_COOKIE['id']."'";
-    $datos_laborales = mysqli_query($conn, $query);
-    $datos_laborales = mysqli_fetch_assoc($datos_laborales);
     ?>
 
     <title>Registro de datos</title>
@@ -55,6 +51,13 @@ checkSession("user");
                   <div class="card-header">
                     <h2 class="text-center">Editar Datos Laborales</h2>
                   </div>
+
+                  <?php
+                  $query = "SELECT * FROM Datos_Laborales WHERE Usuario_idUsuario='".$_COOKIE['id']."'";
+                  $datos_laborales = mysqli_query($conn, $query);
+                  $datos_laborales = mysqli_fetch_assoc($datos_laborales);
+
+                  ?>
                   <div class="card-body">
                     <div class="mt-3" id="questionContainerForIsWorking">
                       

@@ -272,6 +272,7 @@ DROP TABLE IF EXISTS Historial_Laboral;
 CREATE TABLE IF NOT EXISTS Historial_Laboral (
   idHistorial_Laboral INT NOT NULL AUTO_INCREMENT,
   Usuario_idUsuario INT NOT NULL,
+  Datos_Laborales_idDatos_Laborales INT NULL,
   Empleo VARCHAR(45) NULL,
   Empresa VARCHAR(45) NULL,
   Puesto VARCHAR(45) NULL,
@@ -285,7 +286,11 @@ CREATE TABLE IF NOT EXISTS Historial_Laboral (
   PRIMARY KEY (idHistorial_Laboral),
   FOREIGN KEY (Usuario_idUsuario)
   REFERENCES Usuario (idUsuario)
-  ON DELETE CASCADE)
+  ON DELETE CASCADE,
+  FOREIGN KEY (Datos_Laborales_idDatos_Laborales)
+  REFERENCES Datos_Laborales(idDatos_Laborales)
+  ON DELETE SET NULL 
+  )
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 
