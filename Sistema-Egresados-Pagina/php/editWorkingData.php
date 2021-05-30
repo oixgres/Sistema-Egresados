@@ -69,6 +69,11 @@ checkSession("user");
                     {
                       $action = 'change';
                     }
+                    else
+                      if(isset($_POST['editHistory']))
+                      {
+                        $query = "SELECT * FROM Historial_Laboral WHERE idHistorial_Laboral='".$_POST['editHistory']."'";
+                      }
                   
 
                   ?>
