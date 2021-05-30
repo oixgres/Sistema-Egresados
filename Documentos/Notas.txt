@@ -4,3 +4,4 @@
 - Falta actualizar(Insertar/Eliminar) links y habilidades en tiempo real
 - Crear trigger para insertar datos de ingreso directo al historial laboral
 - Eliminar cookies cuando se crean usuarios.
+- Actualizar el trigger de historial laboral para actualizaciones

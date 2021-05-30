@@ -14,10 +14,6 @@ checkSession("user");
 
     <?php
     require_once 'dbh.php';
-
-    $query = "SELECT * FROM Datos_Laborales WHERE Usuario_idUsuario='".$_COOKIE['id']."'";
-    $datos_laborales = mysqli_query($conn, $query);
-    $datos_laborales = mysqli_fetch_assoc($datos_laborales);
     ?>
 
     <title>Registro de datos</title>
@@ -28,9 +24,9 @@ checkSession("user");
 
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../css/index.css">
-    <link rel="stylesheet" href="../../css/generalcss.css">
-    <link rel="stylesheet" href="../../css/profile.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/generalcss.css">
+    <link rel="stylesheet" href="../css/profile.css">
     
   </head>
   <body>
@@ -55,10 +51,32 @@ checkSession("user");
                   <div class="card-header">
                     <h2 class="text-center">Editar Datos Laborales</h2>
                   </div>
+
+                  <?php
+
+                  $action = '';
+
+                  if(isset($_POST['edit']))
+                  {
+                    $query = "SELECT * FROM Datos_Laborales WHERE Usuario_idUsuario='".$_COOKIE['id']."'";
+                    $datos_laborales = mysqli_query($conn, $query);
+                    $datos_laborales = mysqli_fetch_assoc($datos_laborales);
+
+                    $action = 'edit';
+                  }
+                  else
+                    if(isset($_POST['change']))
+                    {
+                      $action = 'change';
+                    }
+                  
+
+                  ?>
                   <div class="card-body">
                     <div class="mt-3" id="questionContainerForIsWorking">
                       
                       <form action="editWorkingDataDB.php" method="POST">
+                        <input type="hidden" name="action" value=<?php echo $action; ?>>
 
                         <div class="row">
                           <div class="col-6">
@@ -198,7 +216,7 @@ checkSession("user");
                         
                         <div class="row mt-3">
                           <div class="col-12 d-flex justify-content-center">
-                            <button type="button" class="btn btn-success" id="sendWorkingDataBtn">
+                            <button type="submit" class="btn btn-success">
                               <span class="spinner-border spinner-border-sm d-none" role="status"></span>
                               Guardar
                             </button>
@@ -215,12 +233,12 @@ checkSession("user");
         </div>
       </div>
 
-      <script src="../../js/boostrap/jquery-3.6.0.min.js"></script>
-      <script src="../../js/boostrap/popper.min.js"></script>
-      <script src="../../js/boostrap/bootstrap.bundle.js"></script>
-      <script src="../../js/boostrap/bootstrap.js"></script>
+      <script src="../js/boostrap/jquery-3.6.0.min.js"></script>
+      <script src="../js/boostrap/popper.min.js"></script>
+      <script src="../js/boostrap/bootstrap.bundle.js"></script>
+      <script src="../js/boostrap/bootstrap.js"></script>
 
-      <script src="../../js/editWorkData.js"></script>
+      <script src="../js/editWorkData.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
     </div>
   </body>
