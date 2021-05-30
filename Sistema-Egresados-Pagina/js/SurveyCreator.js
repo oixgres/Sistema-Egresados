@@ -466,18 +466,31 @@ $(document).ready(function (e) {
                 switch(button.text()){
                     case 'Universidad': SurveyTopicLabel.text('Nombre de la Universidad')
                         SurveyTopic.attr('placeholder', 'Introduce el nombre de la Universidad');
+                        SurveyTopic.attr('readonly', true);
+                        $.ajax({
+                            url: '../php/getAdminUniversity.php',
+                            type: 'POST',
+                            data: {idAdmin},
+                            success: function (response) {
+                                $('#SurveyTopic').val(response);
+                            }
+                        })
+
                         break;
 
                     case 'Campus' : SurveyTopicLabel.text('Nombre del Campus')
                         SurveyTopic.attr('placeholder', 'Introduce el nombre del campus');
+                        SurveyTopic.attr('readonly', false);
                         break;
 
                     case 'Facultad':    SurveyTopicLabel.text('Nombre de la Facultad')
                         SurveyTopic.attr('placeholder', 'Introduce el nombre de la facultad');
+                        SurveyTopic.attr('readonly', false);
                         break;
 
                     case 'Programa Académico':  SurveyTopicLabel.text('Nombre del Programa Academico')
                         SurveyTopic.attr('placeholder', 'Introduce el nombre del programa académico');
+                        SurveyTopic.attr('readonly', false);
                         break;
                 }
             }
@@ -671,11 +684,39 @@ $(document).ready(function (e) {
 
         return status
     }
+    function getCookie(cname) {
+        const name = cname + "=";
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) === 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    } //funcion para obtener un cookie
 
     function cleanValidates() {
         let fields = $('.QuestionTopic,.QuestionTitle,.Answer'); //todos los campos de tema
         fields.removeClass('alert alert-danger alert-success is-valid is-invalid');
     }
+
+    $('#SurveyTopic').attr('readonly', true);
+    let idAdmin = getCookie('id');
+
+    $.ajax({
+        url: '../php/getAdminUniversity.php',
+        type: 'POST',
+        data: {idAdmin},
+        success: function (response) {
+            $('#SurveyTopic').val(response);
+        }
+    })
+
 
     addListeners();
     questionController.createQuestion();
