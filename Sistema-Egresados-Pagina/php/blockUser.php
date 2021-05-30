@@ -41,18 +41,21 @@ if ($res->num_rows == 0) {
 
 $estatus = $res->fetch_row()[0];
 
+
 if($estatus == 'ACTIVO' | $estatus == 'INACTIVO')
 {
 	$estatus = 'BLOQUEADO';
+	$accion = 0;
 } 
 else if($estatus == 'BLOQUEADO')
 {
 	$estatus = 'ACTIVO';
+	$accion = 1;
 }
 
 $sql = "UPDATE Usuario SET Estatus={$estatus} WHERE idUsuario = {$idUsuario}";
 if (mysqli_query($conn, $sql)) {
-    echo 0;
+    echo $accion;
 } else {
     echo -3;
 }
