@@ -21,6 +21,7 @@ if (!isset($_POST['idUsuario'])){
     exit();
 }
 
+$idUsuario = $_POST['idUsuario'];
 $sql = "SELECT idUsuario FROM Usuario WHERE idUsuario = {$idUsuario}";
 $res = mysqli_query($conn, $sql);
 
