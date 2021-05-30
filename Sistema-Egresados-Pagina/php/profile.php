@@ -150,7 +150,14 @@ checkSession("user");
                                     <label>Contraseña</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p>*************</p>
+                                    <p class="" id="pass_hide">*************</p>
+                                    <div class="input-group mb-3 d-none" id="passContainer">
+                                        <input type="password" class="form-control" placeholder="Nueva contraseña" id="newPassWord">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-info" type="button" id="saveNewPassword">Aceptar</button>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                             
@@ -538,5 +545,6 @@ checkSession("user");
     </div>
     <script src="../js/popup.js"></script>
     <script src="../js/profile.js"></script>
+    <script src="../js/profile_status.js"></script>
   </body>
 </html>

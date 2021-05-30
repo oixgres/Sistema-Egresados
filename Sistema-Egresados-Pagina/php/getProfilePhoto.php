@@ -30,6 +30,9 @@ if ($res->num_rows == 0) {
 }
 
 $sql = "SELECT Direccion FROM Foto_Perfil WHERE Usuario_idUsuario = ${idUsuario}";
+
+
+
 $res = mysqli_query($conn, $sql);
                                                                 // Ejemplo
 if(gettype($res) != "boolean" and $res->num_rows != 0) {        // string(22) "/ruta/carpeta/foto.jpg"
