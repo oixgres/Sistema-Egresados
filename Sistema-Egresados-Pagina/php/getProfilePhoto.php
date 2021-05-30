@@ -10,7 +10,6 @@ require_once "dbh.php";
  *  Códigos de error:
  *  -1 : No se mando idUsuario
  *  -2 : No existe usuario
- *  -3 : No existe foto
 */
 
 if(isset($_POST['idUsuario'])) {
@@ -36,7 +35,7 @@ $res = mysqli_query($conn, $sql);
 if(gettype($res) != "boolean" and $res->num_rows != 0) {        // string(22) "/ruta/carpeta/foto.jpg"
     echo mysqli_fetch_assoc($res)['Direccion'];                 // retornar ruta al frontend
 } else {
-    echo -3;
+    echo '../img/profile.jpg';
 }
 
 $conn->close();
