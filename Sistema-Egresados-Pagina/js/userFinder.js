@@ -139,6 +139,21 @@ $(document).ready(function (e) {
                 }
 
             })
+
+
+            $.ajax({
+                url: '../php/getProfilePhoto.php',
+                data: {idUsuario},
+                type: 'POST',
+                success: function (response) {
+                    $('#img_profile').attr('src', response);
+                },
+                error: function () {
+
+                }
+            })
+
+
             $.ajax({
                 url: '../php/getUserEmploymentHistory.php',
                 data: {idUsuario},
