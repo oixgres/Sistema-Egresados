@@ -17,7 +17,7 @@ $sql = "INSERT INTO Respuesta(Pregunta_idPregunta, Respuesta) VALUES ('$question
 if(mysqli_query($conn, $sql)) {
     echo mysqli_insert_id($conn);
 } else {
-    echo "error: no se pudo crear respuesta";
+    echo -1;
 }
 
 $conn->close();

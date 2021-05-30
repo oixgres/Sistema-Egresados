@@ -600,7 +600,7 @@ $(document).ready(function (e) {
 
                 let surveyId = parseInt(sessionStorage.getItem('surveyId'), 10); //obtener la llave primaria de la encuesta creada
 
-
+                let success = true;
                 for(let i = 0; i < questionController.getNumOfQuestions(); i++){
 
                     let title = questionsTittles[i];
@@ -621,6 +621,10 @@ $(document).ready(function (e) {
                         data:   {surveyId, title, theme, type},
                         type:   'POST',
                         success:    function (response) {
+                            if(parseInt(response, 10) < 0){
+                                success = false;
+                            }
+
                             console.log(`Pregunta creada #ID = ${response}`);
                             let questionId = parseInt(response, 10);
                             currentProgress += ProgressBarIncrement;
@@ -639,17 +643,33 @@ $(document).ready(function (e) {
                                         currentProgress += ProgressBarIncrement;
                                         progressBar.css('width',`${currentProgress}%`);
                                         progressBar.text(parseInt(currentProgress));
+
+                                        if(parseInt(response, 10) < 0){
+                                            success = false;
+                                        }
+
                                         console.log('respuesta creada = ' + response)
+                                    },
+                                    error: function () {
+                                        success = false;
                                     }
                                 })
                             }
+                        },
+                        error: function () {
+                            success = false;
                         }
                     });
 
                 }
+                if(success){
+                    $(this).attr('disabled', true);
+                    ModalDatabaseSuccess.modal('show');
+                }
+                else{
+                    alert("Hubo un error, intentelo de nuevo");
+                }
 
-                $(this).attr('disabled', true);
-                ModalDatabaseSuccess.modal('show');
             }
 
 

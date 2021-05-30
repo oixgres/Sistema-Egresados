@@ -20,7 +20,7 @@ $sql = "INSERT INTO Pregunta (Encuesta_idEncuesta, Pregunta, Tipo, Tema) VALUES 
 if(mysqli_query($conn, $sql)) {
     echo mysqli_insert_id($conn);
 } else {
-    echo "error: no se pudo crear pregunta ".$surveyId." ".$title." ".$type." ".$theme;
+    echo -1;
 }
 
 $conn->close();
