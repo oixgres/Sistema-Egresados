@@ -87,6 +87,9 @@ $(document).ready(function (e) {
                         <button class="btn btn-info mr-1 sendEmailProfile" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enviar correo">
                             <span class="fa fa-envelope"></span>
                         </button>
+                          <button class="btn btn-warning mr-1 blockUser" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Bloquear usuario o desbloquear">
+                            <span class="fa fa-lock"></span>
+                        </button>
                         <button class="btn btn-danger deleteUser" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliminar usuario">
                             <span class="fa fa-times"></span>
                         </button>
@@ -94,6 +97,15 @@ $(document).ready(function (e) {
                 </td>
         </tr>  
         `)
+
+        node.find('.blockuser').on('click', function (e) {
+            e.stopPropagation();
+            let userId = $(this).parent().parent().parent().attr('id');
+            let regex = RegExp('[0-9]+')
+            let idUsuario = regex.exec(userId).pop();
+
+
+        })
 
         node.find('.showProfileBtn').on('click', function (e) {
             e.stopPropagation();
