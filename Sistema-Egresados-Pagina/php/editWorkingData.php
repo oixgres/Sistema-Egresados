@@ -54,8 +54,6 @@ checkSession("user");
 
                   <?php
 
-                  $action = '';
-
                   if(isset($_POST['edit']))
                   {
                     $query = "SELECT * FROM Datos_Laborales WHERE Usuario_idUsuario='".$_COOKIE['id']."'";
@@ -69,6 +67,22 @@ checkSession("user");
                     {
                       $action = 'change';
                     }
+                    else
+                      if(isset($_POST['editHistory']))
+                      {
+                        $query = "SELECT * FROM Historial_Laboral WHERE idHistorial_Laboral='".$_POST['editHistory']."'";
+                        $datos_laborales = mysqli_query($conn, $query);
+                        $datos_laborales = mysqli_fetch_assoc($datos_laborales);
+
+                        setcookie('historial', $datos_laborales['idHistorial_Laboral'], time()+(60*60*24*30),"/");
+
+                        $action = 'editHistory';
+                      }
+                      else
+                        if(isset($_POST['addHistory']))
+                        {
+                          $action = 'addHistory';
+                        }
                   
 
                   ?>
