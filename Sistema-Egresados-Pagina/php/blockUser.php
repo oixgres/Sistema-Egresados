@@ -5,7 +5,8 @@ require_once "dbh.php";
  * 	idUsuario : INT
  *
  * Devuelve:
- * 	0 : Operacion exitosa
+ * 	0 : Bloqueado con exito
+ *  1 : Desbloqueado con exito
  *
  *  Códigos de error:
  *  -1 : No se mandó el idUsuario
@@ -41,11 +42,11 @@ if ($res->num_rows == 0) {
 
 $estatus = $res->fetch_row()[0];
 
+$accion = 0;
 
 if($estatus == 'ACTIVO' | $estatus == 'INACTIVO')
 {
 	$estatus = 'BLOQUEADO';
-	$accion = 0;
 } 
 else if($estatus == 'BLOQUEADO')
 {
