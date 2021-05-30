@@ -6,7 +6,7 @@ require_once "dbh.php";
  *
  * Devuelve:
  *
- *  Universidad_idUniversidad : INT
+ *  Nombre de la universidad : VARCHAR(45)
  *
  *  Códigos de error:
  *  -1 : No se mandó el idAdmin
@@ -27,7 +27,10 @@ $res = mysqli_query($conn, $sql);
 if($res->num_rows == 0) {
     echo -2;
 } else {
-    echo mysqli_fetch_assoc($res)['Universidad_idUniversidad'];
+    $sql = "SELECT Nombre FROM Universidad WHERE idUniversidad = ${mysqli_fetch_assoc($res)['Universidad_idUniversidad']}";
+    $res = mysqli_query($conn, $sql);
+
+    echo mysqli_fetch_assoc($res)['Nombre'];
 }
 
 $conn->close();
