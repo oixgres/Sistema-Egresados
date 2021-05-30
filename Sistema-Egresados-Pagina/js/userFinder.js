@@ -618,14 +618,12 @@ $(document).ready(function (e) {
             }
 
         })
-
-
     })
 
     $('#generateCSV').on('click', function (e) {
         e.stopPropagation();
         
-        let nombreArchivo = "Usuarios"
+        let nombreArchivo = "Usuarios.csv"
         let datos = localStorage.getItem(JSON_FOR_CSV);
         
         
