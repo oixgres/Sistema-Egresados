@@ -237,7 +237,6 @@ checkSession("user");
                           </div>
                         </div>                      
                       </form>
-                    
                     </div>
                   </div>
                 </div>

@@ -16,8 +16,12 @@ checkSession("user");
     <?php
     require_once 'dbh.php';
 
-    $query = "SELECT * FROM Historial_Laboral WHERE idUsuario='".$_COOKIE['id']."'";
+    $query = "SELECT * FROM Historial_Laboral WHERE Usuario_idUsuario='".$_COOKIE['id']."'";
     $historial_laboral = mysqli_query($conn, $query);
+
+    $query = "SELECT * FROM Datos_Laborales WHERE Usuario_idUsuario='".$_COOKIE['id']."'";
+    $datos_laborales = mysqli_query($conn, $query);
+    $datos_laborales = mysqli_fetch_assoc($datos_laborales);
     ?>
 
     <!-- bootstrap -->
@@ -44,6 +48,7 @@ checkSession("user");
 
         <div class="mt-5 row">
           <div class="col-12">
+            <head>Empleo Actual</head>
             <table class="table table-bordered table-hover table-responsive-sm table-responsive-md table-responsive-lg" id="UsersContainer">
               <thead class="thead-default">
                 <th>Empleo</th>
@@ -55,9 +60,54 @@ checkSession("user");
                 <th>Actividades</th>
                 <th>Accion</th>
               </thead>
-
-              <tbody>
-                <?php while ($row=mysqli_fetch_assoc($historial_laboral)):?>
+              <tr>
+                <td> <?php echo $datos_laborales['Empleo']; ?> </td>
+                <td> <?php echo $datos_laborales['Empresa']; ?> </td>
+                <td> <?php echo $datos_laborales['Puesto']; ?> </td>
+                <td> <?php echo $datos_laborales['Categoria']; ?> </td>
+                <td> <?php echo $datos_laborales['Departamento']; ?> </td>
+                <td> <?php echo $datos_laborales['Tecnologias']; ?> </td>
+                <td> <?php echo $datos_laborales['Actividades']; ?> </td>
+                  
+                <td style="min-width: 115px; max-width: 120px;">
+                  <button
+                    name="edit"
+                    value="<?php echo $datos_laborales['idDatos_Laborales']; ?>"
+                    type="submit"
+                    class="btn btn-primary mb-2"
+                    style="width: 80px;"
+                  >Editar</button>
+                  
+                  <button
+                    name="delete"
+                    value="<?php echo $datos_laborales['idDatos_Laborales']; ?>"
+                    type="button"
+                    class="btn btn-danger mb-2"
+                    style="width: 80px;"
+                  >Eliminar</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+            
+        <div class="mt-5 row">
+          <div class="col-12">
+            <head>Historial Laboral<head>
+            <table class="table table-bordered table-hover table-responsive-sm table-responsive-md table-responsive-lg" id="UsersContainer">
+              <thead class="thead-default">
+                <th>Empleo</th>
+                <th>Empresa</th>
+                <th>Puesto</th>
+                <th>Categoria</th>
+                <th>Departamento</th>
+                <th>Tecnologias</th>
+                <th>Actividades</th>
+                <th>Accion</th>
+              </thead>
+              <?php while ($row=mysqli_fetch_assoc($historial_laboral)):?>
+                <?php if($row['Datos_Laborales_idDatos_Laborales'] == null): ?>
+                <tr>
                   <td> <?php echo $row['Empleo']; ?> </td>
                   <td> <?php echo $row['Empresa']; ?> </td>
                   <td> <?php echo $row['Puesto']; ?> </td>
@@ -78,13 +128,14 @@ checkSession("user");
                     <button
                       name="delete"
                       value="<?php echo $row['idHistorial_Laboral']; ?>"
-                      type="submit"
+                      type="button"
                       class="btn btn-danger mb-2"
                       style="width: 80px;"
                     >Eliminar</button>
                   </td>
-                <?php endwhile; ?>
-              </tbody>
+                </tr>
+                <?php endif; ?>
+              <?php endwhile; ?>
             </table>
           </div>
         </div>
