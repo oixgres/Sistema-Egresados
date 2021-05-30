@@ -154,7 +154,7 @@ checkSession("user");
                                     <div class="input-group mb-3 d-none" id="passContainer">
                                         <input type="password" class="form-control" placeholder="Nueva contraseña" id="newPassWord">
                                         <div class="input-group-append">
-                                            <button class="btn btn-outline-info" type="button" id="saveNewPassword">Aceptar</button>
+                                            <button type="button" class="btn btn-outline-info" id="saveNewPassword">Aceptar</button>
                                         </div>
                                     </div>
 

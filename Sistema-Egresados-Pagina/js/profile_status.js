@@ -22,13 +22,13 @@ $(document).ready(function () {
     })
 
     $('#saveNewPassword').on('click', function (e) {
-        e.stopPropagation();
+        e.preventDefault();
 
         let idUsuario = getCookie('id');
         let password = $('#newPassWord').val()
 
         $.ajax({
-            url: 'updatePassword.php',
+            url: '../php/updatePassword.php',
             data: {idUsuario, password},
             type: 'POST',
             success: function (response) {
