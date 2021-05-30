@@ -27,7 +27,9 @@ $res = mysqli_query($conn, $sql);
 if($res->num_rows == 0) {
     echo -2;
 } else {
-    $sql = "SELECT Nombre FROM Universidad WHERE idUniversidad = ${mysqli_fetch_assoc($res)['Universidad_idUniversidad']}";
+    $idUniversidad = mysqli_fetch_assoc($res)['Universidad_idUniversidad'];
+
+    $sql = "SELECT Nombre FROM Universidad WHERE idUniversidad = ${idUniversidad}";
     $res = mysqli_query($conn, $sql);
 
     echo mysqli_fetch_assoc($res)['Nombre'];
