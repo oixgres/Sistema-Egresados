@@ -21,7 +21,6 @@ if (!isset($_POST['idUsuario'])){
     exit();
 }
 
-$idUsuario = $_POST['idUsuario'];
 $sql = "SELECT idUsuario FROM Usuario WHERE idUsuario = {$idUsuario}";
 $res = mysqli_query($conn, $sql);
 
@@ -54,7 +53,7 @@ else if($estatus == 'BLOQUEADO')
 	$accion = 1;
 }
 
-$sql = "UPDATE Usuario SET Estatus={$estatus} WHERE idUsuario = {$idUsuario}";
+$sql = "UPDATE Usuario SET Estatus='{$estatus}' WHERE idUsuario = {$idUsuario}";
 
 if (mysqli_query($conn, $sql)) {
     echo $accion;
