@@ -75,7 +75,7 @@ checkSession("user");
                         <img src="<?php echo $profilePicture['Direccion'] ?>"/>
                         <div class="file btn btn-lg btn-primary">
                             Cambiar Foto
-                            <input type="file" name="file"/>
+                            <input type="file" name="file" id="file_profile"/>
                         </div>
                     </div>
                 </div>
@@ -154,7 +154,7 @@ checkSession("user");
                                     <div class="input-group mb-3 d-none" id="passContainer">
                                         <input type="password" class="form-control" placeholder="Nueva contraseña" id="newPassWord">
                                         <div class="input-group-append">
-                                            <button type="button" class="btn btn-outline-info" id="saveNewPassword">Aceptar</button>
+                                            <button class="btn btn-outline-info" type="button" id="saveNewPassword">Aceptar</button>
                                         </div>
                                     </div>
 

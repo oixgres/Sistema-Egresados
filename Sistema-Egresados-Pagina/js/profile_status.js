@@ -22,6 +22,7 @@ $(document).ready(function () {
     })
 
     $('#saveNewPassword').on('click', function (e) {
+        e.stopPropagation();
         e.preventDefault();
 
         let idUsuario = getCookie('id');
@@ -32,7 +33,7 @@ $(document).ready(function () {
             data: {idUsuario, password},
             type: 'POST',
             success: function (response) {
-                console.log(response)
+
                 if(parseInt(response, 10) === 0){
                     alert("Contraseña actualizada")
 
