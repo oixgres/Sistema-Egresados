@@ -486,30 +486,17 @@ checkSession("user");
             name="edit"
             class="profile-edit-btn btn-primary btn-lg"
             style="color:aliceblue;"
-            href="editWorkingData.php"
             >Editar Empleo Actual</button>
           </div>
 
           <!-- Cambio de empleo -->
-          <div class="d-flex justify-content-center">
+          <div class="d-flex justify-content-center mt-4">
             <button
             type="submit"
             name="change"
             class="profile-edit-btn btn-primary btn-lg"
             style="color:aliceblue;"
-            href="editWorkingData.php"
-            >Cambie de Empleo</button>
-          </div>
-          
-          <!-- Agregar empleos al historial -->
-          <div class="d-flex justify-content-center mt-4">
-            <button
-            type="submit"
-            name="add"
-            class="profile-edit-btn btn-primary btn-lg"
-            style="color:aliceblue;"
-            onclick=""
-            >Añadir historial</button>
+            >Cambio de Empleo</button>
           </div>
           
           <!-- Eliminar/Borrar historial -->
@@ -519,7 +506,6 @@ checkSession("user");
             name="edit"
             class="profile-edit-btn btn-primary btn-lg"
             style="color:aliceblue;"
-            onclick=""
             >Editar historial</button>
           </div>
           

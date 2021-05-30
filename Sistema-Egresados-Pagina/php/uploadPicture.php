@@ -30,19 +30,22 @@ else
   /* Eliminamos la imagen anterior del servidor */
   $res = mysqli_query($conn, $query);
   $res = mysqli_fetch_assoc($res);
-  unlink($res['Direccion']);
+
+  if($res['Direccion'] != '../img/profile.jpg')
+  {
+    unlink($res['Direccion']);
+  }
 
   /* Asignamos la nueva imagen al usuario */ 
   $query = "UPDATE Foto_Perfil SET Direccion='$targetImg' WHERE Usuario_idUsuario='".$_COOKIE['id']."'";
   mysqli_query($conn, $query);
-  move_uploaded_file($_FILES['file']['tmp_name'], $targetImg);
 
+  move_uploaded_file($_FILES['file']['tmp_name'], $targetImg);
+  
   /* Cerramos la conexion */
   mysqli_close($conn);
 
   header("Location: profile.php");
   exit();
 }
-
-
 ?>
