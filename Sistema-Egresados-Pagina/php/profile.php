@@ -482,41 +482,39 @@ checkSession("user");
           <!-- Editar/Corregir datos laborales -->
           <div class="d-flex justify-content-center">
             <button
-            type="submit"
-            name="edit"
-            class="profile-edit-btn btn-primary btn-lg"
-            style="color:aliceblue;"
+              type="submit"
+              name="edit"
+              class="profile-edit-btn btn-primary btn-lg"
+              style="color:aliceblue;"
             >Editar Empleo Actual</button>
           </div>
 
           <!-- Cambio de empleo -->
           <div class="d-flex justify-content-center mt-4">
             <button
-            type="submit"
-            name="change"
-            class="profile-edit-btn btn-primary btn-lg"
-            style="color:aliceblue;"
+              type="submit"
+              name="change"
+              class="profile-edit-btn btn-primary btn-lg"
+              style="color:aliceblue;"
             >Cambio de Empleo</button>
           </div>
           
           <!-- Eliminar/Borrar historial -->
           <div class="d-flex justify-content-center mt-4 mb-4">
-            <button
-            type="button"
-            name="edit"
-            class="profile-edit-btn btn-primary btn-lg"
-            style="color:aliceblue;"
-            >Editar historial</button>
+            <a
+              href="workingHistory.php"
+              class="profile-edit-btn btn-primary btn-lg"
+              style="color:aliceblue;"
+            >Editar historial</a>
           </div>
           
           <!-- Borrar perfil -->
           <div class="d-flex justify-content-center mt-4 mb-4">
             <button
-            type="button"
-            name="button"
-            class="profile-edit-btn btn-danger btn-lg"
-            style="color:aliceblue;"
-            onclick=""
+              type="button"
+              name="button"
+              class="profile-edit-btn btn-danger btn-lg"
+              style="color:aliceblue;"
             >Eliminar Perfil</button>
           </div>
         </form>

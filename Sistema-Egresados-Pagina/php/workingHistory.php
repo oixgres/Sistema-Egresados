@@ -40,75 +40,60 @@ checkSession("user");
 
 
     <div class="container-fluid">
+      <form action="editWorkingData.php" method="post">
+
         <div class="mt-5 row">
-            <div class="col-12">
-                <table class="table table-bordered table-hover table-responsive-sm table-responsive-md table-responsive-lg" id="UsersContainer">
-                    <thead class="thead-default">
-                    <th>Empleo</th>
-                    <th>Empresa</th>
-                    <th>Puesto</th>
-                    <th>Categoria</th>
-                    <th>Departamento</th>
-                    <th>Tecnologias</th>
-                    <th>Actividades</th>
-                    <th>Accion</th>
-                    </thead>
+          <div class="col-12">
+            <table class="table table-bordered table-hover table-responsive-sm table-responsive-md table-responsive-lg" id="UsersContainer">
+              <thead class="thead-default">
+                <th>Empleo</th>
+                <th>Empresa</th>
+                <th>Puesto</th>
+                <th>Categoria</th>
+                <th>Departamento</th>
+                <th>Tecnologias</th>
+                <th>Actividades</th>
+                <th>Accion</th>
+              </thead>
 
-                    <tbody>
-                      <?php while ($row=mysqli_fetch_assoc($historial_laboral)):?>
-                        <td> <?php echo $row['Empleo'] ?> </td>
-                        <td> <?php echo $row['Empresa'] ?> </td>
-                        <td> <?php echo $row['Puesto'] ?> </td>
-                        <td> <?php echo $row['Categoria'] ?> </td>
-                        <td> <?php echo $row['Departamento'] ?> </td>
-                        <td> <?php echo $row['Tecnologias'] ?> </td>
-                        <td> <?php echo $row['Actividades'] ?> </td>
-                        
-                        <td>
-                          <button
-                            type="button"
-                            class="btn btn-success"
-                          >Editar</button>
-                        </td>
-                      
-                      <?php endwhile; ?>
-                    </tbody>
-                </table>
+              <tbody>
+                <?php while ($row=mysqli_fetch_assoc($historial_laboral)):?>
+                  <td> <?php echo $row['Empleo']; ?> </td>
+                  <td> <?php echo $row['Empresa']; ?> </td>
+                  <td> <?php echo $row['Puesto']; ?> </td>
+                  <td> <?php echo $row['Categoria']; ?> </td>
+                  <td> <?php echo $row['Departamento']; ?> </td>
+                  <td> <?php echo $row['Tecnologias']; ?> </td>
+                  <td> <?php echo $row['Actividades']; ?> </td>
+                    
+                  <td style="min-width: 115px; max-width: 120px;">
+                    <button
+                      name="editHistory"
+                      value="<?php echo $row['idHistorial_Laboral']; ?>"
+                      type="submit"
+                      class="btn btn-primary mb-2"
+                      style="width: 80px;"
+                    >Editar</button>
+                    
+                    <button
+                      name="delete"
+                      value="<?php echo $row['idHistorial_Laboral']; ?>"
+                      type="submit"
+                      class="btn btn-danger mb-2"
+                      style="width: 80px;"
+                    >Eliminar</button>
+                  </td>
+                <?php endwhile; ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button name="addHistory" type="submit" class="btn btn-success">Añadir Historial</button>
+        </div>  
+      </form>
+    </div>
                 
-
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="d-flex align-items-end">
-                <button class="btn btn-success form-control" id="generateCSV">Añadir Historial</button>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="container">
-        <!-- Modal -->
-        <div class="modal fade" id="deleteUserModal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Eliminar Usuario</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="text-warning-">No podrá recuperar el usuario</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" value="" id="ConfirmDeleteUser">Aceptar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <script src="../../js/boostrap/jquery-3.6.0.min.js"></script>
     <script src="../../js/checkSession.js"></script>
     <script src="../../js/boostrap/popper.min.js"></script>
