@@ -98,11 +98,31 @@ $(document).ready(function (e) {
         </tr>  
         `)
 
-        node.find('.blockuser').on('click', function (e) {
+        node.find('.blockUser').on('click', function (e) {
             e.stopPropagation();
             let userId = $(this).parent().parent().parent().attr('id');
             let regex = RegExp('[0-9]+')
             let idUsuario = regex.exec(userId).pop();
+
+
+            $.ajax({
+                url: '../php/blockUser.php',
+                data: {idUsuario},
+                type: 'POST',
+                success: function (response) {
+                    console.log(response)
+                    switch (parseInt(response, 10)){
+                        case 0: alert("Se bloqueo el usuario");
+                                break;
+                        case 1: alert("Se desbloqueo el usuario")
+                                break;
+                    }
+                },
+                error: function () {
+                    alert("error");
+                }
+
+            })
 
 
         })

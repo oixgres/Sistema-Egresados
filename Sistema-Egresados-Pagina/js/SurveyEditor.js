@@ -40,6 +40,12 @@ $(document).ready(function () {
                                     <span class="fa fa-edit"></span>
                                     <span class="spinner-border spinner-border-sm float-right d-none" role="status"></span>
                                 </button>
+                                <button class="btn btn-warning mr-1 showStadistics" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Estadisticas">
+                                    <span class="fa fa-pie-chart"></span>
+                                    <span class="spinner-border spinner-border-sm float-right d-none" role="status"></span>
+                                </button>
+                                
+                               
                                 <button class="btn btn-danger deleteSurvey" data-bs-toggle="tooltip" data-bs-placement="right" title="Eliminar">
                                     <span class="fa fa-times"></span>
                                     <span class="spinner-border spinner-border-sm float-right d-none" role="status"></span>
@@ -48,6 +54,27 @@ $(document).ready(function () {
                         </td>
                     </tr>
                 `);
+
+                node.find('.showStadistics').on('click', function (e) {
+                    e.stopPropagation();
+
+                    let offcanvas = new bootstrap.Offcanvas($('#SurveyStatistics')[0]);
+
+                    let TESTER = document.getElementById('tester');
+                    let TestNode = $('#SurveyStatistics');
+
+                    var data = [{
+                        values: [19, 26, 55],
+                        labels: ['Respuesta A', 'Respuesta B', 'Respuesta C'],
+                        type: 'pie'
+                    }];
+
+
+                    Plotly.newPlot(TESTER, data);
+
+                    offcanvas.show();
+
+                })
 
                 node.find('.showSurvey').on('click', function (e) {
                     //click the show survey
