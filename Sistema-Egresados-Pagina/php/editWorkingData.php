@@ -53,15 +53,30 @@ checkSession("user");
                   </div>
 
                   <?php
-                  $query = "SELECT * FROM Datos_Laborales WHERE Usuario_idUsuario='".$_COOKIE['id']."'";
-                  $datos_laborales = mysqli_query($conn, $query);
-                  $datos_laborales = mysqli_fetch_assoc($datos_laborales);
+
+                  $action = '';
+
+                  if(isset($_POST['edit']))
+                  {
+                    $query = "SELECT * FROM Datos_Laborales WHERE Usuario_idUsuario='".$_COOKIE['id']."'";
+                    $datos_laborales = mysqli_query($conn, $query);
+                    $datos_laborales = mysqli_fetch_assoc($datos_laborales);
+
+                    $action = 'edit';
+                  }
+                  else
+                    if(isset($_POST['change']))
+                    {
+                      $action = 'change';
+                    }
+                  
 
                   ?>
                   <div class="card-body">
                     <div class="mt-3" id="questionContainerForIsWorking">
                       
                       <form action="editWorkingDataDB.php" method="POST">
+                        <input type="hidden" name="action" value=<?php echo $action; ?>>
 
                         <div class="row">
                           <div class="col-6">

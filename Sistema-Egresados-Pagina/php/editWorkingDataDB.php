@@ -3,6 +3,7 @@
 require_once 'dbh.php';
 
 $date = $_POST['fecha'];
+$work = 1;
 $job = $_POST['empleo'];
 $company = $_POST['empresa'];
 $pos = $_POST['puesto'];
@@ -12,8 +13,23 @@ $dep = $_POST['departamento'];
 $tec = $_POST['tecnologias'];
 $act = $_POST['actividades'];
 
-$query = "UPDATE Datos_Laborales SET Inicio='$date', Empleo='$job', Empresa='$company', Puesto='$pos', Categoria='$category', Correo_Emp='$email', Departamento='$dep', Tecnologias='$tec', Actividades='$act' WHERE Usuario_idUsuario='".$_COOKIE['id']."'";
-mysqli_query($conn, $query);
+$action = $_POST['action'];
+
+switch($action)
+{
+  case 'edit':
+    $query = "UPDATE Datos_Laborales SET Inicio='$date', Empleo='$job', Empresa='$company', Puesto='$pos', Categoria='$category', Correo_Emp='$email', Departamento='$dep', Tecnologias='$tec', Actividades='$act' WHERE Usuario_idUsuario='".$_COOKIE['id']."'";
+    mysqli_query($conn, $query);
+  break;
+
+  case 'change':
+    $query = "DELETE FROM Datos_Laborales WHERE Usuario_idUsuario='".$_COOKIE['id']."'";
+    mysqli_query($conn, $query);
+
+    $query = "INSERT INTO Datos_Laborales (Usuario_idUsuario, Labora, Empleo, Empresa, Puesto, Categoria, Correo_Emp, Departamento, Tecnologias, Actividades, Inicio) VALUES ('".$_COOKIE['id']."', 1, '$job', '$company', '$pos', '$category', '$email', '$dep', '$tec', '$act', '$date')";
+    mysqli_query($conn, $query);
+  break;
+}
 
 mysqli_close($conn);
 

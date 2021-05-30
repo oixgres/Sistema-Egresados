@@ -66,11 +66,10 @@ DROP TABLE IF EXISTS Datos_Personales;
 CREATE TABLE IF NOT EXISTS Datos_Personales (
   idPersonal INT NOT NULL AUTO_INCREMENT,
   Usuario_idUsuario INT NOT NULL,
-  -- Fecha_Nacimiento VARCHAR(45) NOT NULL,
   Fecha_Nacimiento DATE NOT NULL,
   Estado_idEstado INT NOT NULL,
   Ciudad_idCiudad INT NOT NULL,
-  Domicilio VARCHAR(45) NOT NULL,
+  Domicilio VARCHAR(200) NOT NULL,
   Telefono VARCHAR(45) NOT NULL,
   PRIMARY KEY (idPersonal),
   UNIQUE INDEX (Usuario_idUsuario),

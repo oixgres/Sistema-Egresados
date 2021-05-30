@@ -476,38 +476,54 @@ checkSession("user");
         <div class="close-button" onclick="editPopup()">&times;</div>
         <h1 class="popup-title">EDITAR</h1>
         
-        <!-- Editar datos laborales -->
-        <form action="">
+        <!-- Editar Perfil -->
+        <form action="editWorkingData.php" method="post">
+
+          <!-- Editar/Corregir datos laborales -->
           <div class="d-flex justify-content-center">
             <button
-            type="button"
-            name="button"
+            type="submit"
+            name="edit"
             class="profile-edit-btn btn-primary btn-lg"
             style="color:aliceblue;"
             href="editWorkingData.php"
-            >Editar datos laborales</button>
+            >Editar Empleo Actual</button>
+          </div>
+
+          <!-- Cambio de empleo -->
+          <div class="d-flex justify-content-center">
+            <button
+            type="submit"
+            name="change"
+            class="profile-edit-btn btn-primary btn-lg"
+            style="color:aliceblue;"
+            href="editWorkingData.php"
+            >Cambie de Empleo</button>
           </div>
           
+          <!-- Agregar empleos al historial -->
           <div class="d-flex justify-content-center mt-4">
             <button
-            type="button"
-            name="button"
+            type="submit"
+            name="add"
             class="profile-edit-btn btn-primary btn-lg"
             style="color:aliceblue;"
             onclick=""
             >Añadir historial</button>
           </div>
           
+          <!-- Eliminar/Borrar historial -->
           <div class="d-flex justify-content-center mt-4 mb-4">
             <button
             type="button"
-            name="button"
+            name="edit"
             class="profile-edit-btn btn-primary btn-lg"
             style="color:aliceblue;"
             onclick=""
             >Editar historial</button>
           </div>
           
+          <!-- Borrar perfil -->
           <div class="d-flex justify-content-center mt-4 mb-4">
             <button
             type="button"
