@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Creador de encuestas publicas</title>
+
+    <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css"> <!-- Nuevos estilos de boostrap -->
+    <link rel="stylesheet" href="../css/boostrap/bootstrap_pulse.min.css"> <!-- Nuevos estilos de boostrap -->
+
+
+
+    <style>
+        #carousel-button-left, #carousel-button-right{
+            height: 40px;
+            border-radius: 20px;
+        }
+
+        #ToastNotification{
+            position: fixed;
+            width: 300px;
+            top: 0;
+            right: 0;
+        }
+
+        .progress{
+            height: 20px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+
+<div class="container-fluid mt-5">
+
+    <div class="row"> <!-- Una navbar clasica -->
+        <div class="col-12">
+            <nav class="nav navbar-dark bg-dark p-3 d-flex justify-content-between">
+                <div class="navbar-brand">Crear una encuesta</div>
+                <button type="button" class="btn btn-info" id="GoHome">
+                    <i class="fa fa-home"></i>
+                    Regresar
+                </button> <!-- Boton para regresar -->
+            </nav>
+
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12" id="SurveyContainer">
+            <div class="card"> <!-- Nombre de la encuesta, Nombre del alcance, Tipo de alcance -->
+                <div class="card-block">
+                    <div class="card-body">
+                        <form class="row">
+                            <!--nombre de la encuesta -->
+                            <div class="form-group col-12">
+                                <label for="SurveyName">Nombre de la encuesta</label>
+                                <input type="text" class="form-control" id="SurveyName" placeholder="Introduce el nombre de la encuesta">
+
+                                <div class="valid-feedback mt-0"> <!-- Para habilitarlo agregar clase is-valid al input -->
+                                    Nombre Disponible
+                                </div>
+                                <div class="invalid-feedback"> <!-- Para habilitarlo agregar clase is-invalid al input -->
+                                    Nombre no disponible
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="btn btn-primary" id="createSurvey">Crear</div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6 col-xl-4" id="QuestionContainerController">
+
+            <div id="QuestionCarousel" class="carousel slide" role="carousel" data-interval="false">
+
+                <div class="carousel-inner" id="QuestionContainer">
+                    <!-- Contenedor principal de las preguntas-->
+
+                </div>
+
+
+                <a class="carousel-control-prev bg-info mt-2 ml-2" id="carousel-button-left">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next bg-info mt-2 mr-2" id="carousel-button-right">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+
+            <div class="row">
+                <div class="col-12" id="QuestionButtonsContainer">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6 offset-3 col-lg-6 offset-lg-3 col-xl-6">
+                                    <button type="button" class="btn btn-info btn-block rounded-pill" id="AddQuestion">Agregar Pregunta</button>
+                                </div>
+
+                                <div class="col-12 mt-2 d-flex justify-content-center">
+                                    <div class="form-group">
+                                        <label>
+                                            Pregunta#
+                                            <input type="text" class="form-control" placeholder="ir a pregunta..." id="questionFinder"> <!-- Input para saltar al numero de pregunta -->
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6 col-xl-8" id="QuestionContainerPreview">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h4 class="text-center">Previsualización</h4>
+                    </div>
+
+                    <div class="row card-body" id="PreviewQuestionContainer"> <!-- Contenedor de preguntas y respuestas preview -->
+
+                        <h5 class="col-12" id="QuestionTittlePreview"></h5> <!-- Titulo de la pregunta -->
+
+                        <div class="col-12" id="AnswerPreviewContainer">
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <button class="btn btn-success rounded-pill" id="SaveToDatabase">Guardar Encuesta
+                            </button>
+                        </div>
+                        <div class="col-12 mt-4">
+                            <div class="progress">
+                                <div class="progress progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 0%" id="ProgressBarDatabase">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <!-- Modal -->
+        <div class="modal fade" id="ModalDatabaseSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Aviso!</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        La encuesta ha sido guardada con exito.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnDismiss">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" data-autohide="false" id="ToastNotification">
+        <div class="toast-header">
+            <img src="..." class="rounded mr-2" alt="X">
+            <strong class="mr-auto">Notificacion</strong>
+            <small class="text-white">Encuesta creada</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            Ya puede colocar preguntas y respuestas
+        </div>
+    </div>
+
+</div>
+
+
+<script src="../js/boostrap/jquery-3.6.0.min.js"></script>
+<script src="../js/boostrap/popper.min.js"></script>
+<script src="../js/boostrap/bootstrap.min.js"></script>
+<script src="../js/checkSession.js"></script>
+<script src="../js/UniversalCreator.js"></script>
+<script src="https://kit.fontawesome.com/5d2293cbbc.js" crossorigin="anonymous"></script>
+
+</body>
+</html>
