@@ -103,6 +103,7 @@ else
         //setUserCookies($token, $idUser, $name, $lastname, $mail, "admin_master");
         setcookie("token",$token,time()+(60*60*24*30), "/");
         setcookie("id",$idUser,time()+(60*60*24*30), "/");
+        setcookie("userType","admin_master",time()+(60*60*24*30), "/");
 
         echo json_encode(Array(
           'location'=>'php/admin_master.php'
