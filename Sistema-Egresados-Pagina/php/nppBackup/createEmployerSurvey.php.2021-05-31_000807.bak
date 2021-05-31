@@ -48,10 +48,13 @@ if($res == false)
 	exit();
 }
 
-//Se devuelve el id del ultimo query realizado
 
-$surveyId = mysqli_insert_id($conn);
-echo $surveyId;
+if(isset($sql)) {
+    
+    $row = mysqli_fetch_array($res);
+    echo $row['RESULT'];
+    
+}
 
 $conn->close();
 ?>
