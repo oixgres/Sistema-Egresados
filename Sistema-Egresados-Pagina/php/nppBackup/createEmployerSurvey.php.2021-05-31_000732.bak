@@ -37,21 +37,13 @@ if($res->num_rows == 0)
 //Se inserta la encuesta en la tabla Encuesta..
 
 $sql = "INSERT INTO Encuesta (Nombre) VALUES ({$surveyName})";
-$res = mysqli_query($conn, $sql);
 
-//No se pudo insertar en la tabla Encuesta
-
-if($res == false)
-{
-	echo -2;
-	$conn->close();
-	exit();
+if(isset($sql)) {
+    $res = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_array($res);
+    echo $row['RESULT'];
+    
 }
-
-//Se devuelve el id del ultimo query realizado
-
-$surveyId = mysqli_insert_id($conn);
-echo $surveyId;
 
 $conn->close();
 ?>
