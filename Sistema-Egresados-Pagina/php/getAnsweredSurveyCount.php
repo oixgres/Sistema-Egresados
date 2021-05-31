@@ -34,28 +34,28 @@ if($res->num_rows == 0) {
     exit();
 }
 
-$sql = "SELECT COUNT(Encuestas_Contestadas.Usuario_idUsuario) AS contestado, COUNT(Encuestas_Pendientes.Usuario_idUsuario) AS pendiente
-        FROM Encuesta
-        INNER JOIN Encuestas_Contestadas ON Encuesta.idEncuesta = Encuestas_Contestadas.Encuesta_idEncuesta
-        INNER JOIN Encuestas_Pendientes  ON Encuesta.idEncuesta = Encuestas_Pendientes.Encuesta_idEncuesta
-        WHERE Encuesta.idEncuesta = ${idEncuesta}";
+$sql = "SELECT COUNT(Encuestas_Pendientes.Usuario_idUsuario) AS pendiente
+        FROM Encuestas_Pendientes
+        WHERE Encuestas_Pendientes.Encuesta_idEncuesta = ${idEncuesta}
+        GROUP BY Encuestas_Pendientes.Encuesta_idEncuesta";
+
 
 $res = mysqli_query($conn, $sql);
-$json = array();
+$pendiente = mysqli_fetch_array($res)['pendiente'];
 
-if(gettype($res) != "boolean") {
-    while ($fila = mysqli_fetch_array($res)) {
-        $json [] = array(
-            'total' => $fila['contestado'] + $fila['pendiente'],
-            'contestado' => $fila['contestado'],
-            'pendiente' => $fila['pendiente']
-        );
-    }
-}
+$sql = "SELECT COUNT(Encuestas_Contestadas.Usuario_idUsuario) AS contestado
+        FROM Encuestas_Contestadas
+        WHERE Encuestas_Contestadas.Encuesta_idEncuesta = ${idEncuesta}
+        GROUP BY Encuestas_Contestadas.Encuesta_idEncuesta";
+$res = mysqli_query($conn, $sql);
+$contestado = mysqli_fetch_array($res)['contestado'];
 
+$json = array('total' => $pendiente+$contestado,
+              'contestado' => $contestado,
+              'pendiente' => $pendiente);
 /*
  *	JSON Ejemplo:
- *	   string(46) "[{"total":2,"contestado":"1","pendiente":"1"}]"
+ *	   string(44) "{"total":9,"contestado":"2","pendiente":"7"}"
 */
 
 if(!empty($json)) {
