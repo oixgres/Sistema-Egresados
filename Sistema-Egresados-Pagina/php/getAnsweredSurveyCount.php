@@ -38,17 +38,25 @@ $sql = "SELECT COUNT(Encuestas_Pendientes.Usuario_idUsuario) AS pendiente
         FROM Encuestas_Pendientes
         WHERE Encuestas_Pendientes.Encuesta_idEncuesta = ${idEncuesta}
         GROUP BY Encuestas_Pendientes.Encuesta_idEncuesta";
-
-
 $res = mysqli_query($conn, $sql);
-$pendiente = mysqli_fetch_array($res)['pendiente'];
+
+if ($res->num_rows > 0) {
+    $pendiente = mysqli_fetch_array($res)['pendiente'];
+} else {
+    $pendiente = 0;
+}
 
 $sql = "SELECT COUNT(Encuestas_Contestadas.Usuario_idUsuario) AS contestado
         FROM Encuestas_Contestadas
         WHERE Encuestas_Contestadas.Encuesta_idEncuesta = ${idEncuesta}
         GROUP BY Encuestas_Contestadas.Encuesta_idEncuesta";
 $res = mysqli_query($conn, $sql);
-$contestado = mysqli_fetch_array($res)['contestado'];
+
+if ($res->num_rows > 0) {
+    $contestado = mysqli_fetch_array($res)['contestado'];
+} else {
+    $contestado = 0;
+}
 
 $json = array('total' => $pendiente+$contestado,
               'contestado' => $contestado,
