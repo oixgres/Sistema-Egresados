@@ -15,6 +15,8 @@ require_once "dbh.php";
  *  -3 : Error al insertar
 */
 
+
+
 if (!isset($_POST['idPregunta']) || !isset($_POST['idEmpleador']) || !isset($_POST['respuesta'])) {
     echo -1;
     $conn->close();
@@ -37,11 +39,11 @@ if ($resQuestion->num_rows == 0 || $resEmpleador->num_rows == 0) {
 }
 
 $sql = "INSERT INTO Respuesta_Empleador(Respuesta, Pregunta_idPregunta, Empleador_idEmpleador)
-        VALUES ('$respuesta', $idPregunta, $idEmpleador)";
+        VALUES ('$respuesta', '$idPregunta', '$idEmpleador')";
 if (mysqli_query($conn, $sql)) {
     echo mysqli_insert_id($conn);
 } else {
-    echo -3;
+    echo mysqli_error($conn);
 }
 
 $conn->close();
