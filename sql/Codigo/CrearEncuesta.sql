@@ -62,12 +62,12 @@ BEGIN
         END IF;
         
 	WHEN '2' THEN
-        SELECT idCampus INTO tempId from Campus
-        WHERE Universidad_idUniversidad = idUniversity; -- traerme el idCampus (si existe)
+
 
 		SELECT idFacultad INTO id_scope from Facultad
 		INNER JOIN Campus ON Facultad.Campus_idCampus = Campus.idCampus
-        WHERE Facultad.Nombre = scope_name AND Campus_idCampus = tempId; -- traerme el idFacultad (si existe)
+        INNER JOIN Universidad ON Universidad.idUniversidad = Campus.Universidad_idUniversidad
+        WHERE Facultad.Nombre = scope_name; -- traerme el idFacultad (si existe)
 		
         IF(NOT isnull(id_scope)) THEN -- VERIFICAR SI FACULTAD EXISTE 
 			-- la facultad existe 
@@ -90,14 +90,13 @@ BEGIN
         END IF;
         
 	WHEN '3' THEN
-        SELECT idCampus INTO tempId from Campus
-        WHERE Universidad_idUniversidad = idUniversity; -- traerme el idCampus (si existe)
-
-        SELECT idFacultad INTO tempId from Facultad
-        WHERE Facultad.Nombre = scope_name AND Campus_idCampus = tempId; -- traerme el idFacultad (si existe)
-
+    
 		SELECT idPlan_Estudio INTO id_scope from Plan_Estudio
-        WHERE Plan_Estudio.Nombre = scope_name AND Facultad_idFacultad = tempId; -- traerme el idPlan_Estudio (si existe)
+        INNER JOIN Facultad ON Plan_Estudio.Facultad_idFacultad = Facultad.idFacultad
+		INNER JOIN Campus ON Facultad.Campus_idCampus = Campus.idCampus
+        INNER JOIN Universidad ON Universidad.idUniversidad = Campus.Universidad_idUniversidad
+        WHERE Plan_Estudio.Nombre = scope_name; -- traerme el idFacultad (si existe)
+    
 		
         IF(NOT isnull(id_scope)) THEN -- VERIFICAR SI PLAN EXISTE 
 			-- el plan existe 

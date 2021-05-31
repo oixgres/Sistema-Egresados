@@ -774,6 +774,9 @@ $(document).ready(function (e) {
         data: {idAdmin},
         success: function (response) {
             $('#SurveyTopic').val(JSON.parse(response).Nombre);
+
+            localStorage.setItem("ID_UNIVERSIDAD", JSON.parse(response).idUniversidad);
+
         }
     })
 
