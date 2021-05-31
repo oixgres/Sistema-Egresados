@@ -8,6 +8,7 @@ require_once "dbh.php";
  *      campus
  *      faculty
  *      program
+ *      idUniversidad
  * Retorna:
  *      Entero positivo correspondiente al ID
  *      Entero negativo en caso de error
@@ -30,15 +31,18 @@ if(isset($_POST['faculty']) && $_POST['faculty'] !== "NULL")
 if(isset($_POST['program']) && $_POST['program'] !== "NULL")
     $program = $_POST['program'];
 
+if(isset($_POST['idUniversidad']))
+    $idUniversidad = $_POST['idUniversidad'];
+
 
 if(isset($university)) {
-    $sql = "CALL insertSurvey('$surveyName', '$university', 0)";
+    $sql = "CALL insertSurvey('$surveyName', '$university', 0, '$idUniversidad')";
 } else if(isset($campus)) {
-    $sql = "CALL insertSurvey('$surveyName', '$campus', 1)";
+    $sql = "CALL insertSurvey('$surveyName', '$campus', 1, '$idUniversidad')";
 } else if(isset($faculty)) {
-    $sql = "CALL insertSurvey('$surveyName', '$faculty', 2)";
+    $sql = "CALL insertSurvey('$surveyName', '$faculty', 2, '$idUniversidad')";
 } else if(isset($program)) {
-    $sql = "CALL insertSurvey('$surveyName', '$program', 3)";
+    $sql = "CALL insertSurvey('$surveyName', '$program', 3, '$idUniversidad')";
 } else {
     die('No has seleccionado ningun alcance');
 }
