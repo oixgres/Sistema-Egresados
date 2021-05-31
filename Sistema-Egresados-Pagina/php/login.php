@@ -92,7 +92,7 @@ else
       if($nr == 1)
       {
         /* Obtenemos datos para almacenar en la cookie */
-        $idUser = getFirstQueryElement($conn, "Admin_Master", "idAdmin", "Correo", $mail);
+        $idUser = getFirstQueryElement($conn, "Admin_Master", "idAdmin_Master", "Correo", $mail);
 
         /* Creamos un token para almacenarlo en cookies */
         $token = createToken();
