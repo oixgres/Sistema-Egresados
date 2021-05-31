@@ -14,7 +14,10 @@ checkSession("user");
     <title>Editar Historial Laboral</title>
 
     <?php
+    
     require_once 'dbh.php';
+    require_once 'deleteHistory.php';
+
 
     $query = "SELECT * FROM Historial_Laboral WHERE Usuario_idUsuario='".$_COOKIE['id']."'";
     $historial_laboral = mysqli_query($conn, $query);
@@ -78,19 +81,18 @@ checkSession("user");
                     style="width: 80px;"
                   >Editar</button>
                   
-                  <button
-                    name="delete"
-                    value="<?php echo $datos_laborales['idDatos_Laborales']; ?>"
-                    type="button"
+                  <a
+                    href="workingHistory.php?deleteWork=<?php echo $datos_laborales['idDatos_Laborales']; ?>"
                     class="btn btn-danger mb-2"
                     style="width: 80px;"
-                  >Eliminar</button>
+                  >Eliminar</a>
                 </td>
               </tr>
             </table>
           </div>
         </div>
             
+        <!-- Historial Laboral -->
         <div class="mt-5 row">
           <div class="col-12">
             <head>Historial Laboral<head>
@@ -125,13 +127,11 @@ checkSession("user");
                       style="width: 80px;"
                     >Editar</button>
                     
-                    <button
-                      name="delete"
-                      value="<?php echo $row['idHistorial_Laboral']; ?>"
-                      type="button"
+                    <a
+                      href="workingHistory.php?deleteHistory=<?php echo $row['idHistorial_Laboral']; ?>"
                       class="btn btn-danger mb-2"
                       style="width: 80px;"
-                    >Eliminar</button>
+                    >Eliminar</a>
                   </td>
                 </tr>
                 <?php endif; ?>
