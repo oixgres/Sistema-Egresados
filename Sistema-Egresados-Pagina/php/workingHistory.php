@@ -49,6 +49,7 @@ checkSession("user");
     <div class="container-fluid">
       <form action="editWorkingData.php" method="post">
 
+        <!-- Datos Laborales -->
         <div class="mt-5 row">
           <div class="col-12">
             <head>Empleo Actual</head>
@@ -63,6 +64,7 @@ checkSession("user");
                 <th>Actividades</th>
                 <th>Accion</th>
               </thead>
+              <?php if($datos_laborales['Labora'] != 0):?>
               <tr>
                 <td> <?php echo $datos_laborales['Empleo']; ?> </td>
                 <td> <?php echo $datos_laborales['Empresa']; ?> </td>
@@ -88,6 +90,27 @@ checkSession("user");
                   >Eliminar</a>
                 </td>
               </tr>
+              <?php else: ?>
+              <tr>
+                <td> No trabaja </td>
+                <td> No trabaja </td>
+                <td> No trabaja </td>
+                <td> No trabaja </td>
+                <td> No trabaja </td>
+                <td> No trabaja </td>
+                <td> No trabaja </td>
+                  
+                <td>
+                  <button
+                    name="change"
+                    value="<?php echo $datos_laborales['idDatos_Laborales']; ?>"
+                    type="submit"
+                    class="btn btn-primary mb-2"
+                    style="width: 80px;"
+                  >Agregar</button>
+                </td>
+              </tr>
+              <?php endif; ?>
             </table>
           </div>
         </div>
