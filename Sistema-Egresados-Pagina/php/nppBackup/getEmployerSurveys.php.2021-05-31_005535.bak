@@ -16,10 +16,10 @@ require_once "dbh.php";
 //Se buscan las encuestas
 
 $sql = "SELECT idEncuesta, Nombre FROM Encuesta
-		WHERE Universidad_idUniversidad IS NULL
-		AND Campus_idCampus IS NULL
-		AND Facultad_idFacultad IS NULL
-		AND Plan_Estudio_idPlan_Estudio IS NULL";
+		WHERE Universidad_idUniversidad = NULL
+		AND Campus_idCampus = NULL
+		AND Facultad_idFacultad = NULL
+		AND Plan_Estudio_idPlan_Estudio = NULL";
 $res = mysqli_query($conn, $sql);
 
 //Se verifica que la consulta haya devuelto algun valor
