@@ -463,7 +463,8 @@ $(document).ready(function (e) {
                 if(parseInt(response, 10) > 0){
                     console.log("user id = " + response)
                     localStorage.setItem("USER_ID", parseInt(response, 10))
-
+                    $('#surveyContainer').show();
+                    $('#surveyContainer').addClass('d-flex')
                     alert("creado!!")
                 }
 
@@ -477,6 +478,6 @@ $(document).ready(function (e) {
 
     })
 
-
+    $('#surveyContainer').hide();
 
 })
