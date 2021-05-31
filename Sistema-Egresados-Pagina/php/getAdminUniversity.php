@@ -29,10 +29,18 @@ if($res->num_rows == 0) {
 } else {
     $idUniversidad = mysqli_fetch_assoc($res)['Universidad_idUniversidad'];
 
-    $sql = "SELECT Nombre FROM Universidad WHERE idUniversidad = ${idUniversidad}";
+    $sql = "SELECT idUniversidad,Nombre FROM Universidad WHERE idUniversidad = ${idUniversidad}";
     $res = mysqli_query($conn, $sql);
 
-    echo mysqli_fetch_assoc($res)['Nombre'];
+    $values = mysqli_fetch_array($res);
+
+    $json = [
+        'Nombre' => $values['Nombre'],
+        'idUniversidad' => $values['idUniversidad'],
+    ];
+
+
+    echo json_encode($json);
 }
 
 $conn->close();
