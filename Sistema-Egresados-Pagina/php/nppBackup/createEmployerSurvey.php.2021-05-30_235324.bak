@@ -21,8 +21,6 @@ if(isset($_POST['idAdmin_Master']))
 else
 	die('No se mando el id de Admin_Master');
 
-//Se verifica si existe el admin master
-
 $sql = "SELECT idAdmin_Master FROM Admin_Master WHERE idAdmin_Master = {$idAdmin_Master}";
 $res = mysqli_query($conn, $sql);
 
@@ -33,8 +31,6 @@ if($res->num_rows == 0)
 	$conn->close();
 	exit();
 }
-
-//Se inserta la encuesta en la tabla Encuesta..
 
 $sql = "INSERT INTO Encuesta (Nombre) VALUES ({$surveyName})";
 

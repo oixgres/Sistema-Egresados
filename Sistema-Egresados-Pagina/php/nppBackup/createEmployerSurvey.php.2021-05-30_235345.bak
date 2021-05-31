@@ -34,8 +34,6 @@ if($res->num_rows == 0)
 	exit();
 }
 
-//Se inserta la encuesta en la tabla Encuesta..
-
 $sql = "INSERT INTO Encuesta (Nombre) VALUES ({$surveyName})";
 
 if(isset($sql)) {
