@@ -1,5 +1,5 @@
 $(document).ready(function (e) {
-    checkSession('admin');
+    checkSession('admin_master');
     /*
         case 'Radio':   return 0;
         case 'Text Area':   return 1;
@@ -499,7 +499,7 @@ $(document).ready(function (e) {
                     let type = questionTypes[i];
 
                     $.ajax({ //insertar pregunta en la base de datos
-                        url:    '',
+                        url:     '../php/createQuestion.php',
                         async:  false,
                         data:   {surveyId, title, theme, type},
                         type:   'POST',
@@ -612,13 +612,41 @@ $(document).ready(function (e) {
         fields.removeClass('alert alert-danger alert-success is-valid is-invalid');
     }
 
-    let idAdmin = getCookie('id');
+
 
 
     $('#createSurvey').on('click', function (e){
         e.stopPropagation();
 
-        $('.showOff').removeClass('d-none');
+        let idAdmin_Master = getCookie('id');
+        let surveyName = $('#SurveyName').val();
+
+        console.log("master = " + idAdmin_Master);
+        console.log("name = " + surveyName)
+
+
+        $.ajax({
+            url: '../php/createEmployerSurvey.php',
+            type: 'POST',
+            data: {idAdmin_Master, surveyName},
+            success: function (response) {
+                console.log(response)
+                if(parseInt(response, 10) > 0){
+                    //sessionStorage.getItem('surveyId')
+                    sessionStorage.setItem('surveyId', response);
+                    $('.showOff').removeClass('d-none');
+                }
+
+
+            },
+            error: function (){
+
+            }
+
+        })
+
+
+
 
     })
 

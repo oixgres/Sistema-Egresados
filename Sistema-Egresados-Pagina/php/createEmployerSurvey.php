@@ -36,7 +36,7 @@ if($res->num_rows == 0)
 
 //Se inserta la encuesta en la tabla Encuesta..
 
-$sql = "INSERT INTO Encuesta (Nombre) VALUES ({$surveyName})";
+$sql = "INSERT INTO Encuesta (Nombre) VALUES ('$surveyName')";
 $res = mysqli_query($conn, $sql);
 
 //No se pudo insertar en la tabla Encuesta

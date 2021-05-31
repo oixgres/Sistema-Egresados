@@ -40,6 +40,8 @@ form.addEventListener('submit', function(e){
       url: 'php/login.php',
       data: $(this).serialize(),
       success: function(response){
+
+        console.log(response)
         let json = JSON.parse(response)
 
         if(json.location)
