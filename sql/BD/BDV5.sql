@@ -520,7 +520,7 @@ CREATE TABLE IF NOT EXISTS Respuesta_Empleador (
   REFERENCES Pregunta (idPregunta)
   ON DELETE CASCADE,
   FOREIGN KEY (Empleador_idEmpleador)
-  REFERENCES Usuario (idEmpleador)
+  REFERENCES Empleador (idEmpleador)
   ON DELETE CASCADE)
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
