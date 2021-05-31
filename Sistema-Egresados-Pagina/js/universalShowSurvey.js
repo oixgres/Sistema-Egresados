@@ -133,7 +133,7 @@ class AnswersToDatabase{
             console.log("ID usuario = " + idUsuario);
 
             if(flag){
-                alert("Registrado con exito")
+                alert("Preguntas registradas con exito")
             }
             else{
                 alert("Error")
@@ -463,9 +463,8 @@ $(document).ready(function (e) {
                 if(parseInt(response, 10) > 0){
                     console.log("user id = " + response)
                     localStorage.setItem("USER_ID", parseInt(response, 10))
-                    $('#surveyContainer').show();
-                    $('#surveyContainer').addClass('d-flex')
-                    alert("creado!!")
+                    $('#optionContainer').removeClass('d-none')
+                    alert("Registrado con exito")
                 }
 
             },
@@ -478,6 +477,6 @@ $(document).ready(function (e) {
 
     })
 
-    $('#surveyContainer').hide();
+
 
 })
