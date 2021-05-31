@@ -9,7 +9,7 @@ $(document).ready(function () {
     function createPieGraph(questionTittle, respuestas = [], cantidad = [], id) {
         let node = $(`
             <div class="col-12 col-md-6 col-lg-3 col-xl-4">
-               <h2 class="text-center">${questionTittle})</h2>
+               <h2 class="text-center">${questionTittle}</h2>
                 <div id="${id}">
                 
                 </div>

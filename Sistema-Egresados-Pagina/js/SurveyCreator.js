@@ -515,7 +515,6 @@ $(document).ready(function (e) {
 
         AddSurvey.on('click', function (e) { //guardar en base de datos
             e.stopPropagation();
-            $(this).children('span').removeClass('d-none')
             let surveyName = $('#SurveyName').val(); //obtener el nombre de la encuesta
 
             let university = "NULL";
@@ -525,7 +524,7 @@ $(document).ready(function (e) {
 
             let SurveyTopic = $('#SurveyTopic').val(); //obtener el alcance
 
-            $('#SurveyName').removeClass('alert alert-success is-valid');
+            $('#SurveyName').removeClass('alert alert-success alert-danger is-valid');
             $('#SurveyTopic').removeClass('alert alert-success is-valid');
             $('#SurveyName').removeClass('alert alert-danger is-invalid');
             $('#SurveyTopic').removeClass('alert alert-danger is-invalid');
@@ -546,40 +545,77 @@ $(document).ready(function (e) {
 
             }
 
-            $.ajax({
-                url:    '../php/createSurvey.php',
-                data:   {surveyName, campus, faculty, program, university},
-                type: 'POST',
-                success: function (response) {
-                    console.log("CREATE SURVEY = " + response)
-                    if(parseInt(response, 10) > 0){
-                        //encuesta insertada con exito
-                        sessionStorage.setItem('surveyId', response);//guardar llave primaria de la encuesta
-                        $('#QuestionContainerController,#QuestionContainerPreview').show(SHOW_DELAY);//mostrar las herramientas
-                        toast.toast('show');
-                        $('#AddSurvey').children('span').addClass('d-none')
 
-                        $('#SurveyName').addClass('alert alert-success is-valid');
-                        $('#SurveyTopic').addClass('alert alert-success is-valid');
+            if(surveyName !== ""){
+                $(this).children('span').removeClass('d-none')
+                $.ajax({
+                    url:    '../php/createSurvey.php',
+                    data:   {surveyName, campus, faculty, program, university},
+                    type: 'POST',
+                    success: function (response) {
+                        console.log("CREATE SURVEY = " + response)
+                        if(parseInt(response, 10) > 0){
+                            //encuesta insertada con exito
+                            sessionStorage.setItem('surveyId', response);//guardar llave primaria de la encuesta
+                            $('#QuestionContainerController,#QuestionContainerPreview').show(SHOW_DELAY);//mostrar las herramientas
+                            toast.toast('show');
+                            $('#AddSurvey').children('span').addClass('d-none')
 
-                        ShowSuccessToastSound.play().then(r => function () { });
+                            $('#SurveyName').addClass('alert alert-success is-valid');
+                            $('#SurveyTopic').addClass('alert alert-success is-valid');
 
-                    }
-                    else
-                    {
-                        ShowFaildedSound.play();
-                        $('#AddSurvey').children('span').addClass('d-none')
+                            ShowSuccessToastSound.play().then(r => function () { });
 
-                        switch (parseInt(response, 10)){
-                            case -1:    $('#SurveyName').addClass('alert alert-danger is-invalid');
-                                break;
-                            case -2:     $('#SurveyTopic').addClass('alert alert-danger is-invalid');
-                                break;
+                            let tipos = {'Universidad' : 0, 'Campus' : 1, 'Facultad' : 2, 'Programa Académico' : 3}
+
+                            console.log("TIPO ALCANCE = " + tipos[$('#SurveyScope').text()])
+                            //1, 0,
+                            let idAlcance = 1
+                            let tipoAlcance = 0;
+
+
+
+
+                            $.ajax({
+                                url: '../php/sendNewSurveyNotification.php',
+                                type: 'POST',
+                                data: {idAlcance, tipoAlcance},
+                                success: function (response) {
+                                    if(parseInt(response, 10) === 0){
+                                        console.log("TODO SE ENVIO BIEN")
+                                    }
+                                },
+                                error: function(){
+
+                                }
+
+                            })
+
+
+
+
                         }
+                        else
+                        {
+                            ShowFaildedSound.play();
+                            $('#AddSurvey').children('span').addClass('d-none')
 
+                            switch (parseInt(response, 10)){
+                                case -1:    $('#SurveyName').addClass('alert alert-danger is-invalid');
+                                    break;
+                                case -2:     $('#SurveyTopic').addClass('alert alert-danger is-invalid');
+                                    break;
+                            }
+
+                        }
                     }
-                }
-            })
+                })
+            }else{
+                $('#SurveyName').addClass('alert alert-danger is-invalid');
+
+            }
+
+
         })
 
         SaveToDatabase.on('click', function (e) {
