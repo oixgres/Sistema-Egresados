@@ -618,7 +618,7 @@ $(document).ready(function (e) {
     $('#createSurvey').on('click', function (e){
         e.stopPropagation();
 
-
+        $('.showOff').removeClass('d-none');
 
     })
 
