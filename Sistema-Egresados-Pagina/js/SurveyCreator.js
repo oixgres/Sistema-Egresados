@@ -773,7 +773,7 @@ $(document).ready(function (e) {
         type: 'POST',
         data: {idAdmin},
         success: function (response) {
-            $('#SurveyTopic').val(response);
+            $('#SurveyTopic').val(JSON.parse(response).Nombre);
         }
     })
 
