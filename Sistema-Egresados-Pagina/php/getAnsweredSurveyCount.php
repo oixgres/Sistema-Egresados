@@ -25,7 +25,7 @@ if(isset($_POST['idEncuesta'])) {
     exit();
 }
 
-$sql = "SELECT idEncuesta FROM Encuesta WHERE idEncuesta = ${idEncuesta}";
+$sql = "SELECT idEncuesta, Nombre FROM Encuesta WHERE idEncuesta = ${idEncuesta}";
 $res = mysqli_query($conn, $sql);
 
 if($res->num_rows == 0) {
@@ -33,6 +33,7 @@ if($res->num_rows == 0) {
     $conn->close();
     exit();
 }
+$nombre = mysqli_fetch_assoc($res)['Nombre'];
 
 $sql = "SELECT COUNT(Encuestas_Pendientes.Usuario_idUsuario) AS pendiente
         FROM Encuestas_Pendientes
@@ -58,12 +59,13 @@ if ($res->num_rows > 0) {
     $contestado = 0;
 }
 
-$json = array('total' => $pendiente+$contestado,
+$json = array('nombre' => $nombre,
+              'total' => $pendiente+$contestado,
               'contestado' => $contestado,
               'pendiente' => $pendiente);
 /*
  *	JSON Ejemplo:
- *	   string(44) "{"total":9,"contestado":"2","pendiente":"7"}"
+ *	   string(44) "{"nombre":"Una encuesta","total":5,"contestado":2,"pendiente":3}"
 */
 
 if(!empty($json)) {
