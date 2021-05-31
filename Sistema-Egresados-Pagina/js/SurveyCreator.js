@@ -545,12 +545,16 @@ $(document).ready(function (e) {
 
             }
 
+            //  localStorage.setItem("ID_UNIVERSIDAD", JSON.parse(response).idUniversidad);
+            let idUniversidad = localStorage.getItem("ID_UNIVERSIDAD");
+
+
 
             if(surveyName !== ""){
                 $(this).children('span').removeClass('d-none')
                 $.ajax({
                     url:    '../php/createSurvey.php',
-                    data:   {surveyName, campus, faculty, program, university},
+                    data:   {surveyName, campus, faculty, program, university, idUniversidad},
                     type: 'POST',
                     success: function (response) {
                         console.log("CREATE SURVEY = " + response)

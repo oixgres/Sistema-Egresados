@@ -48,7 +48,6 @@ if(isset($university)) {
 }
 
 if(isset($sql)) {
-    echo $sql;
     $res = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($res);
     echo $row['RESULT'];
