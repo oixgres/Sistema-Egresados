@@ -15,16 +15,16 @@ require_once "dbh.php";
  *  -2 : No se pudo insertar el empleador
 */
 
-if(isset($_POST['Nombre'])) {
-    $Nombre = $_POST['Nombre'];
+if(isset($_POST['Nombre']) {
+    $nombre = $_POST['Nombre'];
 } else {
 	echo -1;
     $conn->close();
     exit();
 }
 
-if(isset($_POST['Empresa'])) {
-    $Empresa = $_POST['Empresa'];
+if(isset($_POST['Empresa']) {
+    $empresa = $_POST['Empresa'];
 } else {
 	echo -1;
     $conn->close();

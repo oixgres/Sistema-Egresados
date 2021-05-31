@@ -16,7 +16,7 @@ require_once "dbh.php";
 */
 
 if(isset($_POST['Nombre'])) {
-    $Nombre = $_POST['Nombre'];
+    $nombre = $_POST['Nombre'];
 } else {
 	echo -1;
     $conn->close();
@@ -24,7 +24,7 @@ if(isset($_POST['Nombre'])) {
 }
 
 if(isset($_POST['Empresa'])) {
-    $Empresa = $_POST['Empresa'];
+    $empresa = $_POST['Empresa'];
 } else {
 	echo -1;
     $conn->close();
