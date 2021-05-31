@@ -59,6 +59,28 @@ $(document).ready(function () {
                     e.stopPropagation();
 
                     let offcanvas = new bootstrap.Offcanvas($('#SurveyStatistics')[0]);
+                    let row = $(this).parent().parent().parent() //Obtener la fila
+                    let idEncuesta = regex.exec(row.attr('id')).pop(); //obtener id de la encuesta
+
+                    $.ajax({
+                        url: '../php/getAnsweredSurveyCount.php',
+                        data: {idEncuesta},
+                        type: 'POST',
+                        success: function (response) {
+                            try{
+                                let totalUsers = JSON.parse(response);
+
+                                console.log(totalUsers)
+
+
+                            }catch (e){
+
+                            }
+                        },
+                        error: function () {
+
+                        }
+                    })
 
                     let TESTER = document.getElementById('tester');
                     let TestNode = $('#SurveyStatistics');

@@ -551,7 +551,7 @@ $(document).ready(function (e) {
                 data:   {surveyName, campus, faculty, program, university},
                 type: 'POST',
                 success: function (response) {
-                    console.log(response)
+                    console.log("CREATE SURVEY = " + response)
                     if(parseInt(response, 10) > 0){
                         //encuesta insertada con exito
                         sessionStorage.setItem('surveyId', response);//guardar llave primaria de la encuesta

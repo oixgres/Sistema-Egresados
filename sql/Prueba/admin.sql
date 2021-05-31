@@ -1,3 +1,3 @@
-SET FOREIGN_KEY_CHECKS = 0;
-INSERT INTO `Admin` (`Correo`, `Password`, `Nombres`, `Apellidos`, `Universidad_idUniversidad`) VALUES ('omar5antonio@gmail.com', '12345', 'Omar', 'Montoya', '1');
-SET FOREIGN_KEY_CHECKS = 1;
+INSERT INTO Admin(idAdmin,Correo,Password,Nombres,Apellidos,Universidad_idUniversidad) VALUES (1,'admin@soyadmin.com','A','El','Admin',1000);
+INSERT INTO Admin(idAdmin,Correo,Password,Nombres,Apellidos,Universidad_idUniversidad) VALUES (2,'admin','admin','admin','admin',1);
+INSERT INTO Admin(idAdmin,Correo,Password,Nombres,Apellidos,Universidad_idUniversidad) VALUES (3,'admin2','admin2','admin2','admin2',1);
