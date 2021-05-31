@@ -67,9 +67,13 @@ function sendMail($user) {
     $mensaje = "Hola, ${user['nombreUsuario']},\r\n\r\n";
     $mensaje .= "Se ha creado una nueva encuesta en el Sistema de Egresados por parte de ${user['nombreAlcance']}. Accede en el siguiente enlace: \r\n";
     $mensaje .= "http://sistema-egresados.conisoft.org/";
-    // Preparar el correo
-    $header = "FROM: noreply@SistemaEgresados.com"."\r\n";
-    $header.= "Reply-To: noreply@SistemaEgresados.com"."\r\n";
+    /* Preparamos el correo */
+    $header = "FROM: noreply@sistema-egresados.conisoft.org"."\r\n";
+    $header.= "Return-Path: noreply@sistema-egresados.conisoft.org"."\r\n";
+    $header.= "Reply-To: noreply@sistema-egresados.conisoft.org"."\r\n";
+    $header.= "Organization: Sistema de Seguimiento de Egresados"."\r\n";
+    $header.= "Content-type: text/plain; charset=iso-8859-1\r\n";
+    $header.= "X-Priority: 3\r\n";
     $header.= "X-Mailer: PHP/".phpversion();
 
     if (@mail($correoUsuario, $asunto, $mensaje, $header)) {
