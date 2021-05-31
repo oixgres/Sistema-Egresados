@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS Datos_Laborales (
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- -----------------------------------------------------
--- TableEncuesta
+-- Table Encuesta
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS Encuesta;
 
@@ -492,6 +492,38 @@ CREATE TABLE IF NOT EXISTS Departamento(
     Nombre   VARCHAR(200) NOT NULL,
     PRIMARY KEY (idDepartamento)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- -----------------------------------------------------
+-- Table Empleador
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS Empleador;
+
+CREATE TABLE IF NOT EXISTS Empleador(
+    idEmpleador INT NOT NULL AUTO_INCREMENT,
+    Nombre VARCHAR(200) NOT NULL,
+    Empresa VARCHAR(200) NOT NULL,
+    PRIMARY KEY (idEmpleador)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- -----------------------------------------------------
+-- Table Respuesta_Empleador
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS Respuesta_Empleador;
+
+CREATE TABLE IF NOT EXISTS Respuesta_Empleador (
+  idRespuesta_Empleador INT NOT NULL AUTO_INCREMENT,
+  Respuesta VARCHAR(200) NOT NULL,
+  Pregunta_idPregunta INT NOT NULL,
+  Empleador_idEmpleador INT NOT NULL,
+  PRIMARY KEY (idRespuesta_Empleador, Pregunta_idPregunta, Empleador_idEmpleador),
+  FOREIGN KEY (Pregunta_idPregunta)
+  REFERENCES Pregunta (idPregunta)
+  ON DELETE CASCADE,
+  FOREIGN KEY (Empleador_idEmpleador)
+  REFERENCES Usuario (idEmpleador)
+  ON DELETE CASCADE)
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
 
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

@@ -1,9 +1,4 @@
-DROP PROCEDURE IF EXISTS insertSurvey; 
-
-DELIMITER $$
-
-
-CREATE PROCEDURE `insertSurvey`(survey_name VARCHAR(45), scope_name VARCHAR(45), scope VARCHAR(45), idUniversity INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertSurvey`(survey_name VARCHAR(45), scope_name VARCHAR(45), scope VARCHAR(45), idUniversity INT)
 BEGIN
 	/*
 		RECIBE:
@@ -118,5 +113,4 @@ BEGIN
         END IF;
         
 	END CASE;
-END $$
-DELIMITER ;
+END

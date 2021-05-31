@@ -84,12 +84,37 @@ else
       ));
 
     }
-    /* Si la contraseña es invalida */
     else
     {
-      echo json_encode(Array(
-        'errorMessage'=>'Usuario o contraseña incorrectos'
-      ));
+      /* Ingreso Admin_Master */
+      $res = mysqli_query($conn, "SELECT * FROM Admin_Master WHERE Correo='$mail' AND Password='$pass'");
+      $nr = mysqli_num_rows($res);
+      if($nr == 1)
+      {
+        /* Obtenemos datos para almacenar en la cookie */
+        $idUser = getFirstQueryElement($conn, "Admin", "idAdmin", "Correo", $mail);
+        $name = getFirstQueryElement($conn, "Admin", "Nombres", "Correo", $mail);
+        $lastname = getFirstQueryElement($conn, "Admin", "Apellidos", "Correo", $mail);
+
+        /* Creamos un token para almacenarlo en cookies */
+        $token = createToken();
+
+        /* Guardamos el token en el servidor */
+        $_SESSION['token'] = $token;
+
+        setUserCookies($token, $idUser, $name, $lastname, $mail, "admin_master");
+
+        echo json_encode(Array(
+          'location'=>'php/admin_master.php'
+        ));
+      }
+      /* Si la contraseña es invalida */
+      else
+      {
+        echo json_encode(Array(
+          'errorMessage'=>'Usuario o contraseña incorrectos'
+        ));
+      }
     }
   }
   else

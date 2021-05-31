@@ -7,7 +7,6 @@ $(document).ready(function (e) {
         case 'Checkbox':    return 3;
         default:    return -1;
      */
-    $('#QuestionContainerController,#QuestionContainerPreview').hide();
     const SHOW_DELAY = 600;
     const toast = $('.toast');
     //<source src="../sounds/ShowSuccessToast.ogg" type="audio/ogg">
@@ -453,49 +452,6 @@ $(document).ready(function (e) {
             }
         })
 
-        dropdownItems.on('click', function (e) {
-            e.stopPropagation();
-            const button = $(this).parent().siblings('button');
-            const SurveyTopicLabel = $('#SurveyTopicLabel');
-            const SurveyTopic = $('#SurveyTopic');
-
-            if(button.length){
-                button.text((this).text)
-                $(this).parent().hide(SHOW_DELAY)
-
-                switch(button.text()){
-                    case 'Universidad': SurveyTopicLabel.text('Nombre de la Universidad')
-                        SurveyTopic.attr('placeholder', 'Introduce el nombre de la Universidad');
-                        SurveyTopic.attr('readonly', true);
-                        $.ajax({
-                            url: '../php/getAdminUniversity.php',
-                            type: 'POST',
-                            data: {idAdmin},
-                            success: function (response) {
-                                $('#SurveyTopic').val(JSON.parse(response).Nombre);
-                            }
-                        })
-
-                        break;
-
-                    case 'Campus' : SurveyTopicLabel.text('Nombre del Campus')
-                        SurveyTopic.attr('placeholder', 'Introduce el nombre del campus');
-                        SurveyTopic.attr('readonly', false);
-                        break;
-
-                    case 'Facultad':    SurveyTopicLabel.text('Nombre de la Facultad')
-                        SurveyTopic.attr('placeholder', 'Introduce el nombre de la facultad');
-                        SurveyTopic.attr('readonly', false);
-                        break;
-
-                    case 'Programa Académico':  SurveyTopicLabel.text('Nombre del Programa Academico')
-                        SurveyTopic.attr('placeholder', 'Introduce el nombre del programa académico');
-                        SurveyTopic.attr('readonly', false);
-                        break;
-                }
-            }
-        })
-
         AddQuestion.on('click', function (e) {
             e.stopPropagation();
             questionController.createQuestion();
@@ -514,107 +470,6 @@ $(document).ready(function (e) {
         })
 
         AddSurvey.on('click', function (e) { //guardar en base de datos
-            e.stopPropagation();
-            let surveyName = $('#SurveyName').val(); //obtener el nombre de la encuesta
-
-            let university = "NULL";
-            let campus = "NULL";
-            let faculty = "NULL";
-            let program = "NULL";
-
-            let SurveyTopic = $('#SurveyTopic').val(); //obtener el alcance
-
-            $('#SurveyName').removeClass('alert alert-success alert-danger is-valid');
-            $('#SurveyTopic').removeClass('alert alert-success is-valid');
-            $('#SurveyName').removeClass('alert alert-danger is-invalid');
-            $('#SurveyTopic').removeClass('alert alert-danger is-invalid');
-
-            switch ($('#SurveyScope').text())
-            {
-                case 'Universidad': university = SurveyTopic;
-                    break;
-
-                case 'Campus':      campus = SurveyTopic;
-                    break;
-
-                case 'Facultad':    faculty = SurveyTopic;
-                    break;
-
-                case 'Programa Académico': program = SurveyTopic;
-                    break;
-
-            }
-
-            //  localStorage.setItem("ID_UNIVERSIDAD", JSON.parse(response).idUniversidad);
-            let idUniversidad = localStorage.getItem("ID_UNIVERSIDAD");
-
-
-
-            if(surveyName !== ""){
-                $(this).children('span').removeClass('d-none')
-                $.ajax({
-                    url:    '../php/createSurvey.php',
-                    data:   {surveyName, campus, faculty, program, university, idUniversidad},
-                    type: 'POST',
-                    success: function (response) {
-                        console.log("CREATE SURVEY = " + response)
-                        if(parseInt(response, 10) > 0){
-                            //encuesta insertada con exito
-                            sessionStorage.setItem('surveyId', response);//guardar llave primaria de la encuesta
-                            $('#QuestionContainerController,#QuestionContainerPreview').show(SHOW_DELAY);//mostrar las herramientas
-                            toast.toast('show');
-                            $('#AddSurvey').children('span').addClass('d-none')
-
-                            $('#SurveyName').addClass('alert alert-success is-valid');
-                            $('#SurveyTopic').addClass('alert alert-success is-valid');
-
-                            ShowSuccessToastSound.play().then(r => function () { });
-
-                            let tipos = {'Universidad' : 0, 'Campus' : 1, 'Facultad' : 2, 'Programa Académico' : 3}
-
-                            console.log("TIPO ALCANCE = " + tipos[$('#SurveyScope').text()])
-                            //1, 0,
-                            let idAlcance = 1
-                            let tipoAlcance = 0;
-
-
-
-
-                            $.ajax({
-                                url: '../php/sendNewSurveyNotification.php',
-                                type: 'POST',
-                                data: {idAlcance, tipoAlcance},
-                                success: function (response) {
-                                    if(parseInt(response, 10) === 0){
-                                        console.log("TODO SE ENVIO BIEN")
-                                    }
-                                },
-                                error: function(){
-
-                                }
-                            })
-
-                        }
-                        else
-                        {
-                            ShowFaildedSound.play();
-                            $('#AddSurvey').children('span').addClass('d-none')
-
-                            switch (parseInt(response, 10)){
-                                case -1:    $('#SurveyName').addClass('alert alert-danger is-invalid');
-                                    break;
-                                case -2:     $('#SurveyTopic').addClass('alert alert-danger is-invalid');
-                                    break;
-                            }
-
-                        }
-                    }
-                })
-            }else{
-                $('#SurveyName').addClass('alert alert-danger is-invalid');
-
-            }
-
 
         })
 
@@ -643,16 +498,8 @@ $(document).ready(function (e) {
                     let theme = questionThemes[i];
                     let type = questionTypes[i];
 
-
-
-                    console.log('ID DE ENCUESTA = ' + sessionStorage.getItem('surveyId'))
-                    console.log('TEMA = ' + theme)
-                    console.log('PREGUNTA = ' + title)
-                    console.log('TIPO = ' + sessionStorage.getItem('surveyId'))
-
-
                     $.ajax({ //insertar pregunta en la base de datos
-                        url:    '../php/createQuestion.php',
+                        url:    '',
                         async:  false,
                         data:   {surveyId, title, theme, type},
                         type:   'POST',
@@ -765,21 +612,15 @@ $(document).ready(function (e) {
         fields.removeClass('alert alert-danger alert-success is-valid is-invalid');
     }
 
-    $('#SurveyTopic').attr('readonly', true);
     let idAdmin = getCookie('id');
 
-    $.ajax({
-        url: '../php/getAdminUniversity.php',
-        type: 'POST',
-        data: {idAdmin},
-        success: function (response) {
-            $('#SurveyTopic').val(JSON.parse(response).Nombre);
 
-            localStorage.setItem("ID_UNIVERSIDAD", JSON.parse(response).idUniversidad);
+    $('#createSurvey').on('click', function (e){
+        e.stopPropagation();
 
-        }
+
+
     })
-
 
     addListeners();
     questionController.createQuestion();
