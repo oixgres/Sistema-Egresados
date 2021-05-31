@@ -18,7 +18,7 @@ $action = $_POST['action'];
 switch($action)
 {
   case 'edit':
-    $query = "UPDATE Datos_Laborales SET Labora=1, Inicio='$date', Empleo='$job', Empresa='$company', Puesto='$pos', Categoria='$category', Correo_Emp='$email', Departamento='$dep', Tecnologias='$tec', Actividades='$act' WHERE Usuario_idUsuario='".$_COOKIE['id']."'";
+    $query = "UPDATE Datos_Laborales SET Inicio='$date', Empleo='$job', Empresa='$company', Puesto='$pos', Categoria='$category', Correo_Emp='$email', Departamento='$dep', Tecnologias='$tec', Actividades='$act' WHERE Usuario_idUsuario='".$_COOKIE['id']."'";
     mysqli_query($conn, $query);
   break;
 
@@ -28,6 +28,19 @@ switch($action)
 
     $query = "INSERT INTO Datos_Laborales (Usuario_idUsuario, Labora, Empleo, Empresa, Puesto, Categoria, Correo_Emp, Departamento, Tecnologias, Actividades, Inicio) VALUES ('".$_COOKIE['id']."', 1, '$job', '$company', '$pos', '$category', '$email', '$dep', '$tec', '$act', '$date')";
     mysqli_query($conn, $query);
+  break;
+
+  case 'editHistory':
+    $query = "UPDATE Historial_Laboral SET Inicio='$date', Empleo='$job', Empresa='$company', Puesto='$pos', Categoria='$category', Correo_Emp='$email', Departamento='$dep', Tecnologias='$tec', Actividades='$act' WHERE idHistorial_Laboral='".$_COOKIE['historial']."'";
+    mysqli_query($conn, $query);
+
+    setcookie("historial", "",time()-1,"/");
+  break;
+
+  case 'addHistory':
+    $query = "INSERT INTO Historial_Laboral (Usuario_idUsuario, Empleo, Empresa, Puesto, Categoria, Correo_Emp, Departamento, Tecnologias, Actividades, Inicio) VALUES ('".$_COOKIE['id']."', '$job', '$company', '$pos', '$category', '$email', '$dep', '$tec', '$act', '$date')";
+    mysqli_query($conn, $query);
+
   break;
 }
 
