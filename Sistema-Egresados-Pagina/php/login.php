@@ -92,9 +92,7 @@ else
       if($nr == 1)
       {
         /* Obtenemos datos para almacenar en la cookie */
-        $idUser = getFirstQueryElement($conn, "Admin", "idAdmin", "Correo", $mail);
-        $name = getFirstQueryElement($conn, "Admin", "Nombres", "Correo", $mail);
-        $lastname = getFirstQueryElement($conn, "Admin", "Apellidos", "Correo", $mail);
+        $idUser = getFirstQueryElement($conn, "Admin_Master", "idAdmin", "Correo", $mail);
 
         /* Creamos un token para almacenarlo en cookies */
         $token = createToken();
@@ -102,7 +100,9 @@ else
         /* Guardamos el token en el servidor */
         $_SESSION['token'] = $token;
 
-        setUserCookies($token, $idUser, $name, $lastname, $mail, "admin_master");
+        //setUserCookies($token, $idUser, $name, $lastname, $mail, "admin_master");
+        setcookie("token",$token,time()+(60*60*24*30), "/");
+        setcookie("id",$idUser,time()+(60*60*24*30), "/");
 
         echo json_encode(Array(
           'location'=>'php/admin_master.php'
