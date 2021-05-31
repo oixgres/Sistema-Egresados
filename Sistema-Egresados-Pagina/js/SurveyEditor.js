@@ -6,6 +6,30 @@ $(document).ready(function () {
     const INPUT = 2;
     const CHECKBOX = 3;
 
+    function createPieGraph(questionTittle, respuestas = [], cantidad = [], id) {
+        let node = $(`
+            <div class="col-12 col-md-6 col-lg-3 col-xl-4">
+               <h2 class="text-center">${questionTittle})</h2>
+                <div id="${id}">
+                
+                </div>
+            </div>
+         
+        `)
+
+        $('#pieContainer').append(node)
+
+        let totalAnswers =  document.getElementById(id);
+
+        let data = [{
+            values: cantidad,
+            labels: respuestas,
+            type: 'pie'
+        }]
+
+        Plotly.newPlot(totalAnswers, data);
+    }
+
     class TableManager{ //clase para manejar las filas de las encuestas
         constructor(container) {
             this.ShowSurveyOffcanvas = new bootstrap.Offcanvas($('#SurveyContainerShow')[0]);
@@ -60,7 +84,14 @@ $(document).ready(function () {
 
                     let offcanvas = new bootstrap.Offcanvas($('#SurveyStatistics')[0]);
                     let row = $(this).parent().parent().parent() //Obtener la fila
+                    let surverName = row.children().first().text();
                     let idEncuesta = regex.exec(row.attr('id')).pop(); //obtener id de la encuesta
+                    let currentId = 1;
+
+                    console.log(surverName)
+
+                    $('#SurveyTitle').text(surverName)
+                    $('#pieContainer').empty();
 
                     $.ajax({
                         url: '../php/getAnsweredSurveyCount.php',
@@ -68,9 +99,90 @@ $(document).ready(function () {
                         type: 'POST',
                         success: function (response) {
                             try{
+
                                 let totalUsers = JSON.parse(response);
 
                                 console.log(totalUsers)
+
+
+
+                                let contestado = parseInt(totalUsers.contestado, 10);
+                                let pendiente = parseInt(totalUsers.pendiente, 10);
+
+
+                                let total_question_pie = document.getElementById('Total_question_pie');
+                                var data = [{
+                                    values: [contestado, pendiente],
+                                    labels: ['Contestado', 'Pendiente'],
+                                    type: 'pie'
+                                }]
+
+
+                                Plotly.newPlot(total_question_pie, data);
+
+
+                            }catch (e){
+                                alert(e)
+                            }
+                        },
+                        error: function () {
+                            alert("Error pendejo!")
+                        }
+                    })
+
+                    $.ajax({
+                        url: '../php/getQuestions.php',
+                        data: {idEncuesta},
+                        type: 'POST',
+                        async: false,
+                        success: function (response) {
+                            try{
+                                let preguntas = JSON.parse(response);
+
+                                preguntas.forEach(pregunta => {
+                                    let idPregunta = pregunta.idPregunta;
+                                    let answer_text_array = [];
+                                    let anster_count_array = [];
+
+                                    $.ajax({
+                                        url: '../php/getAnswerSelectionCount.php',
+                                        data: {idPregunta},
+                                        type: 'POST',
+                                        async: false,
+                                        success: function (response)
+                                        {
+                                            console.log(response)
+                                            try{
+                                                let respuestas = JSON.parse(response);
+
+
+                                                respuestas.forEach(respuesta => {
+                                                    answer_text_array.push(respuesta.respuesta);
+                                                    anster_count_array.push(parseInt(respuesta.cantidad, 10));
+                                                })
+
+
+
+
+                                            }catch (e){
+
+                                            }
+
+
+                                        },
+                                        error: function () {
+
+                                        }
+                                    })
+
+
+                                    console.log(answer_text_array)
+                                    console.log(anster_count_array)
+                                    console.log(["-------------------"])
+
+                                    createPieGraph(pregunta.pregunta, answer_text_array,anster_count_array, "current_" + idPregunta);
+
+                                })
 
 
                             }catch (e){
@@ -82,17 +194,6 @@ $(document).ready(function () {
                         }
                     })
 
-                    let TESTER = document.getElementById('tester');
-                    let TestNode = $('#SurveyStatistics');
-
-                    var data = [{
-                        values: [19, 26, 55],
-                        labels: ['Respuesta A', 'Respuesta B', 'Respuesta C'],
-                        type: 'pie'
-                    }];
-
-
-                    Plotly.newPlot(TESTER, data);
 
                     offcanvas.show();
 
@@ -745,6 +846,13 @@ $(document).ready(function () {
         e.stopPropagation();
         $(this).addClass('alert alert-warning change');
     })
+
+    let kvArray = []
+
+    kvArray.forEach((value) =>{
+        console.log(value)
+    })
+
 
     refreshTable();
 })

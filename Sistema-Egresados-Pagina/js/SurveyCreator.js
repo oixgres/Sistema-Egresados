@@ -663,10 +663,14 @@ $(document).ready(function (e) {
 
                 }
                 if(success){
+
+                    //Mandar llamar para mandar el correo
+
                     $(this).attr('disabled', true);
                     ModalDatabaseSuccess.modal('show');
                 }
                 else{
+                    //peticion para boorar preguntas y respuetsas de la encuesta
                     alert("Hubo un error, intentelo de nuevo");
                 }
 
