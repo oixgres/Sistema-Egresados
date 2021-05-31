@@ -35,7 +35,7 @@ checkSession("admin_master");
             aria-expanded="false"
           >Encuestas</a>
           <div class="dropdown-menu" aria-labelledby="navDropdown">
-            <a class="dropdown-item" href="../html/.html">Crear Encuesta</a>
+            <a class="dropdown-item" href="../html/universalCreator.html">Crear Encuesta</a>
             <a class="dropdown-item" href="../html/SurveyEditor.html">Editar Encuestas</a>
           </div>
         </div>
