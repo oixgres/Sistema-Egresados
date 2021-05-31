@@ -592,7 +592,6 @@ $(document).ready(function (e) {
                                 error: function(){
 
                                 }
-
                             })
 
 
