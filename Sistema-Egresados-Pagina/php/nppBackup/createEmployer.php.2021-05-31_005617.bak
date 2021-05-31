@@ -1,0 +1,18 @@
+<?php
+require_once "dbh.php";
+/*
+ * Recibe:
+ * 	Nombre : VARCHAR(200)
+ * 	Empresa : VARCHAR(200)
+ *
+ * Devuelve:
+ * 	ID del empleador insertado
+ *
+ *  Códigos de error:
+ *  -1 : No se mandó el idPregunta, idUsuario o respuesta
+ *  -2 : No existe pregunta o usuario
+ *  -3 : Error al insertar
+*/
+
+
+?>

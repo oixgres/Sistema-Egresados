@@ -1,0 +1,28 @@
+<?php
+require_once "dbh.php";
+/*
+ * Recibe:
+ * 	Nombre : VARCHAR(200)
+ * 	Empresa : VARCHAR(200)
+ *
+ * Devuelve:
+ * 	ID del empleador insertado
+ *
+ *  idEmpleador : INT
+ *
+ *  Códigos de error:
+ *  -1 : No se mando correctamente alguno de los datos 
+ *  -2 : No se pudo insertar el empleador
+*/
+
+if(!isset($_POST['idUsuario']) {
+    echo -1;
+    $conn->close();
+    exit();
+} else {
+    $idUsuario = $_POST['idUsuario'];
+    $estado = $_POST['estado'];
+}
+
+
+?>
