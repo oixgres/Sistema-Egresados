@@ -24,7 +24,7 @@ checkSession("admin_master");
       <a class="navbar-brand" href="menu.php">Sistema Egresados</a>
 
       <div class="row ml-auto justify-content-end">
-        <div class="nav-item dropdown">
+        <!-- <div class="nav-item dropdown">
           <a
             id="navDropdown"
             class="nav-link modified-navbar-elements dropdown-toggle"
@@ -38,9 +38,9 @@ checkSession("admin_master");
             <a class="dropdown-item" href="../html/universalCreator.html">Crear Encuesta</a>
             <a class="dropdown-item" href="../html/SurveyEditor.html">Editar Encuestas</a>
           </div>
-        </div>
+        </div> -->
 
-        <a class="nav-link modified-navbar-elements" href="../html/userFinder.html">Buscar Usuarios</a>
+        <a class="nav-link modified-navbar-elements" href="../html/universalCreator.html">Crear Encuestas</a>
         <a href="logout.php" class="nav-link modified-navbar-quit">Salir</a>
       </div>
     </nav>

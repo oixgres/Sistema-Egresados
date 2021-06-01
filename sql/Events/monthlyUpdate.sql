@@ -1,6 +1,12 @@
+DROP EVENT IF EXISTS monthlyUpdate;
+
+DELIMITER $$
+
 CREATE EVENT IF NOT EXISTS monthlyUpdate
-ON SCHEDULE EVERY 1 MONTH
-DO BEGIN 
-  SELECT Actualizaciones
-  FROM Usuario
-  WHERE Actualizaciones < 3
+ON SCHEDULE EVERY 1 MINUTE
+DO
+BEGIN 
+  UPDATE Usuario
+  SET Actualizaciones=3
+  WHERE Actualizaciones < 3;
+END $$

@@ -39,8 +39,21 @@ checkSession("admin");
             <a class="dropdown-item" href="../html/SurveyEditor.html">Editar Encuestas</a>
           </div>
         </div>
-
-        <a class="nav-link modified-navbar-elements" href="../html/userFinder.html">Buscar Usuarios</a>
+        <div class="nav-item dropdown">
+          <a
+            id="navDropdown"
+            class="nav-link modified-navbar-elements dropdown-toggle"
+            href="#"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >Usuarios</a>
+          <div class="dropdown-menu" aria-labelledby="navDropdown">
+            <a class="dropdown-item" href="../html/userFinder.html">Buscar Usuarios</a>
+            <a class="dropdown-item" href="../html/userPreCreator.html">Crear Usuarios</a>
+          </div>
+        </div>
         <a href="logout.php" class="nav-link modified-navbar-quit">Salir</a>
       </div>
     </nav>
