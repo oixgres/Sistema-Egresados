@@ -1,4 +1,4 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insertSurvey`(survey_name VARCHAR(45), scope_name VARCHAR(45), scope VARCHAR(45), idUniversity INT)
+CREATE PROCEDURE `insertSurvey`(survey_name VARCHAR(45), scope_name VARCHAR(45), scope VARCHAR(45), idUniversity INT)
 BEGIN
 	/*
 		RECIBE:
@@ -14,8 +14,6 @@ BEGIN
 
 	DECLARE id_scope INT;		-- VARIABLE PARA GUARDAR EL idUniversidad
     DECLARE survey_exists INT; 	-- VARIABLE QUE INDICA SI LA ENCUESTA EXISTE
-    DECLARE tempId INT; 	-- VALOR A RETORNAR
-    DECLARE tempId2 INT; 	-- VALOR A RETORNAR
 
 
     CASE (scope)
@@ -26,7 +24,7 @@ BEGIN
         IF(isnull(survey_exists)) THEN -- verificar si se puede crear la encuesta
             -- SE INSERTA LA CORRESPONDIENTE ENCUESTA EN ESTE CASO LA UNIVERSIDAD
             INSERT INTO Encuesta(Nombre, Universidad_idUniversidad)
-            VALUES (survey_name, id_scope);
+            VALUES (survey_name, idUniversity);
 
             SELECT last_insert_id() AS RESULT;  			   -- RETORNAR EL ID DE LA ENCUESTA INSERTADA
         ELSE
