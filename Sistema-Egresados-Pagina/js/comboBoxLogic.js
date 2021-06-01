@@ -115,7 +115,7 @@ $(document).ready(function (e) {
 
                 jobs.forEach(job => {
 
-                    $('#Categoria_list').append(optionComponent(job.Nombre));
+                    $('#Departamento_list').append(optionComponent(job.Nombre));
 
                 })
 

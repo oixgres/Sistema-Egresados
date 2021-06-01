@@ -47,6 +47,7 @@ if(isset($university)) {
     die('No has seleccionado ningun alcance');
 }
 
+
 if(isset($sql)) {
     $res = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($res);

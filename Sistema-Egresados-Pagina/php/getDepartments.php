@@ -24,6 +24,7 @@ if (gettype($res) != "boolean" and $res->num_rows != 0) {
     /* JSON Ejemplo:
      *  string(49) "[{"idDepartamento":"1","Nombre":"Arquitecturas"}]"
      */
+
     $jsonString = json_encode($json);    //convertir el json a cadena
     echo $jsonString;                    //retornar el json al frontend
 } else {

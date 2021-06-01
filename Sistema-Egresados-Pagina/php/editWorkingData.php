@@ -250,7 +250,7 @@ checkSession("user");
       <script src="../js/boostrap/popper.min.js"></script>
       <script src="../js/boostrap/bootstrap.bundle.js"></script>
       <script src="../js/boostrap/bootstrap.js"></script>
-
+        <script SRC="../js/comboBoxLogic.js"></script>
       <script src="../js/editWorkData.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
     </div>
