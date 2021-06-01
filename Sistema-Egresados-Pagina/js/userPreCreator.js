@@ -29,10 +29,7 @@ $(document).ready(function () {
             data: {idName, idLastName, idMail, idMat, idPass, idPass2},
             type: 'POST',
             success: function (response) {
-                console.log(response)
-                if(parseInt(response, 10) === 0){
-                    alert("Usuario creado con exito")
-                }
+                alert("Usuario creado con exito")
             },
             error: function () {
 
