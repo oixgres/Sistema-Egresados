@@ -304,6 +304,8 @@ $(document).ready(function (e) {
     SaveAnswersToDatabase.on('click', function (e) {
         ProgressBarDatabase.show(0)
         answersToDatabase =  new AnswersToDatabase(questionCreator.totalQuestions);
+
+        console.log("ID DE USUARIO HERE = " + idUsuario)
         answersToDatabase.SaveAnswersToDatabase(idUsuario);
 
         $(this).attr('disabled', true);
