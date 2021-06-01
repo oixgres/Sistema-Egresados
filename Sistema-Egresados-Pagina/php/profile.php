@@ -14,6 +14,9 @@ checkSession("user");
     /* Consultas */
     require_once "dbh.php";
 
+    $usuario = mysqli_query($conn, "SELECT * FROM Usuario WHERE idUsuario='".$_COOKIE['id']."'");
+    $usuario = mysqli_fetch_assoc($usuario);
+
     $datos_personales = mysqli_query($conn, "SELECT * FROM Datos_Personales WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
     $datos_laborales = mysqli_query($conn, "SELECT * FROM Datos_Laborales WHERE Usuario_idUsuario='".$_COOKIE["id"]."'");
 
@@ -265,9 +268,6 @@ checkSession("user");
                                 <div class="col-md-8 mt-1">
                                   <p><?php echo $row["Nombre"]; ?></p>
                                 </div>
-                                <div class="col-md-4">
-                                  <a href="#" class="btn btn-secondary modified-small-button">Modificar</a>
-                                </div>
                             </div>
                           <?php endwhile; ?>
                         </div>
@@ -477,6 +477,8 @@ checkSession("user");
       </div>
     </div>
 
+    <!-- Popup de edicion -->
+    <?php if($usuario['Actualizaciones'] > 0): ?>
     <div class="popup" id="popup-edit">
       <div class="overlay"></div>
       <div class="content">
@@ -527,6 +529,22 @@ checkSession("user");
         </form>
       </div>
     </div>
+    <!-- Popup de edicion inhabilitada -->
+    <?php else: ?>
+    <div class="popup" id="popup-edit">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="close-button" onclick="editPopup()">&times;</div>
+        <h1 class="popup-title">Numero de Actualizaciones Excedido</h1>
+
+        <p>
+          Has excedido el numero maximo de actualizaciones mensuales en su perfil.
+          <br>
+          Si desea continuar realizando actualizaciones comuniquese con el administrador.
+        </p>  
+      </div>
+    </div>
+    <?php endif; ?>
     <script src="../js/popup.js"></script>
     <script src="../js/profile.js"></script>
     <script src="../js/profile_status.js"></script>
