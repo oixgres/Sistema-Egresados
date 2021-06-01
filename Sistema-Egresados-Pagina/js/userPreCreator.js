@@ -29,7 +29,7 @@ $(document).ready(function () {
             data: {idName, idLastName, idMail, idMat, idPass, idPass2},
             type: 'POST',
             success: function (response) {
-                alert(response)
+                alert("Usuario creado con exito")
             },
             error: function () {
 
