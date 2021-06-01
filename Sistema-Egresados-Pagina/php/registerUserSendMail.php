@@ -125,6 +125,7 @@ if($conn)
 		mail($email, $asunto, $mensaje, $header);
       
         $conn->close();
+        echo 0;
         exit();
       }
   }
